@@ -1,4 +1,4 @@
-[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+﻿[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.5.2-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![Evidently](https://img.shields.io/badge/Evidently-0.6.0-0B3A53?style=for-the-badge)](https://www.evidentlyai.com/)
@@ -8,7 +8,6 @@
 # Datathon Tech5 | Sistema de Classificação de Risco de Defasagem Escolar
 
 > Documento técnico oficial de entrega (whitepaper + guia operacional + guia de deploy).
-
 ## Índice
 
 - [1) Visão Geral do Projeto](#1-visão-geral-do-projeto)
@@ -34,28 +33,50 @@
 
 ## 1) Visão Geral do Projeto
 
-### Problema de negócio
-A operação educacional precisa identificar, com antecedência, alunos com maior risco de defasagem para priorizar intervenção humana e alocação de recursos escassos.
+### O problema que o projeto resolve
+A operação educacional precisa identificar, com antecedência, estudantes com maior probabilidade de defasagem escolar, para que a intervenção aconteça no momento em que ainda é possível evitar agravamento acadêmico.
 
-### Impacto educacional
-Com priorização orientada por risco:
-- equipes pedagógicas conseguem atuar primeiro em casos críticos;
-- decisões deixam de ser reativas e passam a ser preventivas;
-- a instituição ganha previsibilidade operacional sobre demanda de atendimento.
+Na prática, o desafio não é apenas prever risco, mas transformar dados históricos em priorização operacional acionável, sem depender exclusivamente de triagem manual e sem comprometer a segurança de decisão em casos ambíguos.
 
-### Contexto do Datathon
-Este projeto atende a trilha de **classificação supervisionada**, com foco em solução aplicável em cenário operacional real: inferência online, monitoramento, retreinamento e governança técnica.
+### Por que esse problema é relevante
+- o tempo de resposta pedagógica impacta diretamente a chance de recuperação do estudante;
+- equipes têm capacidade limitada de acompanhamento e precisam de critério objetivo de prioridade;
+- abordagens reativas tendem a consumir recursos tarde demais, com menor efetividade;
+- decisões sem rastreabilidade dificultam governança, auditoria e melhoria contínua.
 
-### Objetivo estratégico
-Transformar dados históricos acadêmicos em decisão operacional confiável, com:
+Em contexto de vulnerabilidade social, o custo de não agir cedo é alto para o aluno, para a equipe educacional e para a instituição.
+
+### Valor funcional entregue pela solução
+O sistema implementa um fluxo de ML ponta a ponta preparado para operação real:
+- predição online de risco (`/api/v1/predict/full` e `/api/v1/predict/smart`);
+- tratamento de cold start com revisão humana obrigatória quando não há histórico;
+- monitoramento contínuo de estabilidade (drift via Evidently + PSI);
+- retreinamento controlado por quality gate para reduzir risco de regressão;
+- logging estruturado para rastreabilidade técnica e análise posterior.
+
+### Valor real para a operação
+Com o uso do sistema, a operação sai de um modelo majoritariamente reativo para um modelo preventivo orientado por probabilidade de risco:
+- a fila de atendimento passa a refletir criticidade real dos casos;
+- casos limítrofes e novos alunos são sinalizados para decisão assistida por humano;
+- a coordenação ganha previsibilidade de demanda e base objetiva para alocação de recursos;
+- a gestão passa a acompanhar sinais de degradação do modelo antes de impacto severo.
+
+### Objetivo estratégico do projeto
+Transformar dados acadêmicos em decisão operacional confiável, equilibrando performance preditiva e governança técnica:
 - controle de leakage temporal;
-- rastreabilidade de predição;
-- monitoramento contínuo de drift e fairness;
-- qualidade mínima para promoção de modelo.
+- calibração de probabilidade para decisão prática;
+- monitoramento de drift e fairness;
+- critério mínimo de qualidade para promoção de novos modelos.
 
-### O que muda na operação com o sistema
-Antes: priorização majoritariamente manual e tardia.
-Depois: fila de risco orientada por probabilidade, com sinalização de revisão humana nos casos limítrofes e cold start.
+### O que muda na prática (antes vs depois)
+Antes:
+- priorização manual, heterogênea e frequentemente tardia;
+- baixa rastreabilidade dos critérios usados para intervenção.
+
+Depois:
+- priorização orientada por risco com critérios explícitos e auditáveis;
+- intervenção mais cedo nos casos críticos;
+- ciclo contínuo de monitoramento e melhoria do modelo em produção.
 
 ---
 
@@ -600,3 +621,4 @@ Este projeto está licenciado sob a **MIT License**.
 - Em resumo, a licença permite uso, cópia, modificação e distribuição, com preservação do aviso de copyright e da própria licença.
 
 ---
+
