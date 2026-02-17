@@ -3,7 +3,7 @@
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.5.2-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
 [![Evidently](https://img.shields.io/badge/Evidently-0.6.0-0B3A53?style=for-the-badge)](https://www.evidentlyai.com/)
 [![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
-[![Status](https://img.shields.io/badge/Status-Produ%C3%A7%C3%A3o%20Candidata-2E7D32?style=for-the-badge)](#)
+[![Status](https://img.shields.io/badge/Status-Produ%C3%A7%C3%A3o%20Candidata-2E7D32?style=for-the-badge)](https://passos-magicos-datathon.onrender.com/docs#/)
 
 # Datathon Tech5 | Sistema de Classificação de Risco de Defasagem Escolar
 
