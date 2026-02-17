@@ -46,9 +46,9 @@ COPY app/main.py .
 # Initial model artifact (required for first API boot)
 COPY app/models/ ./models/
 
-# Training data is intentionally not baked into the image.
-# Mount a volume/persistent disk in /app/data when retraining is required.
+# Embedded dataset for Render Free
 RUN mkdir -p /app/data
+COPY app/data/PEDE_PASSOS_DATASET_FIAP.xlsx /app/data/PEDE_PASSOS_DATASET_FIAP.xlsx
 
 # Permissions
 RUN chown -R appuser:appuser /app
