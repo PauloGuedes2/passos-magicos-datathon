@@ -1,0 +1,30 @@
+services:
+  passos-magicos-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: passos-magicos-container
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - PYTHONPATH=/app
+      - DATA_DIR=/app/data
+      - RATE_LIMIT_PER_MINUTE=60
+      - MAX_REQUEST_BYTES=1048576
+    volumes:
+      # Persist trained model artifacts
+      - ./app/models:/app/models
+      # Persist production prediction logs
+      - ./logs:/app/logs
+      # Persist monitoring artifacts
+      - ./app/monitoring:/app/monitoring
+      # Provide training data to enable retraining inside container
+      - ./app/data:/app/data:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health').read()"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s

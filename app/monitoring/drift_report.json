@@ -1,0 +1,6888 @@
+{
+  "timestamp": "2026-02-17T16:55:08.137028",
+  "psi_metrics": [
+    {
+      "feature": "IDADE",
+      "psi": 0.0455,
+      "reference_mean": 12.974,
+      "current_mean": 13.0,
+      "delta_mean": 0.026,
+      "direction": "increase",
+      "drift_flag": false,
+      "reference_distribution": [
+        0.16436,
+        0.110727,
+        0.115052,
+        0.128028,
+        0.0891,
+        0.168685,
+        0.069204,
+        0.073529,
+        0.081315
+      ],
+      "current_distribution": [
+        0.151376,
+        0.110092,
+        0.151376,
+        0.123853,
+        0.077982,
+        0.169725,
+        0.045872,
+        0.050459,
+        0.119266
+      ],
+      "bins": [
+        7.0,
+        9.0,
+        10.0,
+        11.0,
+        12.0,
+        13.0,
+        15.0,
+        16.0,
+        18.0,
+        25.0
+      ]
+    },
+    {
+      "feature": "TEMPO_NA_ONG",
+      "psi": 0.0275,
+      "reference_mean": 1.4801,
+      "current_mean": 1.6773,
+      "delta_mean": 0.1972,
+      "direction": "increase",
+      "drift_flag": false,
+      "reference_distribution": [
+        0.516436,
+        0.185121,
+        0.298443
+      ],
+      "current_distribution": [
+        0.436364,
+        0.2,
+        0.363636
+      ],
+      "bins": [
+        0.0,
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    {
+      "feature": "INDE_ANTERIOR",
+      "psi": 0.0262,
+      "reference_mean": 4.4701,
+      "current_mean": 4.6571,
+      "delta_mean": 0.187,
+      "direction": "increase",
+      "drift_flag": false,
+      "reference_distribution": [
+        0.400519,
+        0.099481,
+        0.100346,
+        0.099481,
+        0.100346,
+        0.099481,
+        0.100346
+      ],
+      "current_distribution": [
+        0.374429,
+        0.100457,
+        0.100457,
+        0.13242,
+        0.109589,
+        0.114155,
+        0.068493
+      ],
+      "bins": [
+        0.0,
+        3.032,
+        6.582029,
+        7.116633,
+        7.553008,
+        7.838867,
+        8.292654,
+        9.3712
+      ]
+    },
+    {
+      "feature": "IAA_ANTERIOR",
+      "psi": 0.0161,
+      "reference_mean": 4.2946,
+      "current_mean": 4.2582,
+      "delta_mean": -0.0365,
+      "direction": "decrease_or_stable",
+      "drift_flag": false,
+      "reference_distribution": [
+        0.608997,
+        0.101211,
+        0.110727,
+        0.094291,
+        0.084775
+      ],
+      "current_distribution": [
+        0.604545,
+        0.131818,
+        0.118182,
+        0.072727,
+        0.072727
+      ],
+      "bins": [
+        0.0,
+        7.9,
+        8.5,
+        9.0,
+        9.5,
+        10.0
+      ]
+    },
+    {
+      "feature": "IEG_ANTERIOR",
+      "psi": 0.0096,
+      "reference_mean": 5.3335,
+      "current_mean": 5.4941,
+      "delta_mean": 0.1606,
+      "direction": "increase",
+      "drift_flag": false,
+      "reference_distribution": [
+        0.400519,
+        0.104671,
+        0.099481,
+        0.102076,
+        0.128028,
+        0.066609,
+        0.098616
+      ],
+      "current_distribution": [
+        0.377273,
+        0.122727,
+        0.090909,
+        0.118182,
+        0.122727,
+        0.059091,
+        0.109091
+      ],
+      "bins": [
+        0.0,
+        4.2,
+        7.9,
+        8.6,
+        9.1,
+        9.5,
+        9.7,
+        10.0
+      ]
+    }
+  ],
+  "psi_alerts": [],
+  "strategic_monitoring": {
+    "reference_high_risk_rate_pct": 63.15,
+    "current_high_risk_rate_pct": 62.73,
+    "delta_high_risk_pp": -0.42,
+    "high_risk_change_pct": -0.67,
+    "significant_shift_alert": false,
+    "alert_message": "Taxa de ALTO_RISCO dentro da variacao esperada.",
+    "threshold_pct": 20.0
+  },
+  "psi_by_feature": {
+    "IDADE": {
+      "psi": 0.0455,
+      "reference_distribution": [
+        0.16436,
+        0.110727,
+        0.115052,
+        0.128028,
+        0.0891,
+        0.168685,
+        0.069204,
+        0.073529,
+        0.081315
+      ],
+      "current_distribution": [
+        0.151376,
+        0.110092,
+        0.151376,
+        0.123853,
+        0.077982,
+        0.169725,
+        0.045872,
+        0.050459,
+        0.119266
+      ],
+      "bins": [
+        7.0,
+        9.0,
+        10.0,
+        11.0,
+        12.0,
+        13.0,
+        15.0,
+        16.0,
+        18.0,
+        25.0
+      ]
+    },
+    "TEMPO_NA_ONG": {
+      "psi": 0.0275,
+      "reference_distribution": [
+        0.516436,
+        0.185121,
+        0.298443
+      ],
+      "current_distribution": [
+        0.436364,
+        0.2,
+        0.363636
+      ],
+      "bins": [
+        0.0,
+        1.0,
+        2.0,
+        3.0
+      ]
+    },
+    "INDE_ANTERIOR": {
+      "psi": 0.0262,
+      "reference_distribution": [
+        0.400519,
+        0.099481,
+        0.100346,
+        0.099481,
+        0.100346,
+        0.099481,
+        0.100346
+      ],
+      "current_distribution": [
+        0.374429,
+        0.100457,
+        0.100457,
+        0.13242,
+        0.109589,
+        0.114155,
+        0.068493
+      ],
+      "bins": [
+        0.0,
+        3.032,
+        6.582029,
+        7.116633,
+        7.553008,
+        7.838867,
+        8.292654,
+        9.3712
+      ]
+    },
+    "IAA_ANTERIOR": {
+      "psi": 0.0161,
+      "reference_distribution": [
+        0.608997,
+        0.101211,
+        0.110727,
+        0.094291,
+        0.084775
+      ],
+      "current_distribution": [
+        0.604545,
+        0.131818,
+        0.118182,
+        0.072727,
+        0.072727
+      ],
+      "bins": [
+        0.0,
+        7.9,
+        8.5,
+        9.0,
+        9.5,
+        10.0
+      ]
+    },
+    "IEG_ANTERIOR": {
+      "psi": 0.0096,
+      "reference_distribution": [
+        0.400519,
+        0.104671,
+        0.099481,
+        0.102076,
+        0.128028,
+        0.066609,
+        0.098616
+      ],
+      "current_distribution": [
+        0.377273,
+        0.122727,
+        0.090909,
+        0.118182,
+        0.122727,
+        0.059091,
+        0.109091
+      ],
+      "bins": [
+        0.0,
+        4.2,
+        7.9,
+        8.6,
+        9.1,
+        9.5,
+        9.7,
+        10.0
+      ]
+    }
+  },
+  "top_drift_features": [
+    "IDADE",
+    "TEMPO_NA_ONG",
+    "INDE_ANTERIOR",
+    "IAA_ANTERIOR",
+    "IEG_ANTERIOR"
+  ],
+  "drift_status": "Estavel",
+  "drift_history": [
+    {
+      "timestamp": "2026-02-16T21:30:02.822915",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T21:38:11.920814",
+      "high_risk_rate": 51.43,
+      "avg_psi": 0.1066
+    },
+    {
+      "timestamp": "2026-02-16T21:38:18.291806",
+      "high_risk_rate": 51.43,
+      "avg_psi": 0.1066
+    },
+    {
+      "timestamp": "2026-02-16T21:42:05.130534",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:00.998137",
+      "high_risk_rate": 80.0,
+      "avg_psi": 2.8808
+    },
+    {
+      "timestamp": "2026-02-16T21:43:01.642929",
+      "high_risk_rate": 80.0,
+      "avg_psi": 2.8808
+    },
+    {
+      "timestamp": "2026-02-16T21:43:04.321774",
+      "high_risk_rate": 83.33,
+      "avg_psi": 2.285
+    },
+    {
+      "timestamp": "2026-02-16T21:43:04.936339",
+      "high_risk_rate": 83.33,
+      "avg_psi": 2.285
+    },
+    {
+      "timestamp": "2026-02-16T21:43:07.651638",
+      "high_risk_rate": 85.71,
+      "avg_psi": 2.2328
+    },
+    {
+      "timestamp": "2026-02-16T21:43:08.672150",
+      "high_risk_rate": 85.71,
+      "avg_psi": 2.2328
+    },
+    {
+      "timestamp": "2026-02-16T21:43:11.431715",
+      "high_risk_rate": 75.0,
+      "avg_psi": 2.2898
+    },
+    {
+      "timestamp": "2026-02-16T21:43:12.207460",
+      "high_risk_rate": 75.0,
+      "avg_psi": 2.2898
+    },
+    {
+      "timestamp": "2026-02-16T21:43:14.881691",
+      "high_risk_rate": 66.67,
+      "avg_psi": 1.8738
+    },
+    {
+      "timestamp": "2026-02-16T21:43:15.487981",
+      "high_risk_rate": 66.67,
+      "avg_psi": 1.8738
+    },
+    {
+      "timestamp": "2026-02-16T21:43:18.129846",
+      "high_risk_rate": 70.0,
+      "avg_psi": 1.8321
+    },
+    {
+      "timestamp": "2026-02-16T21:43:18.698886",
+      "high_risk_rate": 70.0,
+      "avg_psi": 1.8321
+    },
+    {
+      "timestamp": "2026-02-16T21:43:21.383485",
+      "high_risk_rate": 72.73,
+      "avg_psi": 1.6115
+    },
+    {
+      "timestamp": "2026-02-16T21:43:21.953912",
+      "high_risk_rate": 72.73,
+      "avg_psi": 1.6115
+    },
+    {
+      "timestamp": "2026-02-16T21:43:24.592147",
+      "high_risk_rate": 66.67,
+      "avg_psi": 1.3858
+    },
+    {
+      "timestamp": "2026-02-16T21:43:25.154433",
+      "high_risk_rate": 66.67,
+      "avg_psi": 1.3858
+    },
+    {
+      "timestamp": "2026-02-16T21:43:27.896516",
+      "high_risk_rate": 69.23,
+      "avg_psi": 1.1719
+    },
+    {
+      "timestamp": "2026-02-16T21:43:28.553852",
+      "high_risk_rate": 69.23,
+      "avg_psi": 1.1719
+    },
+    {
+      "timestamp": "2026-02-16T21:43:31.174756",
+      "high_risk_rate": 71.43,
+      "avg_psi": 1.2188
+    },
+    {
+      "timestamp": "2026-02-16T21:43:31.691195",
+      "high_risk_rate": 71.43,
+      "avg_psi": 1.2188
+    },
+    {
+      "timestamp": "2026-02-16T21:43:34.489594",
+      "high_risk_rate": 73.33,
+      "avg_psi": 1.2534
+    },
+    {
+      "timestamp": "2026-02-16T21:43:35.195218",
+      "high_risk_rate": 73.33,
+      "avg_psi": 1.2534
+    },
+    {
+      "timestamp": "2026-02-16T21:43:38.020248",
+      "high_risk_rate": 68.75,
+      "avg_psi": 1.2168
+    },
+    {
+      "timestamp": "2026-02-16T21:43:38.757591",
+      "high_risk_rate": 68.75,
+      "avg_psi": 1.2168
+    },
+    {
+      "timestamp": "2026-02-16T21:43:41.614895",
+      "high_risk_rate": 70.59,
+      "avg_psi": 1.2481
+    },
+    {
+      "timestamp": "2026-02-16T21:43:42.676412",
+      "high_risk_rate": 70.59,
+      "avg_psi": 1.2481
+    },
+    {
+      "timestamp": "2026-02-16T21:43:45.425742",
+      "high_risk_rate": 66.67,
+      "avg_psi": 1.0544
+    },
+    {
+      "timestamp": "2026-02-16T21:43:46.087213",
+      "high_risk_rate": 66.67,
+      "avg_psi": 1.0544
+    },
+    {
+      "timestamp": "2026-02-16T21:43:48.946348",
+      "high_risk_rate": 63.16,
+      "avg_psi": 1.0467
+    },
+    {
+      "timestamp": "2026-02-16T21:43:49.621975",
+      "high_risk_rate": 63.16,
+      "avg_psi": 1.0467
+    },
+    {
+      "timestamp": "2026-02-16T21:43:52.479027",
+      "high_risk_rate": 65.0,
+      "avg_psi": 0.5899
+    },
+    {
+      "timestamp": "2026-02-16T21:43:53.051592",
+      "high_risk_rate": 65.0,
+      "avg_psi": 0.5899
+    },
+    {
+      "timestamp": "2026-02-16T21:43:55.732668",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.5832
+    },
+    {
+      "timestamp": "2026-02-16T21:43:56.360636",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.5832
+    },
+    {
+      "timestamp": "2026-02-16T21:43:59.061155",
+      "high_risk_rate": 68.18,
+      "avg_psi": 0.5807
+    },
+    {
+      "timestamp": "2026-02-16T21:43:59.608659",
+      "high_risk_rate": 68.18,
+      "avg_psi": 0.5807
+    },
+    {
+      "timestamp": "2026-02-16T21:44:02.242967",
+      "high_risk_rate": 69.57,
+      "avg_psi": 0.5724
+    },
+    {
+      "timestamp": "2026-02-16T21:44:02.762587",
+      "high_risk_rate": 69.57,
+      "avg_psi": 0.5724
+    },
+    {
+      "timestamp": "2026-02-16T21:44:05.385888",
+      "high_risk_rate": 70.83,
+      "avg_psi": 0.5751
+    },
+    {
+      "timestamp": "2026-02-16T21:44:05.926003",
+      "high_risk_rate": 70.83,
+      "avg_psi": 0.5751
+    },
+    {
+      "timestamp": "2026-02-16T21:44:08.770244",
+      "high_risk_rate": 72.0,
+      "avg_psi": 0.5832
+    },
+    {
+      "timestamp": "2026-02-16T21:44:09.506890",
+      "high_risk_rate": 72.0,
+      "avg_psi": 0.5832
+    },
+    {
+      "timestamp": "2026-02-16T21:44:12.200089",
+      "high_risk_rate": 69.23,
+      "avg_psi": 0.5798
+    },
+    {
+      "timestamp": "2026-02-16T21:44:12.779397",
+      "high_risk_rate": 69.23,
+      "avg_psi": 0.5798
+    },
+    {
+      "timestamp": "2026-02-16T21:44:15.411714",
+      "high_risk_rate": 70.37,
+      "avg_psi": 0.545
+    },
+    {
+      "timestamp": "2026-02-16T21:44:15.940546",
+      "high_risk_rate": 70.37,
+      "avg_psi": 0.545
+    },
+    {
+      "timestamp": "2026-02-16T21:44:18.546442",
+      "high_risk_rate": 71.43,
+      "avg_psi": 0.5317
+    },
+    {
+      "timestamp": "2026-02-16T21:44:19.163357",
+      "high_risk_rate": 71.43,
+      "avg_psi": 0.5317
+    },
+    {
+      "timestamp": "2026-02-16T21:44:21.899386",
+      "high_risk_rate": 68.97,
+      "avg_psi": 0.3271
+    },
+    {
+      "timestamp": "2026-02-16T21:44:22.829252",
+      "high_risk_rate": 68.97,
+      "avg_psi": 0.3271
+    },
+    {
+      "timestamp": "2026-02-16T21:44:25.562314",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2947
+    },
+    {
+      "timestamp": "2026-02-16T21:44:26.168917",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2947
+    },
+    {
+      "timestamp": "2026-02-16T21:44:28.827754",
+      "high_risk_rate": 67.74,
+      "avg_psi": 0.2949
+    },
+    {
+      "timestamp": "2026-02-16T21:44:29.414901",
+      "high_risk_rate": 67.74,
+      "avg_psi": 0.2949
+    },
+    {
+      "timestamp": "2026-02-16T21:44:32.023930",
+      "high_risk_rate": 68.75,
+      "avg_psi": 0.2917
+    },
+    {
+      "timestamp": "2026-02-16T21:44:32.721931",
+      "high_risk_rate": 68.75,
+      "avg_psi": 0.2917
+    },
+    {
+      "timestamp": "2026-02-16T21:44:35.342870",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2868
+    },
+    {
+      "timestamp": "2026-02-16T21:44:35.889253",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2868
+    },
+    {
+      "timestamp": "2026-02-16T21:44:38.582308",
+      "high_risk_rate": 67.65,
+      "avg_psi": 0.2958
+    },
+    {
+      "timestamp": "2026-02-16T21:44:39.281996",
+      "high_risk_rate": 67.65,
+      "avg_psi": 0.2958
+    },
+    {
+      "timestamp": "2026-02-16T21:44:41.909777",
+      "high_risk_rate": 65.71,
+      "avg_psi": 0.2907
+    },
+    {
+      "timestamp": "2026-02-16T21:44:42.495804",
+      "high_risk_rate": 65.71,
+      "avg_psi": 0.2907
+    },
+    {
+      "timestamp": "2026-02-16T21:44:45.180139",
+      "high_risk_rate": 63.89,
+      "avg_psi": 0.2726
+    },
+    {
+      "timestamp": "2026-02-16T21:44:45.696405",
+      "high_risk_rate": 63.89,
+      "avg_psi": 0.2726
+    },
+    {
+      "timestamp": "2026-02-16T21:44:48.414841",
+      "high_risk_rate": 64.86,
+      "avg_psi": 0.2792
+    },
+    {
+      "timestamp": "2026-02-16T21:44:49.143969",
+      "high_risk_rate": 64.86,
+      "avg_psi": 0.2792
+    },
+    {
+      "timestamp": "2026-02-16T21:44:51.981002",
+      "high_risk_rate": 65.79,
+      "avg_psi": 0.2723
+    },
+    {
+      "timestamp": "2026-02-16T21:44:53.115569",
+      "high_risk_rate": 65.79,
+      "avg_psi": 0.2723
+    },
+    {
+      "timestamp": "2026-02-16T21:44:56.027988",
+      "high_risk_rate": 64.1,
+      "avg_psi": 0.2715
+    },
+    {
+      "timestamp": "2026-02-16T21:44:56.689267",
+      "high_risk_rate": 64.1,
+      "avg_psi": 0.2715
+    },
+    {
+      "timestamp": "2026-02-16T21:44:59.565822",
+      "high_risk_rate": 65.0,
+      "avg_psi": 0.2629
+    },
+    {
+      "timestamp": "2026-02-16T21:45:00.189329",
+      "high_risk_rate": 65.0,
+      "avg_psi": 0.2629
+    },
+    {
+      "timestamp": "2026-02-16T21:45:02.876726",
+      "high_risk_rate": 63.41,
+      "avg_psi": 0.2494
+    },
+    {
+      "timestamp": "2026-02-16T21:45:03.423961",
+      "high_risk_rate": 63.41,
+      "avg_psi": 0.2494
+    },
+    {
+      "timestamp": "2026-02-16T21:45:06.129174",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.2462
+    },
+    {
+      "timestamp": "2026-02-16T21:45:06.792768",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.2462
+    },
+    {
+      "timestamp": "2026-02-16T21:45:10.082777",
+      "high_risk_rate": 65.12,
+      "avg_psi": 0.2467
+    },
+    {
+      "timestamp": "2026-02-16T21:45:10.695649",
+      "high_risk_rate": 65.12,
+      "avg_psi": 0.2467
+    },
+    {
+      "timestamp": "2026-02-16T21:45:13.393181",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.2449
+    },
+    {
+      "timestamp": "2026-02-16T21:45:14.023600",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.2449
+    },
+    {
+      "timestamp": "2026-02-16T21:45:16.650975",
+      "high_risk_rate": 64.44,
+      "avg_psi": 0.2466
+    },
+    {
+      "timestamp": "2026-02-16T21:45:17.190730",
+      "high_risk_rate": 64.44,
+      "avg_psi": 0.2466
+    },
+    {
+      "timestamp": "2026-02-16T21:45:19.955103",
+      "high_risk_rate": 65.22,
+      "avg_psi": 0.2301
+    },
+    {
+      "timestamp": "2026-02-16T21:45:20.533483",
+      "high_risk_rate": 65.22,
+      "avg_psi": 0.2301
+    },
+    {
+      "timestamp": "2026-02-16T21:45:23.338022",
+      "high_risk_rate": 65.96,
+      "avg_psi": 0.2187
+    },
+    {
+      "timestamp": "2026-02-16T21:45:24.001294",
+      "high_risk_rate": 65.96,
+      "avg_psi": 0.2187
+    },
+    {
+      "timestamp": "2026-02-16T21:45:26.677636",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2163
+    },
+    {
+      "timestamp": "2026-02-16T21:45:27.325346",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2163
+    },
+    {
+      "timestamp": "2026-02-16T21:45:30.213122",
+      "high_risk_rate": 67.35,
+      "avg_psi": 0.2176
+    },
+    {
+      "timestamp": "2026-02-16T21:45:31.225357",
+      "high_risk_rate": 67.35,
+      "avg_psi": 0.2176
+    },
+    {
+      "timestamp": "2026-02-16T21:45:34.487971",
+      "high_risk_rate": 68.0,
+      "avg_psi": 0.2183
+    },
+    {
+      "timestamp": "2026-02-16T21:45:35.515856",
+      "high_risk_rate": 68.0,
+      "avg_psi": 0.2183
+    },
+    {
+      "timestamp": "2026-02-16T21:45:38.807540",
+      "high_risk_rate": 68.63,
+      "avg_psi": 0.2207
+    },
+    {
+      "timestamp": "2026-02-16T21:45:39.968304",
+      "high_risk_rate": 68.63,
+      "avg_psi": 0.2207
+    },
+    {
+      "timestamp": "2026-02-16T21:45:43.129114",
+      "high_risk_rate": 69.23,
+      "avg_psi": 0.2242
+    },
+    {
+      "timestamp": "2026-02-16T21:45:44.272552",
+      "high_risk_rate": 69.23,
+      "avg_psi": 0.2242
+    },
+    {
+      "timestamp": "2026-02-16T21:45:47.442368",
+      "high_risk_rate": 69.81,
+      "avg_psi": 0.2269
+    },
+    {
+      "timestamp": "2026-02-16T21:45:48.506999",
+      "high_risk_rate": 69.81,
+      "avg_psi": 0.2269
+    },
+    {
+      "timestamp": "2026-02-16T21:45:51.717995",
+      "high_risk_rate": 68.52,
+      "avg_psi": 0.2218
+    },
+    {
+      "timestamp": "2026-02-16T21:45:53.704840",
+      "high_risk_rate": 68.52,
+      "avg_psi": 0.2218
+    },
+    {
+      "timestamp": "2026-02-16T21:45:56.910031",
+      "high_risk_rate": 67.27,
+      "avg_psi": 0.2112
+    },
+    {
+      "timestamp": "2026-02-16T21:45:57.956684",
+      "high_risk_rate": 67.27,
+      "avg_psi": 0.2112
+    },
+    {
+      "timestamp": "2026-02-16T21:46:01.048313",
+      "high_risk_rate": 66.07,
+      "avg_psi": 0.2162
+    },
+    {
+      "timestamp": "2026-02-16T21:46:02.218450",
+      "high_risk_rate": 66.07,
+      "avg_psi": 0.2162
+    },
+    {
+      "timestamp": "2026-02-16T21:46:05.378821",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2078
+    },
+    {
+      "timestamp": "2026-02-16T21:46:06.426502",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2078
+    },
+    {
+      "timestamp": "2026-02-16T21:46:09.822633",
+      "high_risk_rate": 67.24,
+      "avg_psi": 0.2117
+    },
+    {
+      "timestamp": "2026-02-16T21:46:10.875283",
+      "high_risk_rate": 67.24,
+      "avg_psi": 0.2117
+    },
+    {
+      "timestamp": "2026-02-16T21:46:14.036551",
+      "high_risk_rate": 67.8,
+      "avg_psi": 0.2095
+    },
+    {
+      "timestamp": "2026-02-16T21:46:15.105265",
+      "high_risk_rate": 67.8,
+      "avg_psi": 0.2095
+    },
+    {
+      "timestamp": "2026-02-16T21:46:18.412805",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2122
+    },
+    {
+      "timestamp": "2026-02-16T21:46:19.517001",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2122
+    },
+    {
+      "timestamp": "2026-02-16T21:46:23.645653",
+      "high_risk_rate": 65.57,
+      "avg_psi": 0.2119
+    },
+    {
+      "timestamp": "2026-02-16T21:46:23.981285",
+      "high_risk_rate": 65.57,
+      "avg_psi": 0.2119
+    },
+    {
+      "timestamp": "2026-02-16T21:46:24.973782",
+      "high_risk_rate": 65.57,
+      "avg_psi": 0.2119
+    },
+    {
+      "timestamp": "2026-02-16T21:46:28.426109",
+      "high_risk_rate": 66.13,
+      "avg_psi": 0.2058
+    },
+    {
+      "timestamp": "2026-02-16T21:46:29.433796",
+      "high_risk_rate": 66.13,
+      "avg_psi": 0.2058
+    },
+    {
+      "timestamp": "2026-02-16T21:46:32.605208",
+      "high_risk_rate": 65.08,
+      "avg_psi": 0.2093
+    },
+    {
+      "timestamp": "2026-02-16T21:46:33.735579",
+      "high_risk_rate": 65.08,
+      "avg_psi": 0.2093
+    },
+    {
+      "timestamp": "2026-02-16T21:46:36.897112",
+      "high_risk_rate": 64.06,
+      "avg_psi": 0.2027
+    },
+    {
+      "timestamp": "2026-02-16T21:46:38.436183",
+      "high_risk_rate": 64.06,
+      "avg_psi": 0.2027
+    },
+    {
+      "timestamp": "2026-02-16T21:46:41.790818",
+      "high_risk_rate": 64.62,
+      "avg_psi": 0.2069
+    },
+    {
+      "timestamp": "2026-02-16T21:46:42.833202",
+      "high_risk_rate": 64.62,
+      "avg_psi": 0.2069
+    },
+    {
+      "timestamp": "2026-02-16T21:46:45.954739",
+      "high_risk_rate": 65.15,
+      "avg_psi": 0.2099
+    },
+    {
+      "timestamp": "2026-02-16T21:46:46.999959",
+      "high_risk_rate": 65.15,
+      "avg_psi": 0.2099
+    },
+    {
+      "timestamp": "2026-02-16T21:46:50.148718",
+      "high_risk_rate": 65.67,
+      "avg_psi": 0.2057
+    },
+    {
+      "timestamp": "2026-02-16T21:46:51.288966",
+      "high_risk_rate": 65.67,
+      "avg_psi": 0.2057
+    },
+    {
+      "timestamp": "2026-02-16T21:46:54.606194",
+      "high_risk_rate": 66.18,
+      "avg_psi": 0.2042
+    },
+    {
+      "timestamp": "2026-02-16T21:46:55.654325",
+      "high_risk_rate": 66.18,
+      "avg_psi": 0.2042
+    },
+    {
+      "timestamp": "2026-02-16T21:46:58.808157",
+      "high_risk_rate": 65.22,
+      "avg_psi": 0.2
+    },
+    {
+      "timestamp": "2026-02-16T21:46:59.813702",
+      "high_risk_rate": 65.22,
+      "avg_psi": 0.2
+    },
+    {
+      "timestamp": "2026-02-16T21:47:02.867581",
+      "high_risk_rate": 65.71,
+      "avg_psi": 0.205
+    },
+    {
+      "timestamp": "2026-02-16T21:47:03.898091",
+      "high_risk_rate": 65.71,
+      "avg_psi": 0.205
+    },
+    {
+      "timestamp": "2026-02-16T21:47:07.020932",
+      "high_risk_rate": 66.2,
+      "avg_psi": 0.2051
+    },
+    {
+      "timestamp": "2026-02-16T21:47:08.937984",
+      "high_risk_rate": 66.2,
+      "avg_psi": 0.2051
+    },
+    {
+      "timestamp": "2026-02-16T21:47:12.269542",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2066
+    },
+    {
+      "timestamp": "2026-02-16T21:47:13.304916",
+      "high_risk_rate": 66.67,
+      "avg_psi": 0.2066
+    },
+    {
+      "timestamp": "2026-02-16T21:47:16.432880",
+      "high_risk_rate": 67.12,
+      "avg_psi": 0.2088
+    },
+    {
+      "timestamp": "2026-02-16T21:47:17.454879",
+      "high_risk_rate": 67.12,
+      "avg_psi": 0.2088
+    },
+    {
+      "timestamp": "2026-02-16T21:47:20.582589",
+      "high_risk_rate": 66.22,
+      "avg_psi": 0.2082
+    },
+    {
+      "timestamp": "2026-02-16T21:47:21.620090",
+      "high_risk_rate": 66.22,
+      "avg_psi": 0.2082
+    },
+    {
+      "timestamp": "2026-02-16T21:47:24.907360",
+      "high_risk_rate": 65.33,
+      "avg_psi": 0.2108
+    },
+    {
+      "timestamp": "2026-02-16T21:47:26.092184",
+      "high_risk_rate": 65.33,
+      "avg_psi": 0.2108
+    },
+    {
+      "timestamp": "2026-02-16T21:47:29.237682",
+      "high_risk_rate": 64.47,
+      "avg_psi": 0.2137
+    },
+    {
+      "timestamp": "2026-02-16T21:47:30.234078",
+      "high_risk_rate": 64.47,
+      "avg_psi": 0.2137
+    },
+    {
+      "timestamp": "2026-02-16T21:47:33.325871",
+      "high_risk_rate": 64.94,
+      "avg_psi": 0.2091
+    },
+    {
+      "timestamp": "2026-02-16T21:47:34.346116",
+      "high_risk_rate": 64.94,
+      "avg_psi": 0.2091
+    },
+    {
+      "timestamp": "2026-02-16T21:47:38.012704",
+      "high_risk_rate": 64.1,
+      "avg_psi": 0.2049
+    },
+    {
+      "timestamp": "2026-02-16T21:47:39.272817",
+      "high_risk_rate": 64.1,
+      "avg_psi": 0.2049
+    },
+    {
+      "timestamp": "2026-02-16T21:47:42.581109",
+      "high_risk_rate": 63.29,
+      "avg_psi": 0.0709
+    },
+    {
+      "timestamp": "2026-02-16T21:47:43.612936",
+      "high_risk_rate": 63.29,
+      "avg_psi": 0.0709
+    },
+    {
+      "timestamp": "2026-02-16T21:47:46.736776",
+      "high_risk_rate": 63.75,
+      "avg_psi": 0.0692
+    },
+    {
+      "timestamp": "2026-02-16T21:47:47.778726",
+      "high_risk_rate": 63.75,
+      "avg_psi": 0.0692
+    },
+    {
+      "timestamp": "2026-02-16T21:47:50.959021",
+      "high_risk_rate": 62.96,
+      "avg_psi": 0.0637
+    },
+    {
+      "timestamp": "2026-02-16T21:47:51.962889",
+      "high_risk_rate": 62.96,
+      "avg_psi": 0.0637
+    },
+    {
+      "timestamp": "2026-02-16T21:47:55.868529",
+      "high_risk_rate": 62.2,
+      "avg_psi": 0.064
+    },
+    {
+      "timestamp": "2026-02-16T21:47:56.995148",
+      "high_risk_rate": 62.2,
+      "avg_psi": 0.064
+    },
+    {
+      "timestamp": "2026-02-16T21:48:00.195717",
+      "high_risk_rate": 62.65,
+      "avg_psi": 0.0643
+    },
+    {
+      "timestamp": "2026-02-16T21:48:01.221114",
+      "high_risk_rate": 62.65,
+      "avg_psi": 0.0643
+    },
+    {
+      "timestamp": "2026-02-16T21:48:04.321237",
+      "high_risk_rate": 61.9,
+      "avg_psi": 0.0658
+    },
+    {
+      "timestamp": "2026-02-16T21:48:05.301140",
+      "high_risk_rate": 61.9,
+      "avg_psi": 0.0658
+    },
+    {
+      "timestamp": "2026-02-16T21:48:08.428932",
+      "high_risk_rate": 62.35,
+      "avg_psi": 0.0678
+    },
+    {
+      "timestamp": "2026-02-16T21:48:09.614319",
+      "high_risk_rate": 62.35,
+      "avg_psi": 0.0678
+    },
+    {
+      "timestamp": "2026-02-16T21:48:12.740256",
+      "high_risk_rate": 62.79,
+      "avg_psi": 0.072
+    },
+    {
+      "timestamp": "2026-02-16T21:48:13.779168",
+      "high_risk_rate": 62.79,
+      "avg_psi": 0.072
+    },
+    {
+      "timestamp": "2026-02-16T21:48:16.992184",
+      "high_risk_rate": 62.07,
+      "avg_psi": 0.0736
+    },
+    {
+      "timestamp": "2026-02-16T21:48:18.142502",
+      "high_risk_rate": 62.07,
+      "avg_psi": 0.0736
+    },
+    {
+      "timestamp": "2026-02-16T21:48:21.308097",
+      "high_risk_rate": 61.36,
+      "avg_psi": 0.07
+    },
+    {
+      "timestamp": "2026-02-16T21:48:22.378555",
+      "high_risk_rate": 61.36,
+      "avg_psi": 0.07
+    },
+    {
+      "timestamp": "2026-02-16T21:48:25.950195",
+      "high_risk_rate": 61.8,
+      "avg_psi": 0.0695
+    },
+    {
+      "timestamp": "2026-02-16T21:48:26.985044",
+      "high_risk_rate": 61.8,
+      "avg_psi": 0.0695
+    },
+    {
+      "timestamp": "2026-02-16T21:48:30.101034",
+      "high_risk_rate": 62.22,
+      "avg_psi": 0.0728
+    },
+    {
+      "timestamp": "2026-02-16T21:48:31.223315",
+      "high_risk_rate": 62.22,
+      "avg_psi": 0.0728
+    },
+    {
+      "timestamp": "2026-02-16T21:48:34.430545",
+      "high_risk_rate": 62.64,
+      "avg_psi": 0.0739
+    },
+    {
+      "timestamp": "2026-02-16T21:48:35.445567",
+      "high_risk_rate": 62.64,
+      "avg_psi": 0.0739
+    },
+    {
+      "timestamp": "2026-02-16T21:48:38.851292",
+      "high_risk_rate": 63.04,
+      "avg_psi": 0.0756
+    },
+    {
+      "timestamp": "2026-02-16T21:48:40.078985",
+      "high_risk_rate": 63.04,
+      "avg_psi": 0.0756
+    },
+    {
+      "timestamp": "2026-02-16T21:48:43.230638",
+      "high_risk_rate": 62.37,
+      "avg_psi": 0.075
+    },
+    {
+      "timestamp": "2026-02-16T21:48:44.258643",
+      "high_risk_rate": 62.37,
+      "avg_psi": 0.075
+    },
+    {
+      "timestamp": "2026-02-16T21:48:47.425028",
+      "high_risk_rate": 62.77,
+      "avg_psi": 0.072
+    },
+    {
+      "timestamp": "2026-02-16T21:48:48.549568",
+      "high_risk_rate": 62.77,
+      "avg_psi": 0.072
+    },
+    {
+      "timestamp": "2026-02-16T21:48:51.660128",
+      "high_risk_rate": 63.16,
+      "avg_psi": 0.0758
+    },
+    {
+      "timestamp": "2026-02-16T21:48:53.298435",
+      "high_risk_rate": 63.16,
+      "avg_psi": 0.0758
+    },
+    {
+      "timestamp": "2026-02-16T21:48:56.450040",
+      "high_risk_rate": 62.5,
+      "avg_psi": 0.0755
+    },
+    {
+      "timestamp": "2026-02-16T21:48:57.443568",
+      "high_risk_rate": 62.5,
+      "avg_psi": 0.0755
+    },
+    {
+      "timestamp": "2026-02-16T21:49:00.684187",
+      "high_risk_rate": 61.86,
+      "avg_psi": 0.0759
+    },
+    {
+      "timestamp": "2026-02-16T21:49:01.713625",
+      "high_risk_rate": 61.86,
+      "avg_psi": 0.0759
+    },
+    {
+      "timestamp": "2026-02-16T21:49:04.803851",
+      "high_risk_rate": 61.22,
+      "avg_psi": 0.0789
+    },
+    {
+      "timestamp": "2026-02-16T21:49:05.910119",
+      "high_risk_rate": 61.22,
+      "avg_psi": 0.0789
+    },
+    {
+      "timestamp": "2026-02-16T21:49:09.184916",
+      "high_risk_rate": 61.62,
+      "avg_psi": 0.0771
+    },
+    {
+      "timestamp": "2026-02-16T21:49:10.289265",
+      "high_risk_rate": 61.62,
+      "avg_psi": 0.0771
+    },
+    {
+      "timestamp": "2026-02-16T21:49:13.416646",
+      "high_risk_rate": 61.0,
+      "avg_psi": 0.0687
+    },
+    {
+      "timestamp": "2026-02-16T21:49:14.534302",
+      "high_risk_rate": 61.0,
+      "avg_psi": 0.0687
+    },
+    {
+      "timestamp": "2026-02-16T21:49:17.661140",
+      "high_risk_rate": 61.39,
+      "avg_psi": 0.0669
+    },
+    {
+      "timestamp": "2026-02-16T21:49:18.794795",
+      "high_risk_rate": 61.39,
+      "avg_psi": 0.0669
+    },
+    {
+      "timestamp": "2026-02-16T21:49:21.881658",
+      "high_risk_rate": 60.78,
+      "avg_psi": 0.0613
+    },
+    {
+      "timestamp": "2026-02-16T21:49:23.477207",
+      "high_risk_rate": 60.78,
+      "avg_psi": 0.0613
+    },
+    {
+      "timestamp": "2026-02-16T21:49:26.685777",
+      "high_risk_rate": 60.19,
+      "avg_psi": 0.0626
+    },
+    {
+      "timestamp": "2026-02-16T21:49:27.711571",
+      "high_risk_rate": 60.19,
+      "avg_psi": 0.0626
+    },
+    {
+      "timestamp": "2026-02-16T21:49:30.832979",
+      "high_risk_rate": 60.58,
+      "avg_psi": 0.0609
+    },
+    {
+      "timestamp": "2026-02-16T21:49:31.864865",
+      "high_risk_rate": 60.58,
+      "avg_psi": 0.0609
+    },
+    {
+      "timestamp": "2026-02-16T21:49:35.060950",
+      "high_risk_rate": 60.95,
+      "avg_psi": 0.0585
+    },
+    {
+      "timestamp": "2026-02-16T21:49:36.078281",
+      "high_risk_rate": 60.95,
+      "avg_psi": 0.0585
+    },
+    {
+      "timestamp": "2026-02-16T21:49:39.357861",
+      "high_risk_rate": 60.38,
+      "avg_psi": 0.056
+    },
+    {
+      "timestamp": "2026-02-16T21:49:40.549946",
+      "high_risk_rate": 60.38,
+      "avg_psi": 0.056
+    },
+    {
+      "timestamp": "2026-02-16T21:49:43.721782",
+      "high_risk_rate": 60.75,
+      "avg_psi": 0.048
+    },
+    {
+      "timestamp": "2026-02-16T21:49:44.749759",
+      "high_risk_rate": 60.75,
+      "avg_psi": 0.048
+    },
+    {
+      "timestamp": "2026-02-16T21:49:47.959355",
+      "high_risk_rate": 61.11,
+      "avg_psi": 0.0496
+    },
+    {
+      "timestamp": "2026-02-16T21:49:49.006075",
+      "high_risk_rate": 61.11,
+      "avg_psi": 0.0496
+    },
+    {
+      "timestamp": "2026-02-16T21:49:52.056375",
+      "high_risk_rate": 60.55,
+      "avg_psi": 0.0478
+    },
+    {
+      "timestamp": "2026-02-16T21:49:53.654906",
+      "high_risk_rate": 60.55,
+      "avg_psi": 0.0478
+    },
+    {
+      "timestamp": "2026-02-16T21:49:56.917823",
+      "high_risk_rate": 60.0,
+      "avg_psi": 0.045
+    },
+    {
+      "timestamp": "2026-02-16T21:49:57.966492",
+      "high_risk_rate": 60.0,
+      "avg_psi": 0.045
+    },
+    {
+      "timestamp": "2026-02-16T21:50:01.131333",
+      "high_risk_rate": 60.36,
+      "avg_psi": 0.0439
+    },
+    {
+      "timestamp": "2026-02-16T21:50:02.176731",
+      "high_risk_rate": 60.36,
+      "avg_psi": 0.0439
+    },
+    {
+      "timestamp": "2026-02-16T21:50:05.359101",
+      "high_risk_rate": 60.71,
+      "avg_psi": 0.0428
+    },
+    {
+      "timestamp": "2026-02-16T21:50:06.376531",
+      "high_risk_rate": 60.71,
+      "avg_psi": 0.0428
+    },
+    {
+      "timestamp": "2026-02-16T21:50:09.634048",
+      "high_risk_rate": 61.06,
+      "avg_psi": 0.0423
+    },
+    {
+      "timestamp": "2026-02-16T21:50:10.781379",
+      "high_risk_rate": 61.06,
+      "avg_psi": 0.0423
+    },
+    {
+      "timestamp": "2026-02-16T21:50:13.900601",
+      "high_risk_rate": 61.4,
+      "avg_psi": 0.0414
+    },
+    {
+      "timestamp": "2026-02-16T21:50:14.901029",
+      "high_risk_rate": 61.4,
+      "avg_psi": 0.0414
+    },
+    {
+      "timestamp": "2026-02-16T21:50:18.096770",
+      "high_risk_rate": 61.74,
+      "avg_psi": 0.0397
+    },
+    {
+      "timestamp": "2026-02-16T21:50:19.147907",
+      "high_risk_rate": 61.74,
+      "avg_psi": 0.0397
+    },
+    {
+      "timestamp": "2026-02-16T21:50:22.243801",
+      "high_risk_rate": 62.07,
+      "avg_psi": 0.0417
+    },
+    {
+      "timestamp": "2026-02-16T21:50:24.062907",
+      "high_risk_rate": 62.07,
+      "avg_psi": 0.0417
+    },
+    {
+      "timestamp": "2026-02-16T21:50:27.485915",
+      "high_risk_rate": 62.39,
+      "avg_psi": 0.0399
+    },
+    {
+      "timestamp": "2026-02-16T21:50:28.623705",
+      "high_risk_rate": 62.39,
+      "avg_psi": 0.0399
+    },
+    {
+      "timestamp": "2026-02-16T21:50:31.793178",
+      "high_risk_rate": 61.86,
+      "avg_psi": 0.0393
+    },
+    {
+      "timestamp": "2026-02-16T21:50:32.813515",
+      "high_risk_rate": 61.86,
+      "avg_psi": 0.0393
+    },
+    {
+      "timestamp": "2026-02-16T21:50:35.946116",
+      "high_risk_rate": 62.18,
+      "avg_psi": 0.0415
+    },
+    {
+      "timestamp": "2026-02-16T21:50:36.942407",
+      "high_risk_rate": 62.18,
+      "avg_psi": 0.0415
+    },
+    {
+      "timestamp": "2026-02-16T21:50:40.146118",
+      "high_risk_rate": 62.5,
+      "avg_psi": 0.0414
+    },
+    {
+      "timestamp": "2026-02-16T21:50:41.154505",
+      "high_risk_rate": 62.5,
+      "avg_psi": 0.0414
+    },
+    {
+      "timestamp": "2026-02-16T21:50:44.225161",
+      "high_risk_rate": 62.81,
+      "avg_psi": 0.0385
+    },
+    {
+      "timestamp": "2026-02-16T21:50:45.306580",
+      "high_risk_rate": 62.81,
+      "avg_psi": 0.0385
+    },
+    {
+      "timestamp": "2026-02-16T21:50:48.457892",
+      "high_risk_rate": 63.11,
+      "avg_psi": 0.0402
+    },
+    {
+      "timestamp": "2026-02-16T21:50:49.487423",
+      "high_risk_rate": 63.11,
+      "avg_psi": 0.0402
+    },
+    {
+      "timestamp": "2026-02-16T21:50:53.086420",
+      "high_risk_rate": 63.41,
+      "avg_psi": 0.037
+    },
+    {
+      "timestamp": "2026-02-16T21:50:54.364416",
+      "high_risk_rate": 63.41,
+      "avg_psi": 0.037
+    },
+    {
+      "timestamp": "2026-02-16T21:50:57.617299",
+      "high_risk_rate": 63.71,
+      "avg_psi": 0.0383
+    },
+    {
+      "timestamp": "2026-02-16T21:50:58.744878",
+      "high_risk_rate": 63.71,
+      "avg_psi": 0.0383
+    },
+    {
+      "timestamp": "2026-02-16T21:51:01.856186",
+      "high_risk_rate": 64.0,
+      "avg_psi": 0.0358
+    },
+    {
+      "timestamp": "2026-02-16T21:51:02.950720",
+      "high_risk_rate": 64.0,
+      "avg_psi": 0.0358
+    },
+    {
+      "timestamp": "2026-02-16T21:51:06.092010",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.036
+    },
+    {
+      "timestamp": "2026-02-16T21:51:07.112094",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.036
+    },
+    {
+      "timestamp": "2026-02-16T21:51:11.198112",
+      "high_risk_rate": 63.78,
+      "avg_psi": 0.0354
+    },
+    {
+      "timestamp": "2026-02-16T21:51:12.205833",
+      "high_risk_rate": 63.78,
+      "avg_psi": 0.0354
+    },
+    {
+      "timestamp": "2026-02-16T21:51:15.335539",
+      "high_risk_rate": 64.06,
+      "avg_psi": 0.036
+    },
+    {
+      "timestamp": "2026-02-16T21:51:16.468077",
+      "high_risk_rate": 64.06,
+      "avg_psi": 0.036
+    },
+    {
+      "timestamp": "2026-02-16T21:51:19.631776",
+      "high_risk_rate": 64.34,
+      "avg_psi": 0.0348
+    },
+    {
+      "timestamp": "2026-02-16T21:51:20.663723",
+      "high_risk_rate": 64.34,
+      "avg_psi": 0.0348
+    },
+    {
+      "timestamp": "2026-02-16T21:51:23.972473",
+      "high_risk_rate": 64.62,
+      "avg_psi": 0.0368
+    },
+    {
+      "timestamp": "2026-02-16T21:51:25.148139",
+      "high_risk_rate": 64.62,
+      "avg_psi": 0.0368
+    },
+    {
+      "timestamp": "2026-02-16T21:51:28.255812",
+      "high_risk_rate": 64.89,
+      "avg_psi": 0.0363
+    },
+    {
+      "timestamp": "2026-02-16T21:51:29.300668",
+      "high_risk_rate": 64.89,
+      "avg_psi": 0.0363
+    },
+    {
+      "timestamp": "2026-02-16T21:51:32.508743",
+      "high_risk_rate": 65.15,
+      "avg_psi": 0.0358
+    },
+    {
+      "timestamp": "2026-02-16T21:51:33.551860",
+      "high_risk_rate": 65.15,
+      "avg_psi": 0.0358
+    },
+    {
+      "timestamp": "2026-02-16T21:51:36.600849",
+      "high_risk_rate": 65.41,
+      "avg_psi": 0.0341
+    },
+    {
+      "timestamp": "2026-02-16T21:51:37.650184",
+      "high_risk_rate": 65.41,
+      "avg_psi": 0.0341
+    },
+    {
+      "timestamp": "2026-02-16T21:51:41.291250",
+      "high_risk_rate": 64.93,
+      "avg_psi": 0.0351
+    },
+    {
+      "timestamp": "2026-02-16T21:51:42.293621",
+      "high_risk_rate": 64.93,
+      "avg_psi": 0.0351
+    },
+    {
+      "timestamp": "2026-02-16T21:51:45.426191",
+      "high_risk_rate": 65.19,
+      "avg_psi": 0.036
+    },
+    {
+      "timestamp": "2026-02-16T21:51:46.424774",
+      "high_risk_rate": 65.19,
+      "avg_psi": 0.036
+    },
+    {
+      "timestamp": "2026-02-16T21:51:49.534235",
+      "high_risk_rate": 64.71,
+      "avg_psi": 0.0333
+    },
+    {
+      "timestamp": "2026-02-16T21:51:50.663876",
+      "high_risk_rate": 64.71,
+      "avg_psi": 0.0333
+    },
+    {
+      "timestamp": "2026-02-16T21:51:54.098284",
+      "high_risk_rate": 64.23,
+      "avg_psi": 0.0334
+    },
+    {
+      "timestamp": "2026-02-16T21:51:55.278003",
+      "high_risk_rate": 64.23,
+      "avg_psi": 0.0334
+    },
+    {
+      "timestamp": "2026-02-16T21:51:58.465822",
+      "high_risk_rate": 63.77,
+      "avg_psi": 0.0347
+    },
+    {
+      "timestamp": "2026-02-16T21:51:59.462193",
+      "high_risk_rate": 63.77,
+      "avg_psi": 0.0347
+    },
+    {
+      "timestamp": "2026-02-16T21:52:02.563880",
+      "high_risk_rate": 64.03,
+      "avg_psi": 0.0349
+    },
+    {
+      "timestamp": "2026-02-16T21:52:03.557026",
+      "high_risk_rate": 64.03,
+      "avg_psi": 0.0349
+    },
+    {
+      "timestamp": "2026-02-16T21:52:06.739027",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.0361
+    },
+    {
+      "timestamp": "2026-02-16T21:52:08.450251",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.0361
+    },
+    {
+      "timestamp": "2026-02-16T21:52:11.809850",
+      "high_risk_rate": 64.54,
+      "avg_psi": 0.0365
+    },
+    {
+      "timestamp": "2026-02-16T21:52:12.838564",
+      "high_risk_rate": 64.54,
+      "avg_psi": 0.0365
+    },
+    {
+      "timestamp": "2026-02-16T21:52:15.928621",
+      "high_risk_rate": 64.79,
+      "avg_psi": 0.0335
+    },
+    {
+      "timestamp": "2026-02-16T21:52:16.938668",
+      "high_risk_rate": 64.79,
+      "avg_psi": 0.0335
+    },
+    {
+      "timestamp": "2026-02-16T21:52:20.119370",
+      "high_risk_rate": 65.03,
+      "avg_psi": 0.0361
+    },
+    {
+      "timestamp": "2026-02-16T21:52:21.162333",
+      "high_risk_rate": 65.03,
+      "avg_psi": 0.0361
+    },
+    {
+      "timestamp": "2026-02-16T21:52:24.503611",
+      "high_risk_rate": 65.28,
+      "avg_psi": 0.0374
+    },
+    {
+      "timestamp": "2026-02-16T21:52:25.687925",
+      "high_risk_rate": 65.28,
+      "avg_psi": 0.0374
+    },
+    {
+      "timestamp": "2026-02-16T21:52:28.849350",
+      "high_risk_rate": 65.52,
+      "avg_psi": 0.0376
+    },
+    {
+      "timestamp": "2026-02-16T21:52:29.908202",
+      "high_risk_rate": 65.52,
+      "avg_psi": 0.0376
+    },
+    {
+      "timestamp": "2026-02-16T21:52:33.074049",
+      "high_risk_rate": 65.75,
+      "avg_psi": 0.034
+    },
+    {
+      "timestamp": "2026-02-16T21:52:34.131836",
+      "high_risk_rate": 65.75,
+      "avg_psi": 0.034
+    },
+    {
+      "timestamp": "2026-02-16T21:52:37.300106",
+      "high_risk_rate": 65.99,
+      "avg_psi": 0.0312
+    },
+    {
+      "timestamp": "2026-02-16T21:52:39.055857",
+      "high_risk_rate": 65.99,
+      "avg_psi": 0.0312
+    },
+    {
+      "timestamp": "2026-02-16T21:52:42.359011",
+      "high_risk_rate": 65.54,
+      "avg_psi": 0.0316
+    },
+    {
+      "timestamp": "2026-02-16T21:52:43.508970",
+      "high_risk_rate": 65.54,
+      "avg_psi": 0.0316
+    },
+    {
+      "timestamp": "2026-02-16T21:52:46.703040",
+      "high_risk_rate": 65.77,
+      "avg_psi": 0.0329
+    },
+    {
+      "timestamp": "2026-02-16T21:52:47.707866",
+      "high_risk_rate": 65.77,
+      "avg_psi": 0.0329
+    },
+    {
+      "timestamp": "2026-02-16T21:52:50.751452",
+      "high_risk_rate": 66.0,
+      "avg_psi": 0.0343
+    },
+    {
+      "timestamp": "2026-02-16T21:52:51.811935",
+      "high_risk_rate": 66.0,
+      "avg_psi": 0.0343
+    },
+    {
+      "timestamp": "2026-02-16T21:52:54.953852",
+      "high_risk_rate": 66.23,
+      "avg_psi": 0.0355
+    },
+    {
+      "timestamp": "2026-02-16T21:52:56.047973",
+      "high_risk_rate": 66.23,
+      "avg_psi": 0.0355
+    },
+    {
+      "timestamp": "2026-02-16T21:52:59.427635",
+      "high_risk_rate": 65.79,
+      "avg_psi": 0.035
+    },
+    {
+      "timestamp": "2026-02-16T21:53:00.572328",
+      "high_risk_rate": 65.79,
+      "avg_psi": 0.035
+    },
+    {
+      "timestamp": "2026-02-16T21:53:03.799843",
+      "high_risk_rate": 66.01,
+      "avg_psi": 0.0349
+    },
+    {
+      "timestamp": "2026-02-16T21:53:04.829905",
+      "high_risk_rate": 66.01,
+      "avg_psi": 0.0349
+    },
+    {
+      "timestamp": "2026-02-16T21:53:08.308041",
+      "high_risk_rate": 66.23,
+      "avg_psi": 0.0341
+    },
+    {
+      "timestamp": "2026-02-16T21:53:09.276482",
+      "high_risk_rate": 66.23,
+      "avg_psi": 0.0341
+    },
+    {
+      "timestamp": "2026-02-16T21:53:12.515695",
+      "high_risk_rate": 65.81,
+      "avg_psi": 0.0329
+    },
+    {
+      "timestamp": "2026-02-16T21:53:13.576737",
+      "high_risk_rate": 65.81,
+      "avg_psi": 0.0329
+    },
+    {
+      "timestamp": "2026-02-16T21:53:16.777962",
+      "high_risk_rate": 66.03,
+      "avg_psi": 0.0342
+    },
+    {
+      "timestamp": "2026-02-16T21:53:17.915313",
+      "high_risk_rate": 66.03,
+      "avg_psi": 0.0342
+    },
+    {
+      "timestamp": "2026-02-16T21:53:21.042496",
+      "high_risk_rate": 65.61,
+      "avg_psi": 0.0327
+    },
+    {
+      "timestamp": "2026-02-16T21:53:22.037394",
+      "high_risk_rate": 65.61,
+      "avg_psi": 0.0327
+    },
+    {
+      "timestamp": "2026-02-16T21:53:25.209419",
+      "high_risk_rate": 65.82,
+      "avg_psi": 0.0338
+    },
+    {
+      "timestamp": "2026-02-16T21:53:26.265731",
+      "high_risk_rate": 65.82,
+      "avg_psi": 0.0338
+    },
+    {
+      "timestamp": "2026-02-16T21:53:29.619945",
+      "high_risk_rate": 66.04,
+      "avg_psi": 0.0351
+    },
+    {
+      "timestamp": "2026-02-16T21:53:30.665174",
+      "high_risk_rate": 66.04,
+      "avg_psi": 0.0351
+    },
+    {
+      "timestamp": "2026-02-16T21:53:33.917487",
+      "high_risk_rate": 66.25,
+      "avg_psi": 0.0344
+    },
+    {
+      "timestamp": "2026-02-16T21:53:34.892839",
+      "high_risk_rate": 66.25,
+      "avg_psi": 0.0344
+    },
+    {
+      "timestamp": "2026-02-16T21:53:38.198330",
+      "high_risk_rate": 66.46,
+      "avg_psi": 0.0342
+    },
+    {
+      "timestamp": "2026-02-16T21:53:39.362878",
+      "high_risk_rate": 66.46,
+      "avg_psi": 0.0342
+    },
+    {
+      "timestamp": "2026-02-16T21:53:42.603119",
+      "high_risk_rate": 66.05,
+      "avg_psi": 0.0355
+    },
+    {
+      "timestamp": "2026-02-16T21:53:43.654803",
+      "high_risk_rate": 66.05,
+      "avg_psi": 0.0355
+    },
+    {
+      "timestamp": "2026-02-16T21:53:46.896984",
+      "high_risk_rate": 65.64,
+      "avg_psi": 0.0364
+    },
+    {
+      "timestamp": "2026-02-16T21:53:48.019487",
+      "high_risk_rate": 65.64,
+      "avg_psi": 0.0364
+    },
+    {
+      "timestamp": "2026-02-16T21:53:51.124375",
+      "high_risk_rate": 65.24,
+      "avg_psi": 0.0352
+    },
+    {
+      "timestamp": "2026-02-16T21:53:52.113967",
+      "high_risk_rate": 65.24,
+      "avg_psi": 0.0352
+    },
+    {
+      "timestamp": "2026-02-16T21:53:55.255799",
+      "high_risk_rate": 64.85,
+      "avg_psi": 0.0343
+    },
+    {
+      "timestamp": "2026-02-16T21:53:56.334219",
+      "high_risk_rate": 64.85,
+      "avg_psi": 0.0343
+    },
+    {
+      "timestamp": "2026-02-16T21:53:59.547475",
+      "high_risk_rate": 65.06,
+      "avg_psi": 0.033
+    },
+    {
+      "timestamp": "2026-02-16T21:54:00.568309",
+      "high_risk_rate": 65.06,
+      "avg_psi": 0.033
+    },
+    {
+      "timestamp": "2026-02-16T21:54:03.804728",
+      "high_risk_rate": 65.27,
+      "avg_psi": 0.0338
+    },
+    {
+      "timestamp": "2026-02-16T21:54:04.865783",
+      "high_risk_rate": 65.27,
+      "avg_psi": 0.0338
+    },
+    {
+      "timestamp": "2026-02-16T21:54:08.283941",
+      "high_risk_rate": 64.88,
+      "avg_psi": 0.0329
+    },
+    {
+      "timestamp": "2026-02-16T21:54:09.628332",
+      "high_risk_rate": 64.88,
+      "avg_psi": 0.0329
+    },
+    {
+      "timestamp": "2026-02-16T21:54:12.865869",
+      "high_risk_rate": 64.5,
+      "avg_psi": 0.032
+    },
+    {
+      "timestamp": "2026-02-16T21:54:13.898621",
+      "high_risk_rate": 64.5,
+      "avg_psi": 0.032
+    },
+    {
+      "timestamp": "2026-02-16T21:54:17.113287",
+      "high_risk_rate": 64.71,
+      "avg_psi": 0.0326
+    },
+    {
+      "timestamp": "2026-02-16T21:54:18.149470",
+      "high_risk_rate": 64.71,
+      "avg_psi": 0.0326
+    },
+    {
+      "timestamp": "2026-02-16T21:54:21.277109",
+      "high_risk_rate": 64.33,
+      "avg_psi": 0.0318
+    },
+    {
+      "timestamp": "2026-02-16T21:54:22.407184",
+      "high_risk_rate": 64.33,
+      "avg_psi": 0.0318
+    },
+    {
+      "timestamp": "2026-02-16T21:54:25.924485",
+      "high_risk_rate": 63.95,
+      "avg_psi": 0.031
+    },
+    {
+      "timestamp": "2026-02-16T21:54:27.105877",
+      "high_risk_rate": 63.95,
+      "avg_psi": 0.031
+    },
+    {
+      "timestamp": "2026-02-16T21:54:30.443098",
+      "high_risk_rate": 64.16,
+      "avg_psi": 0.0304
+    },
+    {
+      "timestamp": "2026-02-16T21:54:31.438811",
+      "high_risk_rate": 64.16,
+      "avg_psi": 0.0304
+    },
+    {
+      "timestamp": "2026-02-16T21:54:34.557398",
+      "high_risk_rate": 63.79,
+      "avg_psi": 0.0315
+    },
+    {
+      "timestamp": "2026-02-16T21:54:35.594128",
+      "high_risk_rate": 63.79,
+      "avg_psi": 0.0315
+    },
+    {
+      "timestamp": "2026-02-16T21:54:38.924801",
+      "high_risk_rate": 64.0,
+      "avg_psi": 0.0306
+    },
+    {
+      "timestamp": "2026-02-16T21:54:39.995361",
+      "high_risk_rate": 64.0,
+      "avg_psi": 0.0306
+    },
+    {
+      "timestamp": "2026-02-16T21:54:43.176092",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.031
+    },
+    {
+      "timestamp": "2026-02-16T21:54:44.199780",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.031
+    },
+    {
+      "timestamp": "2026-02-16T21:54:47.409773",
+      "high_risk_rate": 63.84,
+      "avg_psi": 0.0305
+    },
+    {
+      "timestamp": "2026-02-16T21:54:48.444705",
+      "high_risk_rate": 63.84,
+      "avg_psi": 0.0305
+    },
+    {
+      "timestamp": "2026-02-16T21:54:51.573933",
+      "high_risk_rate": 64.04,
+      "avg_psi": 0.0317
+    },
+    {
+      "timestamp": "2026-02-16T21:54:52.574171",
+      "high_risk_rate": 64.04,
+      "avg_psi": 0.0317
+    },
+    {
+      "timestamp": "2026-02-16T21:54:56.137128",
+      "high_risk_rate": 64.25,
+      "avg_psi": 0.0304
+    },
+    {
+      "timestamp": "2026-02-16T21:54:57.415084",
+      "high_risk_rate": 64.25,
+      "avg_psi": 0.0304
+    },
+    {
+      "timestamp": "2026-02-16T21:55:00.518206",
+      "high_risk_rate": 64.44,
+      "avg_psi": 0.0301
+    },
+    {
+      "timestamp": "2026-02-16T21:55:01.558709",
+      "high_risk_rate": 64.44,
+      "avg_psi": 0.0301
+    },
+    {
+      "timestamp": "2026-02-16T21:55:04.800626",
+      "high_risk_rate": 64.09,
+      "avg_psi": 0.0307
+    },
+    {
+      "timestamp": "2026-02-16T21:55:05.822267",
+      "high_risk_rate": 64.09,
+      "avg_psi": 0.0307
+    },
+    {
+      "timestamp": "2026-02-16T21:55:09.128329",
+      "high_risk_rate": 63.74,
+      "avg_psi": 0.0327
+    },
+    {
+      "timestamp": "2026-02-16T21:55:10.163600",
+      "high_risk_rate": 63.74,
+      "avg_psi": 0.0327
+    },
+    {
+      "timestamp": "2026-02-16T21:55:13.308131",
+      "high_risk_rate": 63.39,
+      "avg_psi": 0.0317
+    },
+    {
+      "timestamp": "2026-02-16T21:55:14.430300",
+      "high_risk_rate": 63.39,
+      "avg_psi": 0.0317
+    },
+    {
+      "timestamp": "2026-02-16T21:55:17.585613",
+      "high_risk_rate": 63.04,
+      "avg_psi": 0.03
+    },
+    {
+      "timestamp": "2026-02-16T21:55:18.709054",
+      "high_risk_rate": 63.04,
+      "avg_psi": 0.03
+    },
+    {
+      "timestamp": "2026-02-16T21:55:21.845004",
+      "high_risk_rate": 63.24,
+      "avg_psi": 0.0289
+    },
+    {
+      "timestamp": "2026-02-16T21:55:22.878842",
+      "high_risk_rate": 63.24,
+      "avg_psi": 0.0289
+    },
+    {
+      "timestamp": "2026-02-16T21:55:26.582908",
+      "high_risk_rate": 63.44,
+      "avg_psi": 0.0286
+    },
+    {
+      "timestamp": "2026-02-16T21:55:27.949694",
+      "high_risk_rate": 63.44,
+      "avg_psi": 0.0286
+    },
+    {
+      "timestamp": "2026-02-16T21:55:31.195484",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:55:32.439864",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:55:35.776953",
+      "high_risk_rate": 63.83,
+      "avg_psi": 0.0294
+    },
+    {
+      "timestamp": "2026-02-16T21:55:36.930524",
+      "high_risk_rate": 63.83,
+      "avg_psi": 0.0294
+    },
+    {
+      "timestamp": "2026-02-16T21:55:40.217694",
+      "high_risk_rate": 64.02,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:55:41.380041",
+      "high_risk_rate": 64.02,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:55:44.700047",
+      "high_risk_rate": 63.68,
+      "avg_psi": 0.0285
+    },
+    {
+      "timestamp": "2026-02-16T21:55:45.726035",
+      "high_risk_rate": 63.68,
+      "avg_psi": 0.0285
+    },
+    {
+      "timestamp": "2026-02-16T21:55:48.833552",
+      "high_risk_rate": 63.87,
+      "avg_psi": 0.0296
+    },
+    {
+      "timestamp": "2026-02-16T21:55:49.959036",
+      "high_risk_rate": 63.87,
+      "avg_psi": 0.0296
+    },
+    {
+      "timestamp": "2026-02-16T21:55:53.467981",
+      "high_risk_rate": 64.06,
+      "avg_psi": 0.0287
+    },
+    {
+      "timestamp": "2026-02-16T21:55:54.536352",
+      "high_risk_rate": 64.06,
+      "avg_psi": 0.0287
+    },
+    {
+      "timestamp": "2026-02-16T21:55:57.747148",
+      "high_risk_rate": 64.25,
+      "avg_psi": 0.03
+    },
+    {
+      "timestamp": "2026-02-16T21:55:58.795452",
+      "high_risk_rate": 64.25,
+      "avg_psi": 0.03
+    },
+    {
+      "timestamp": "2026-02-16T21:56:01.772011",
+      "high_risk_rate": 64.43,
+      "avg_psi": 0.03
+    },
+    {
+      "timestamp": "2026-02-16T21:56:02.833682",
+      "high_risk_rate": 64.43,
+      "avg_psi": 0.03
+    },
+    {
+      "timestamp": "2026-02-16T21:56:06.052175",
+      "high_risk_rate": 64.1,
+      "avg_psi": 0.0292
+    },
+    {
+      "timestamp": "2026-02-16T21:56:07.178685",
+      "high_risk_rate": 64.1,
+      "avg_psi": 0.0292
+    },
+    {
+      "timestamp": "2026-02-16T21:56:10.272447",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.0285
+    },
+    {
+      "timestamp": "2026-02-16T21:56:11.346700",
+      "high_risk_rate": 64.29,
+      "avg_psi": 0.0285
+    },
+    {
+      "timestamp": "2026-02-16T21:56:14.608393",
+      "high_risk_rate": 63.96,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:56:15.615678",
+      "high_risk_rate": 63.96,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:56:18.727803",
+      "high_risk_rate": 64.14,
+      "avg_psi": 0.0282
+    },
+    {
+      "timestamp": "2026-02-16T21:56:19.810191",
+      "high_risk_rate": 64.14,
+      "avg_psi": 0.0282
+    },
+    {
+      "timestamp": "2026-02-16T21:56:23.025072",
+      "high_risk_rate": 64.32,
+      "avg_psi": 0.0276
+    },
+    {
+      "timestamp": "2026-02-16T21:56:24.381099",
+      "high_risk_rate": 64.32,
+      "avg_psi": 0.0276
+    },
+    {
+      "timestamp": "2026-02-16T21:56:27.615805",
+      "high_risk_rate": 64.0,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:56:28.792694",
+      "high_risk_rate": 64.0,
+      "avg_psi": 0.0284
+    },
+    {
+      "timestamp": "2026-02-16T21:56:31.971676",
+      "high_risk_rate": 64.18,
+      "avg_psi": 0.0279
+    },
+    {
+      "timestamp": "2026-02-16T21:56:33.009485",
+      "high_risk_rate": 64.18,
+      "avg_psi": 0.0279
+    },
+    {
+      "timestamp": "2026-02-16T21:56:36.201972",
+      "high_risk_rate": 63.86,
+      "avg_psi": 0.0276
+    },
+    {
+      "timestamp": "2026-02-16T21:56:37.335929",
+      "high_risk_rate": 63.86,
+      "avg_psi": 0.0276
+    },
+    {
+      "timestamp": "2026-02-16T21:56:40.447920",
+      "high_risk_rate": 63.55,
+      "avg_psi": 0.0277
+    },
+    {
+      "timestamp": "2026-02-16T21:56:41.537934",
+      "high_risk_rate": 63.55,
+      "avg_psi": 0.0277
+    },
+    {
+      "timestamp": "2026-02-16T21:56:44.805412",
+      "high_risk_rate": 63.73,
+      "avg_psi": 0.028
+    },
+    {
+      "timestamp": "2026-02-16T21:56:45.847008",
+      "high_risk_rate": 63.73,
+      "avg_psi": 0.028
+    },
+    {
+      "timestamp": "2026-02-16T21:56:49.026279",
+      "high_risk_rate": 63.9,
+      "avg_psi": 0.0279
+    },
+    {
+      "timestamp": "2026-02-16T21:56:50.067987",
+      "high_risk_rate": 63.9,
+      "avg_psi": 0.0279
+    },
+    {
+      "timestamp": "2026-02-16T21:57:58.964096",
+      "high_risk_rate": 64.08,
+      "avg_psi": 0.028
+    },
+    {
+      "timestamp": "2026-02-16T21:58:02.577671",
+      "high_risk_rate": 63.77,
+      "avg_psi": 0.0272
+    },
+    {
+      "timestamp": "2026-02-16T21:58:04.385185",
+      "high_risk_rate": 63.77,
+      "avg_psi": 0.0272
+    },
+    {
+      "timestamp": "2026-02-16T21:58:07.683066",
+      "high_risk_rate": 63.94,
+      "avg_psi": 0.0272
+    },
+    {
+      "timestamp": "2026-02-16T21:58:08.736014",
+      "high_risk_rate": 63.94,
+      "avg_psi": 0.0272
+    },
+    {
+      "timestamp": "2026-02-16T21:58:11.932282",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.0279
+    },
+    {
+      "timestamp": "2026-02-16T21:58:13.059767",
+      "high_risk_rate": 63.64,
+      "avg_psi": 0.0279
+    },
+    {
+      "timestamp": "2026-02-16T21:58:16.422067",
+      "high_risk_rate": 63.33,
+      "avg_psi": 0.0282
+    },
+    {
+      "timestamp": "2026-02-16T21:58:17.706332",
+      "high_risk_rate": 63.33,
+      "avg_psi": 0.0282
+    },
+    {
+      "timestamp": "2026-02-16T21:58:21.190423",
+      "high_risk_rate": 63.03,
+      "avg_psi": 0.029
+    },
+    {
+      "timestamp": "2026-02-16T21:58:22.251876",
+      "high_risk_rate": 63.03,
+      "avg_psi": 0.029
+    },
+    {
+      "timestamp": "2026-02-16T21:58:25.437161",
+      "high_risk_rate": 63.21,
+      "avg_psi": 0.0271
+    },
+    {
+      "timestamp": "2026-02-16T21:58:26.482354",
+      "high_risk_rate": 63.21,
+      "avg_psi": 0.0271
+    },
+    {
+      "timestamp": "2026-02-16T21:58:29.640142",
+      "high_risk_rate": 62.91,
+      "avg_psi": 0.0274
+    },
+    {
+      "timestamp": "2026-02-16T21:58:31.213391",
+      "high_risk_rate": 62.91,
+      "avg_psi": 0.0274
+    },
+    {
+      "timestamp": "2026-02-16T21:58:34.559439",
+      "high_risk_rate": 63.08,
+      "avg_psi": 0.0266
+    },
+    {
+      "timestamp": "2026-02-16T21:58:35.623858",
+      "high_risk_rate": 63.08,
+      "avg_psi": 0.0266
+    },
+    {
+      "timestamp": "2026-02-16T21:58:38.786044",
+      "high_risk_rate": 63.26,
+      "avg_psi": 0.0269
+    },
+    {
+      "timestamp": "2026-02-16T21:58:39.778976",
+      "high_risk_rate": 63.26,
+      "avg_psi": 0.0269
+    },
+    {
+      "timestamp": "2026-02-16T21:58:42.912866",
+      "high_risk_rate": 62.96,
+      "avg_psi": 0.028
+    },
+    {
+      "timestamp": "2026-02-16T21:58:43.931511",
+      "high_risk_rate": 62.96,
+      "avg_psi": 0.028
+    },
+    {
+      "timestamp": "2026-02-16T21:58:47.181129",
+      "high_risk_rate": 63.13,
+      "avg_psi": 0.0277
+    },
+    {
+      "timestamp": "2026-02-16T21:58:48.486214",
+      "high_risk_rate": 63.13,
+      "avg_psi": 0.0277
+    },
+    {
+      "timestamp": "2026-02-16T21:58:51.753278",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:58:52.524889",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:22.676302",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.610314",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.695045",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.771558",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.847143",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.921171",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.000760",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.096114",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.359271",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.434021",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.505004",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.577567",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.647252",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.724767",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.802882",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.881969",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.957558",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T21:59:43.696546",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.098886",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.189093",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.274615",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.370804",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.467351",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.565895",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.684448",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.982322",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.071565",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.160887",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.248492",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.334147",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.419335",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.513525",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.605134",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.709562",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:04:46.784817",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:39.942411",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.052966",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.134529",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.240045",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.333278",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.418508",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.513065",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.776205",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.857740",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.940870",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.018457",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.092504",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.178019",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.264403",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.342944",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.426115",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:13:45.286039",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:40.757699",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:40.842225",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:40.927978",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.006486",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.083869",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.160457",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.260029",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.512232",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.587766",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.661307",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.736827",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.810828",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.884000",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.962512",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:42.040053",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:42.116165",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:16:45.960469",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:01.683146",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:01.767697",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:01.888222",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.001760",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.137142",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.246675",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.414591",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.799627",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.907155",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.000667",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.091215",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.184695",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.290216",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.445738",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.566764",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.674171",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:22.981110",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.064640",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.145172",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.229691",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.310693",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.389220",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.489631",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:14:44.828093",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:44.913605",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:44.991121",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.066691",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.141118",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.215119",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.295766",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.392889",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.471446",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:37.901044",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:37.987602",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.062718",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.143225",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.246983",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.423140",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.498683",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.575420",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.655303",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.728814",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.802408",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.879950",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.956957",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:39.033519",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:43.814403",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:18:43.896961",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.241750",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.325857",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.403575",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.482094",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.586890",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.757000",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.840500",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.916544",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.991288",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.065850",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.138997",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.217003",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.293379",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.370458",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:37.108673",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:21:37.191219",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.581751",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.668857",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.749267",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.825924",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.930398",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.097601",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.173642",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.254148",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.328604",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.404169",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.480350",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.559368",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.638517",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.716128",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:24.529758",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:22:24.613698",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:42.870635",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.000265",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.121103",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.244036",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.415694",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.666928",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.797223",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.920928",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.032249",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.157721",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.278370",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.402478",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.524485",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.646160",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:53.101170",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:24:53.236095",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.559602",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.647609",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.726226",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.803743",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.907316",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.072100",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.150009",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.226516",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.302239",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.374669",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.448722",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.528112",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.617663",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.696180",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:45.642455",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:26:45.728026",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.322914",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.406488",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.483960",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.558948",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.665323",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.832470",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.911053",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.986652",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.060615",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.133030",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.204722",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.284194",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.366260",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.441839",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:08.793178",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:27:08.877075",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:10.897181",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:10.984810",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.064996",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.142606",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.242079",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.406900",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.483368",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.560910",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.633459",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.710668",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.782172",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.860666",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.937183",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:12.016192",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:17.432998",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T13:39:17.518004",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.568752",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.667976",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.765607",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.866226",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.979538",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.166614",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.253831",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.343356",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.428974",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.512600",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.598231",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.687746",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.774466",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.865315",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:47.660191",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T14:45:47.759773",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:16.779594",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:16.880780",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:16.984246",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.110342",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.243917",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.437513",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.538006",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.627534",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.718103",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.807660",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.898747",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.993154",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:18.088676",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:18.195205",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:24.298799",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:40:24.394450",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.336105",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.428634",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.529217",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.645802",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.795841",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.996959",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.083698",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.171377",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.265241",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.345135",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.424750",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.504278",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.582534",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.663283",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:16.702458",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T15:45:16.790997",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.295850",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.434361",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.565411",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.698973",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.874000",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.123082",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.261099",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.411339",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.543665",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.667019",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.791583",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.921211",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:25.051767",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:25.182221",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:35.228811",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:46:35.373363",
+      "high_risk_rate": 63.3,
+      "avg_psi": 0.0261
+    },
+    {
+      "timestamp": "2026-02-17T16:54:21.497537",
+      "high_risk_rate": 63.01,
+      "avg_psi": 0.0255
+    },
+    {
+      "timestamp": "2026-02-17T16:54:31.451752",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.216609",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.303229",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.384737",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.463379",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.570016",
+      "high_risk_rate": 40.0,
+      "avg_psi": 0.0
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.740370",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.823775",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.905879",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.985288",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.059905",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.135341",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.219348",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.300963",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.385387",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:08.052589",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    },
+    {
+      "timestamp": "2026-02-17T16:55:08.137028",
+      "high_risk_rate": 62.73,
+      "avg_psi": 0.025
+    }
+  ],
+  "high_risk_rate_history": [
+    {
+      "timestamp": "2026-02-16T21:30:02.822915",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T21:38:11.920814",
+      "rate": 51.43
+    },
+    {
+      "timestamp": "2026-02-16T21:38:18.291806",
+      "rate": 51.43
+    },
+    {
+      "timestamp": "2026-02-16T21:42:05.130534",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:00.998137",
+      "rate": 80.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:01.642929",
+      "rate": 80.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:04.321774",
+      "rate": 83.33
+    },
+    {
+      "timestamp": "2026-02-16T21:43:04.936339",
+      "rate": 83.33
+    },
+    {
+      "timestamp": "2026-02-16T21:43:07.651638",
+      "rate": 85.71
+    },
+    {
+      "timestamp": "2026-02-16T21:43:08.672150",
+      "rate": 85.71
+    },
+    {
+      "timestamp": "2026-02-16T21:43:11.431715",
+      "rate": 75.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:12.207460",
+      "rate": 75.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:14.881691",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:15.487981",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:18.129846",
+      "rate": 70.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:18.698886",
+      "rate": 70.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:21.383485",
+      "rate": 72.73
+    },
+    {
+      "timestamp": "2026-02-16T21:43:21.953912",
+      "rate": 72.73
+    },
+    {
+      "timestamp": "2026-02-16T21:43:24.592147",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:25.154433",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:27.896516",
+      "rate": 69.23
+    },
+    {
+      "timestamp": "2026-02-16T21:43:28.553852",
+      "rate": 69.23
+    },
+    {
+      "timestamp": "2026-02-16T21:43:31.174756",
+      "rate": 71.43
+    },
+    {
+      "timestamp": "2026-02-16T21:43:31.691195",
+      "rate": 71.43
+    },
+    {
+      "timestamp": "2026-02-16T21:43:34.489594",
+      "rate": 73.33
+    },
+    {
+      "timestamp": "2026-02-16T21:43:35.195218",
+      "rate": 73.33
+    },
+    {
+      "timestamp": "2026-02-16T21:43:38.020248",
+      "rate": 68.75
+    },
+    {
+      "timestamp": "2026-02-16T21:43:38.757591",
+      "rate": 68.75
+    },
+    {
+      "timestamp": "2026-02-16T21:43:41.614895",
+      "rate": 70.59
+    },
+    {
+      "timestamp": "2026-02-16T21:43:42.676412",
+      "rate": 70.59
+    },
+    {
+      "timestamp": "2026-02-16T21:43:45.425742",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:46.087213",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:48.946348",
+      "rate": 63.16
+    },
+    {
+      "timestamp": "2026-02-16T21:43:49.621975",
+      "rate": 63.16
+    },
+    {
+      "timestamp": "2026-02-16T21:43:52.479027",
+      "rate": 65.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:53.051592",
+      "rate": 65.0
+    },
+    {
+      "timestamp": "2026-02-16T21:43:55.732668",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:56.360636",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:43:59.061155",
+      "rate": 68.18
+    },
+    {
+      "timestamp": "2026-02-16T21:43:59.608659",
+      "rate": 68.18
+    },
+    {
+      "timestamp": "2026-02-16T21:44:02.242967",
+      "rate": 69.57
+    },
+    {
+      "timestamp": "2026-02-16T21:44:02.762587",
+      "rate": 69.57
+    },
+    {
+      "timestamp": "2026-02-16T21:44:05.385888",
+      "rate": 70.83
+    },
+    {
+      "timestamp": "2026-02-16T21:44:05.926003",
+      "rate": 70.83
+    },
+    {
+      "timestamp": "2026-02-16T21:44:08.770244",
+      "rate": 72.0
+    },
+    {
+      "timestamp": "2026-02-16T21:44:09.506890",
+      "rate": 72.0
+    },
+    {
+      "timestamp": "2026-02-16T21:44:12.200089",
+      "rate": 69.23
+    },
+    {
+      "timestamp": "2026-02-16T21:44:12.779397",
+      "rate": 69.23
+    },
+    {
+      "timestamp": "2026-02-16T21:44:15.411714",
+      "rate": 70.37
+    },
+    {
+      "timestamp": "2026-02-16T21:44:15.940546",
+      "rate": 70.37
+    },
+    {
+      "timestamp": "2026-02-16T21:44:18.546442",
+      "rate": 71.43
+    },
+    {
+      "timestamp": "2026-02-16T21:44:19.163357",
+      "rate": 71.43
+    },
+    {
+      "timestamp": "2026-02-16T21:44:21.899386",
+      "rate": 68.97
+    },
+    {
+      "timestamp": "2026-02-16T21:44:22.829252",
+      "rate": 68.97
+    },
+    {
+      "timestamp": "2026-02-16T21:44:25.562314",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:44:26.168917",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:44:28.827754",
+      "rate": 67.74
+    },
+    {
+      "timestamp": "2026-02-16T21:44:29.414901",
+      "rate": 67.74
+    },
+    {
+      "timestamp": "2026-02-16T21:44:32.023930",
+      "rate": 68.75
+    },
+    {
+      "timestamp": "2026-02-16T21:44:32.721931",
+      "rate": 68.75
+    },
+    {
+      "timestamp": "2026-02-16T21:44:35.342870",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:44:35.889253",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:44:38.582308",
+      "rate": 67.65
+    },
+    {
+      "timestamp": "2026-02-16T21:44:39.281996",
+      "rate": 67.65
+    },
+    {
+      "timestamp": "2026-02-16T21:44:41.909777",
+      "rate": 65.71
+    },
+    {
+      "timestamp": "2026-02-16T21:44:42.495804",
+      "rate": 65.71
+    },
+    {
+      "timestamp": "2026-02-16T21:44:45.180139",
+      "rate": 63.89
+    },
+    {
+      "timestamp": "2026-02-16T21:44:45.696405",
+      "rate": 63.89
+    },
+    {
+      "timestamp": "2026-02-16T21:44:48.414841",
+      "rate": 64.86
+    },
+    {
+      "timestamp": "2026-02-16T21:44:49.143969",
+      "rate": 64.86
+    },
+    {
+      "timestamp": "2026-02-16T21:44:51.981002",
+      "rate": 65.79
+    },
+    {
+      "timestamp": "2026-02-16T21:44:53.115569",
+      "rate": 65.79
+    },
+    {
+      "timestamp": "2026-02-16T21:44:56.027988",
+      "rate": 64.1
+    },
+    {
+      "timestamp": "2026-02-16T21:44:56.689267",
+      "rate": 64.1
+    },
+    {
+      "timestamp": "2026-02-16T21:44:59.565822",
+      "rate": 65.0
+    },
+    {
+      "timestamp": "2026-02-16T21:45:00.189329",
+      "rate": 65.0
+    },
+    {
+      "timestamp": "2026-02-16T21:45:02.876726",
+      "rate": 63.41
+    },
+    {
+      "timestamp": "2026-02-16T21:45:03.423961",
+      "rate": 63.41
+    },
+    {
+      "timestamp": "2026-02-16T21:45:06.129174",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:45:06.792768",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:45:10.082777",
+      "rate": 65.12
+    },
+    {
+      "timestamp": "2026-02-16T21:45:10.695649",
+      "rate": 65.12
+    },
+    {
+      "timestamp": "2026-02-16T21:45:13.393181",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:45:14.023600",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:45:16.650975",
+      "rate": 64.44
+    },
+    {
+      "timestamp": "2026-02-16T21:45:17.190730",
+      "rate": 64.44
+    },
+    {
+      "timestamp": "2026-02-16T21:45:19.955103",
+      "rate": 65.22
+    },
+    {
+      "timestamp": "2026-02-16T21:45:20.533483",
+      "rate": 65.22
+    },
+    {
+      "timestamp": "2026-02-16T21:45:23.338022",
+      "rate": 65.96
+    },
+    {
+      "timestamp": "2026-02-16T21:45:24.001294",
+      "rate": 65.96
+    },
+    {
+      "timestamp": "2026-02-16T21:45:26.677636",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:45:27.325346",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:45:30.213122",
+      "rate": 67.35
+    },
+    {
+      "timestamp": "2026-02-16T21:45:31.225357",
+      "rate": 67.35
+    },
+    {
+      "timestamp": "2026-02-16T21:45:34.487971",
+      "rate": 68.0
+    },
+    {
+      "timestamp": "2026-02-16T21:45:35.515856",
+      "rate": 68.0
+    },
+    {
+      "timestamp": "2026-02-16T21:45:38.807540",
+      "rate": 68.63
+    },
+    {
+      "timestamp": "2026-02-16T21:45:39.968304",
+      "rate": 68.63
+    },
+    {
+      "timestamp": "2026-02-16T21:45:43.129114",
+      "rate": 69.23
+    },
+    {
+      "timestamp": "2026-02-16T21:45:44.272552",
+      "rate": 69.23
+    },
+    {
+      "timestamp": "2026-02-16T21:45:47.442368",
+      "rate": 69.81
+    },
+    {
+      "timestamp": "2026-02-16T21:45:48.506999",
+      "rate": 69.81
+    },
+    {
+      "timestamp": "2026-02-16T21:45:51.717995",
+      "rate": 68.52
+    },
+    {
+      "timestamp": "2026-02-16T21:45:53.704840",
+      "rate": 68.52
+    },
+    {
+      "timestamp": "2026-02-16T21:45:56.910031",
+      "rate": 67.27
+    },
+    {
+      "timestamp": "2026-02-16T21:45:57.956684",
+      "rate": 67.27
+    },
+    {
+      "timestamp": "2026-02-16T21:46:01.048313",
+      "rate": 66.07
+    },
+    {
+      "timestamp": "2026-02-16T21:46:02.218450",
+      "rate": 66.07
+    },
+    {
+      "timestamp": "2026-02-16T21:46:05.378821",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:46:06.426502",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:46:09.822633",
+      "rate": 67.24
+    },
+    {
+      "timestamp": "2026-02-16T21:46:10.875283",
+      "rate": 67.24
+    },
+    {
+      "timestamp": "2026-02-16T21:46:14.036551",
+      "rate": 67.8
+    },
+    {
+      "timestamp": "2026-02-16T21:46:15.105265",
+      "rate": 67.8
+    },
+    {
+      "timestamp": "2026-02-16T21:46:18.412805",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:46:19.517001",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:46:23.645653",
+      "rate": 65.57
+    },
+    {
+      "timestamp": "2026-02-16T21:46:23.981285",
+      "rate": 65.57
+    },
+    {
+      "timestamp": "2026-02-16T21:46:24.973782",
+      "rate": 65.57
+    },
+    {
+      "timestamp": "2026-02-16T21:46:28.426109",
+      "rate": 66.13
+    },
+    {
+      "timestamp": "2026-02-16T21:46:29.433796",
+      "rate": 66.13
+    },
+    {
+      "timestamp": "2026-02-16T21:46:32.605208",
+      "rate": 65.08
+    },
+    {
+      "timestamp": "2026-02-16T21:46:33.735579",
+      "rate": 65.08
+    },
+    {
+      "timestamp": "2026-02-16T21:46:36.897112",
+      "rate": 64.06
+    },
+    {
+      "timestamp": "2026-02-16T21:46:38.436183",
+      "rate": 64.06
+    },
+    {
+      "timestamp": "2026-02-16T21:46:41.790818",
+      "rate": 64.62
+    },
+    {
+      "timestamp": "2026-02-16T21:46:42.833202",
+      "rate": 64.62
+    },
+    {
+      "timestamp": "2026-02-16T21:46:45.954739",
+      "rate": 65.15
+    },
+    {
+      "timestamp": "2026-02-16T21:46:46.999959",
+      "rate": 65.15
+    },
+    {
+      "timestamp": "2026-02-16T21:46:50.148718",
+      "rate": 65.67
+    },
+    {
+      "timestamp": "2026-02-16T21:46:51.288966",
+      "rate": 65.67
+    },
+    {
+      "timestamp": "2026-02-16T21:46:54.606194",
+      "rate": 66.18
+    },
+    {
+      "timestamp": "2026-02-16T21:46:55.654325",
+      "rate": 66.18
+    },
+    {
+      "timestamp": "2026-02-16T21:46:58.808157",
+      "rate": 65.22
+    },
+    {
+      "timestamp": "2026-02-16T21:46:59.813702",
+      "rate": 65.22
+    },
+    {
+      "timestamp": "2026-02-16T21:47:02.867581",
+      "rate": 65.71
+    },
+    {
+      "timestamp": "2026-02-16T21:47:03.898091",
+      "rate": 65.71
+    },
+    {
+      "timestamp": "2026-02-16T21:47:07.020932",
+      "rate": 66.2
+    },
+    {
+      "timestamp": "2026-02-16T21:47:08.937984",
+      "rate": 66.2
+    },
+    {
+      "timestamp": "2026-02-16T21:47:12.269542",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:47:13.304916",
+      "rate": 66.67
+    },
+    {
+      "timestamp": "2026-02-16T21:47:16.432880",
+      "rate": 67.12
+    },
+    {
+      "timestamp": "2026-02-16T21:47:17.454879",
+      "rate": 67.12
+    },
+    {
+      "timestamp": "2026-02-16T21:47:20.582589",
+      "rate": 66.22
+    },
+    {
+      "timestamp": "2026-02-16T21:47:21.620090",
+      "rate": 66.22
+    },
+    {
+      "timestamp": "2026-02-16T21:47:24.907360",
+      "rate": 65.33
+    },
+    {
+      "timestamp": "2026-02-16T21:47:26.092184",
+      "rate": 65.33
+    },
+    {
+      "timestamp": "2026-02-16T21:47:29.237682",
+      "rate": 64.47
+    },
+    {
+      "timestamp": "2026-02-16T21:47:30.234078",
+      "rate": 64.47
+    },
+    {
+      "timestamp": "2026-02-16T21:47:33.325871",
+      "rate": 64.94
+    },
+    {
+      "timestamp": "2026-02-16T21:47:34.346116",
+      "rate": 64.94
+    },
+    {
+      "timestamp": "2026-02-16T21:47:38.012704",
+      "rate": 64.1
+    },
+    {
+      "timestamp": "2026-02-16T21:47:39.272817",
+      "rate": 64.1
+    },
+    {
+      "timestamp": "2026-02-16T21:47:42.581109",
+      "rate": 63.29
+    },
+    {
+      "timestamp": "2026-02-16T21:47:43.612936",
+      "rate": 63.29
+    },
+    {
+      "timestamp": "2026-02-16T21:47:46.736776",
+      "rate": 63.75
+    },
+    {
+      "timestamp": "2026-02-16T21:47:47.778726",
+      "rate": 63.75
+    },
+    {
+      "timestamp": "2026-02-16T21:47:50.959021",
+      "rate": 62.96
+    },
+    {
+      "timestamp": "2026-02-16T21:47:51.962889",
+      "rate": 62.96
+    },
+    {
+      "timestamp": "2026-02-16T21:47:55.868529",
+      "rate": 62.2
+    },
+    {
+      "timestamp": "2026-02-16T21:47:56.995148",
+      "rate": 62.2
+    },
+    {
+      "timestamp": "2026-02-16T21:48:00.195717",
+      "rate": 62.65
+    },
+    {
+      "timestamp": "2026-02-16T21:48:01.221114",
+      "rate": 62.65
+    },
+    {
+      "timestamp": "2026-02-16T21:48:04.321237",
+      "rate": 61.9
+    },
+    {
+      "timestamp": "2026-02-16T21:48:05.301140",
+      "rate": 61.9
+    },
+    {
+      "timestamp": "2026-02-16T21:48:08.428932",
+      "rate": 62.35
+    },
+    {
+      "timestamp": "2026-02-16T21:48:09.614319",
+      "rate": 62.35
+    },
+    {
+      "timestamp": "2026-02-16T21:48:12.740256",
+      "rate": 62.79
+    },
+    {
+      "timestamp": "2026-02-16T21:48:13.779168",
+      "rate": 62.79
+    },
+    {
+      "timestamp": "2026-02-16T21:48:16.992184",
+      "rate": 62.07
+    },
+    {
+      "timestamp": "2026-02-16T21:48:18.142502",
+      "rate": 62.07
+    },
+    {
+      "timestamp": "2026-02-16T21:48:21.308097",
+      "rate": 61.36
+    },
+    {
+      "timestamp": "2026-02-16T21:48:22.378555",
+      "rate": 61.36
+    },
+    {
+      "timestamp": "2026-02-16T21:48:25.950195",
+      "rate": 61.8
+    },
+    {
+      "timestamp": "2026-02-16T21:48:26.985044",
+      "rate": 61.8
+    },
+    {
+      "timestamp": "2026-02-16T21:48:30.101034",
+      "rate": 62.22
+    },
+    {
+      "timestamp": "2026-02-16T21:48:31.223315",
+      "rate": 62.22
+    },
+    {
+      "timestamp": "2026-02-16T21:48:34.430545",
+      "rate": 62.64
+    },
+    {
+      "timestamp": "2026-02-16T21:48:35.445567",
+      "rate": 62.64
+    },
+    {
+      "timestamp": "2026-02-16T21:48:38.851292",
+      "rate": 63.04
+    },
+    {
+      "timestamp": "2026-02-16T21:48:40.078985",
+      "rate": 63.04
+    },
+    {
+      "timestamp": "2026-02-16T21:48:43.230638",
+      "rate": 62.37
+    },
+    {
+      "timestamp": "2026-02-16T21:48:44.258643",
+      "rate": 62.37
+    },
+    {
+      "timestamp": "2026-02-16T21:48:47.425028",
+      "rate": 62.77
+    },
+    {
+      "timestamp": "2026-02-16T21:48:48.549568",
+      "rate": 62.77
+    },
+    {
+      "timestamp": "2026-02-16T21:48:51.660128",
+      "rate": 63.16
+    },
+    {
+      "timestamp": "2026-02-16T21:48:53.298435",
+      "rate": 63.16
+    },
+    {
+      "timestamp": "2026-02-16T21:48:56.450040",
+      "rate": 62.5
+    },
+    {
+      "timestamp": "2026-02-16T21:48:57.443568",
+      "rate": 62.5
+    },
+    {
+      "timestamp": "2026-02-16T21:49:00.684187",
+      "rate": 61.86
+    },
+    {
+      "timestamp": "2026-02-16T21:49:01.713625",
+      "rate": 61.86
+    },
+    {
+      "timestamp": "2026-02-16T21:49:04.803851",
+      "rate": 61.22
+    },
+    {
+      "timestamp": "2026-02-16T21:49:05.910119",
+      "rate": 61.22
+    },
+    {
+      "timestamp": "2026-02-16T21:49:09.184916",
+      "rate": 61.62
+    },
+    {
+      "timestamp": "2026-02-16T21:49:10.289265",
+      "rate": 61.62
+    },
+    {
+      "timestamp": "2026-02-16T21:49:13.416646",
+      "rate": 61.0
+    },
+    {
+      "timestamp": "2026-02-16T21:49:14.534302",
+      "rate": 61.0
+    },
+    {
+      "timestamp": "2026-02-16T21:49:17.661140",
+      "rate": 61.39
+    },
+    {
+      "timestamp": "2026-02-16T21:49:18.794795",
+      "rate": 61.39
+    },
+    {
+      "timestamp": "2026-02-16T21:49:21.881658",
+      "rate": 60.78
+    },
+    {
+      "timestamp": "2026-02-16T21:49:23.477207",
+      "rate": 60.78
+    },
+    {
+      "timestamp": "2026-02-16T21:49:26.685777",
+      "rate": 60.19
+    },
+    {
+      "timestamp": "2026-02-16T21:49:27.711571",
+      "rate": 60.19
+    },
+    {
+      "timestamp": "2026-02-16T21:49:30.832979",
+      "rate": 60.58
+    },
+    {
+      "timestamp": "2026-02-16T21:49:31.864865",
+      "rate": 60.58
+    },
+    {
+      "timestamp": "2026-02-16T21:49:35.060950",
+      "rate": 60.95
+    },
+    {
+      "timestamp": "2026-02-16T21:49:36.078281",
+      "rate": 60.95
+    },
+    {
+      "timestamp": "2026-02-16T21:49:39.357861",
+      "rate": 60.38
+    },
+    {
+      "timestamp": "2026-02-16T21:49:40.549946",
+      "rate": 60.38
+    },
+    {
+      "timestamp": "2026-02-16T21:49:43.721782",
+      "rate": 60.75
+    },
+    {
+      "timestamp": "2026-02-16T21:49:44.749759",
+      "rate": 60.75
+    },
+    {
+      "timestamp": "2026-02-16T21:49:47.959355",
+      "rate": 61.11
+    },
+    {
+      "timestamp": "2026-02-16T21:49:49.006075",
+      "rate": 61.11
+    },
+    {
+      "timestamp": "2026-02-16T21:49:52.056375",
+      "rate": 60.55
+    },
+    {
+      "timestamp": "2026-02-16T21:49:53.654906",
+      "rate": 60.55
+    },
+    {
+      "timestamp": "2026-02-16T21:49:56.917823",
+      "rate": 60.0
+    },
+    {
+      "timestamp": "2026-02-16T21:49:57.966492",
+      "rate": 60.0
+    },
+    {
+      "timestamp": "2026-02-16T21:50:01.131333",
+      "rate": 60.36
+    },
+    {
+      "timestamp": "2026-02-16T21:50:02.176731",
+      "rate": 60.36
+    },
+    {
+      "timestamp": "2026-02-16T21:50:05.359101",
+      "rate": 60.71
+    },
+    {
+      "timestamp": "2026-02-16T21:50:06.376531",
+      "rate": 60.71
+    },
+    {
+      "timestamp": "2026-02-16T21:50:09.634048",
+      "rate": 61.06
+    },
+    {
+      "timestamp": "2026-02-16T21:50:10.781379",
+      "rate": 61.06
+    },
+    {
+      "timestamp": "2026-02-16T21:50:13.900601",
+      "rate": 61.4
+    },
+    {
+      "timestamp": "2026-02-16T21:50:14.901029",
+      "rate": 61.4
+    },
+    {
+      "timestamp": "2026-02-16T21:50:18.096770",
+      "rate": 61.74
+    },
+    {
+      "timestamp": "2026-02-16T21:50:19.147907",
+      "rate": 61.74
+    },
+    {
+      "timestamp": "2026-02-16T21:50:22.243801",
+      "rate": 62.07
+    },
+    {
+      "timestamp": "2026-02-16T21:50:24.062907",
+      "rate": 62.07
+    },
+    {
+      "timestamp": "2026-02-16T21:50:27.485915",
+      "rate": 62.39
+    },
+    {
+      "timestamp": "2026-02-16T21:50:28.623705",
+      "rate": 62.39
+    },
+    {
+      "timestamp": "2026-02-16T21:50:31.793178",
+      "rate": 61.86
+    },
+    {
+      "timestamp": "2026-02-16T21:50:32.813515",
+      "rate": 61.86
+    },
+    {
+      "timestamp": "2026-02-16T21:50:35.946116",
+      "rate": 62.18
+    },
+    {
+      "timestamp": "2026-02-16T21:50:36.942407",
+      "rate": 62.18
+    },
+    {
+      "timestamp": "2026-02-16T21:50:40.146118",
+      "rate": 62.5
+    },
+    {
+      "timestamp": "2026-02-16T21:50:41.154505",
+      "rate": 62.5
+    },
+    {
+      "timestamp": "2026-02-16T21:50:44.225161",
+      "rate": 62.81
+    },
+    {
+      "timestamp": "2026-02-16T21:50:45.306580",
+      "rate": 62.81
+    },
+    {
+      "timestamp": "2026-02-16T21:50:48.457892",
+      "rate": 63.11
+    },
+    {
+      "timestamp": "2026-02-16T21:50:49.487423",
+      "rate": 63.11
+    },
+    {
+      "timestamp": "2026-02-16T21:50:53.086420",
+      "rate": 63.41
+    },
+    {
+      "timestamp": "2026-02-16T21:50:54.364416",
+      "rate": 63.41
+    },
+    {
+      "timestamp": "2026-02-16T21:50:57.617299",
+      "rate": 63.71
+    },
+    {
+      "timestamp": "2026-02-16T21:50:58.744878",
+      "rate": 63.71
+    },
+    {
+      "timestamp": "2026-02-16T21:51:01.856186",
+      "rate": 64.0
+    },
+    {
+      "timestamp": "2026-02-16T21:51:02.950720",
+      "rate": 64.0
+    },
+    {
+      "timestamp": "2026-02-16T21:51:06.092010",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:51:07.112094",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:51:11.198112",
+      "rate": 63.78
+    },
+    {
+      "timestamp": "2026-02-16T21:51:12.205833",
+      "rate": 63.78
+    },
+    {
+      "timestamp": "2026-02-16T21:51:15.335539",
+      "rate": 64.06
+    },
+    {
+      "timestamp": "2026-02-16T21:51:16.468077",
+      "rate": 64.06
+    },
+    {
+      "timestamp": "2026-02-16T21:51:19.631776",
+      "rate": 64.34
+    },
+    {
+      "timestamp": "2026-02-16T21:51:20.663723",
+      "rate": 64.34
+    },
+    {
+      "timestamp": "2026-02-16T21:51:23.972473",
+      "rate": 64.62
+    },
+    {
+      "timestamp": "2026-02-16T21:51:25.148139",
+      "rate": 64.62
+    },
+    {
+      "timestamp": "2026-02-16T21:51:28.255812",
+      "rate": 64.89
+    },
+    {
+      "timestamp": "2026-02-16T21:51:29.300668",
+      "rate": 64.89
+    },
+    {
+      "timestamp": "2026-02-16T21:51:32.508743",
+      "rate": 65.15
+    },
+    {
+      "timestamp": "2026-02-16T21:51:33.551860",
+      "rate": 65.15
+    },
+    {
+      "timestamp": "2026-02-16T21:51:36.600849",
+      "rate": 65.41
+    },
+    {
+      "timestamp": "2026-02-16T21:51:37.650184",
+      "rate": 65.41
+    },
+    {
+      "timestamp": "2026-02-16T21:51:41.291250",
+      "rate": 64.93
+    },
+    {
+      "timestamp": "2026-02-16T21:51:42.293621",
+      "rate": 64.93
+    },
+    {
+      "timestamp": "2026-02-16T21:51:45.426191",
+      "rate": 65.19
+    },
+    {
+      "timestamp": "2026-02-16T21:51:46.424774",
+      "rate": 65.19
+    },
+    {
+      "timestamp": "2026-02-16T21:51:49.534235",
+      "rate": 64.71
+    },
+    {
+      "timestamp": "2026-02-16T21:51:50.663876",
+      "rate": 64.71
+    },
+    {
+      "timestamp": "2026-02-16T21:51:54.098284",
+      "rate": 64.23
+    },
+    {
+      "timestamp": "2026-02-16T21:51:55.278003",
+      "rate": 64.23
+    },
+    {
+      "timestamp": "2026-02-16T21:51:58.465822",
+      "rate": 63.77
+    },
+    {
+      "timestamp": "2026-02-16T21:51:59.462193",
+      "rate": 63.77
+    },
+    {
+      "timestamp": "2026-02-16T21:52:02.563880",
+      "rate": 64.03
+    },
+    {
+      "timestamp": "2026-02-16T21:52:03.557026",
+      "rate": 64.03
+    },
+    {
+      "timestamp": "2026-02-16T21:52:06.739027",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:52:08.450251",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:52:11.809850",
+      "rate": 64.54
+    },
+    {
+      "timestamp": "2026-02-16T21:52:12.838564",
+      "rate": 64.54
+    },
+    {
+      "timestamp": "2026-02-16T21:52:15.928621",
+      "rate": 64.79
+    },
+    {
+      "timestamp": "2026-02-16T21:52:16.938668",
+      "rate": 64.79
+    },
+    {
+      "timestamp": "2026-02-16T21:52:20.119370",
+      "rate": 65.03
+    },
+    {
+      "timestamp": "2026-02-16T21:52:21.162333",
+      "rate": 65.03
+    },
+    {
+      "timestamp": "2026-02-16T21:52:24.503611",
+      "rate": 65.28
+    },
+    {
+      "timestamp": "2026-02-16T21:52:25.687925",
+      "rate": 65.28
+    },
+    {
+      "timestamp": "2026-02-16T21:52:28.849350",
+      "rate": 65.52
+    },
+    {
+      "timestamp": "2026-02-16T21:52:29.908202",
+      "rate": 65.52
+    },
+    {
+      "timestamp": "2026-02-16T21:52:33.074049",
+      "rate": 65.75
+    },
+    {
+      "timestamp": "2026-02-16T21:52:34.131836",
+      "rate": 65.75
+    },
+    {
+      "timestamp": "2026-02-16T21:52:37.300106",
+      "rate": 65.99
+    },
+    {
+      "timestamp": "2026-02-16T21:52:39.055857",
+      "rate": 65.99
+    },
+    {
+      "timestamp": "2026-02-16T21:52:42.359011",
+      "rate": 65.54
+    },
+    {
+      "timestamp": "2026-02-16T21:52:43.508970",
+      "rate": 65.54
+    },
+    {
+      "timestamp": "2026-02-16T21:52:46.703040",
+      "rate": 65.77
+    },
+    {
+      "timestamp": "2026-02-16T21:52:47.707866",
+      "rate": 65.77
+    },
+    {
+      "timestamp": "2026-02-16T21:52:50.751452",
+      "rate": 66.0
+    },
+    {
+      "timestamp": "2026-02-16T21:52:51.811935",
+      "rate": 66.0
+    },
+    {
+      "timestamp": "2026-02-16T21:52:54.953852",
+      "rate": 66.23
+    },
+    {
+      "timestamp": "2026-02-16T21:52:56.047973",
+      "rate": 66.23
+    },
+    {
+      "timestamp": "2026-02-16T21:52:59.427635",
+      "rate": 65.79
+    },
+    {
+      "timestamp": "2026-02-16T21:53:00.572328",
+      "rate": 65.79
+    },
+    {
+      "timestamp": "2026-02-16T21:53:03.799843",
+      "rate": 66.01
+    },
+    {
+      "timestamp": "2026-02-16T21:53:04.829905",
+      "rate": 66.01
+    },
+    {
+      "timestamp": "2026-02-16T21:53:08.308041",
+      "rate": 66.23
+    },
+    {
+      "timestamp": "2026-02-16T21:53:09.276482",
+      "rate": 66.23
+    },
+    {
+      "timestamp": "2026-02-16T21:53:12.515695",
+      "rate": 65.81
+    },
+    {
+      "timestamp": "2026-02-16T21:53:13.576737",
+      "rate": 65.81
+    },
+    {
+      "timestamp": "2026-02-16T21:53:16.777962",
+      "rate": 66.03
+    },
+    {
+      "timestamp": "2026-02-16T21:53:17.915313",
+      "rate": 66.03
+    },
+    {
+      "timestamp": "2026-02-16T21:53:21.042496",
+      "rate": 65.61
+    },
+    {
+      "timestamp": "2026-02-16T21:53:22.037394",
+      "rate": 65.61
+    },
+    {
+      "timestamp": "2026-02-16T21:53:25.209419",
+      "rate": 65.82
+    },
+    {
+      "timestamp": "2026-02-16T21:53:26.265731",
+      "rate": 65.82
+    },
+    {
+      "timestamp": "2026-02-16T21:53:29.619945",
+      "rate": 66.04
+    },
+    {
+      "timestamp": "2026-02-16T21:53:30.665174",
+      "rate": 66.04
+    },
+    {
+      "timestamp": "2026-02-16T21:53:33.917487",
+      "rate": 66.25
+    },
+    {
+      "timestamp": "2026-02-16T21:53:34.892839",
+      "rate": 66.25
+    },
+    {
+      "timestamp": "2026-02-16T21:53:38.198330",
+      "rate": 66.46
+    },
+    {
+      "timestamp": "2026-02-16T21:53:39.362878",
+      "rate": 66.46
+    },
+    {
+      "timestamp": "2026-02-16T21:53:42.603119",
+      "rate": 66.05
+    },
+    {
+      "timestamp": "2026-02-16T21:53:43.654803",
+      "rate": 66.05
+    },
+    {
+      "timestamp": "2026-02-16T21:53:46.896984",
+      "rate": 65.64
+    },
+    {
+      "timestamp": "2026-02-16T21:53:48.019487",
+      "rate": 65.64
+    },
+    {
+      "timestamp": "2026-02-16T21:53:51.124375",
+      "rate": 65.24
+    },
+    {
+      "timestamp": "2026-02-16T21:53:52.113967",
+      "rate": 65.24
+    },
+    {
+      "timestamp": "2026-02-16T21:53:55.255799",
+      "rate": 64.85
+    },
+    {
+      "timestamp": "2026-02-16T21:53:56.334219",
+      "rate": 64.85
+    },
+    {
+      "timestamp": "2026-02-16T21:53:59.547475",
+      "rate": 65.06
+    },
+    {
+      "timestamp": "2026-02-16T21:54:00.568309",
+      "rate": 65.06
+    },
+    {
+      "timestamp": "2026-02-16T21:54:03.804728",
+      "rate": 65.27
+    },
+    {
+      "timestamp": "2026-02-16T21:54:04.865783",
+      "rate": 65.27
+    },
+    {
+      "timestamp": "2026-02-16T21:54:08.283941",
+      "rate": 64.88
+    },
+    {
+      "timestamp": "2026-02-16T21:54:09.628332",
+      "rate": 64.88
+    },
+    {
+      "timestamp": "2026-02-16T21:54:12.865869",
+      "rate": 64.5
+    },
+    {
+      "timestamp": "2026-02-16T21:54:13.898621",
+      "rate": 64.5
+    },
+    {
+      "timestamp": "2026-02-16T21:54:17.113287",
+      "rate": 64.71
+    },
+    {
+      "timestamp": "2026-02-16T21:54:18.149470",
+      "rate": 64.71
+    },
+    {
+      "timestamp": "2026-02-16T21:54:21.277109",
+      "rate": 64.33
+    },
+    {
+      "timestamp": "2026-02-16T21:54:22.407184",
+      "rate": 64.33
+    },
+    {
+      "timestamp": "2026-02-16T21:54:25.924485",
+      "rate": 63.95
+    },
+    {
+      "timestamp": "2026-02-16T21:54:27.105877",
+      "rate": 63.95
+    },
+    {
+      "timestamp": "2026-02-16T21:54:30.443098",
+      "rate": 64.16
+    },
+    {
+      "timestamp": "2026-02-16T21:54:31.438811",
+      "rate": 64.16
+    },
+    {
+      "timestamp": "2026-02-16T21:54:34.557398",
+      "rate": 63.79
+    },
+    {
+      "timestamp": "2026-02-16T21:54:35.594128",
+      "rate": 63.79
+    },
+    {
+      "timestamp": "2026-02-16T21:54:38.924801",
+      "rate": 64.0
+    },
+    {
+      "timestamp": "2026-02-16T21:54:39.995361",
+      "rate": 64.0
+    },
+    {
+      "timestamp": "2026-02-16T21:54:43.176092",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:54:44.199780",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:54:47.409773",
+      "rate": 63.84
+    },
+    {
+      "timestamp": "2026-02-16T21:54:48.444705",
+      "rate": 63.84
+    },
+    {
+      "timestamp": "2026-02-16T21:54:51.573933",
+      "rate": 64.04
+    },
+    {
+      "timestamp": "2026-02-16T21:54:52.574171",
+      "rate": 64.04
+    },
+    {
+      "timestamp": "2026-02-16T21:54:56.137128",
+      "rate": 64.25
+    },
+    {
+      "timestamp": "2026-02-16T21:54:57.415084",
+      "rate": 64.25
+    },
+    {
+      "timestamp": "2026-02-16T21:55:00.518206",
+      "rate": 64.44
+    },
+    {
+      "timestamp": "2026-02-16T21:55:01.558709",
+      "rate": 64.44
+    },
+    {
+      "timestamp": "2026-02-16T21:55:04.800626",
+      "rate": 64.09
+    },
+    {
+      "timestamp": "2026-02-16T21:55:05.822267",
+      "rate": 64.09
+    },
+    {
+      "timestamp": "2026-02-16T21:55:09.128329",
+      "rate": 63.74
+    },
+    {
+      "timestamp": "2026-02-16T21:55:10.163600",
+      "rate": 63.74
+    },
+    {
+      "timestamp": "2026-02-16T21:55:13.308131",
+      "rate": 63.39
+    },
+    {
+      "timestamp": "2026-02-16T21:55:14.430300",
+      "rate": 63.39
+    },
+    {
+      "timestamp": "2026-02-16T21:55:17.585613",
+      "rate": 63.04
+    },
+    {
+      "timestamp": "2026-02-16T21:55:18.709054",
+      "rate": 63.04
+    },
+    {
+      "timestamp": "2026-02-16T21:55:21.845004",
+      "rate": 63.24
+    },
+    {
+      "timestamp": "2026-02-16T21:55:22.878842",
+      "rate": 63.24
+    },
+    {
+      "timestamp": "2026-02-16T21:55:26.582908",
+      "rate": 63.44
+    },
+    {
+      "timestamp": "2026-02-16T21:55:27.949694",
+      "rate": 63.44
+    },
+    {
+      "timestamp": "2026-02-16T21:55:31.195484",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:55:32.439864",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:55:35.776953",
+      "rate": 63.83
+    },
+    {
+      "timestamp": "2026-02-16T21:55:36.930524",
+      "rate": 63.83
+    },
+    {
+      "timestamp": "2026-02-16T21:55:40.217694",
+      "rate": 64.02
+    },
+    {
+      "timestamp": "2026-02-16T21:55:41.380041",
+      "rate": 64.02
+    },
+    {
+      "timestamp": "2026-02-16T21:55:44.700047",
+      "rate": 63.68
+    },
+    {
+      "timestamp": "2026-02-16T21:55:45.726035",
+      "rate": 63.68
+    },
+    {
+      "timestamp": "2026-02-16T21:55:48.833552",
+      "rate": 63.87
+    },
+    {
+      "timestamp": "2026-02-16T21:55:49.959036",
+      "rate": 63.87
+    },
+    {
+      "timestamp": "2026-02-16T21:55:53.467981",
+      "rate": 64.06
+    },
+    {
+      "timestamp": "2026-02-16T21:55:54.536352",
+      "rate": 64.06
+    },
+    {
+      "timestamp": "2026-02-16T21:55:57.747148",
+      "rate": 64.25
+    },
+    {
+      "timestamp": "2026-02-16T21:55:58.795452",
+      "rate": 64.25
+    },
+    {
+      "timestamp": "2026-02-16T21:56:01.772011",
+      "rate": 64.43
+    },
+    {
+      "timestamp": "2026-02-16T21:56:02.833682",
+      "rate": 64.43
+    },
+    {
+      "timestamp": "2026-02-16T21:56:06.052175",
+      "rate": 64.1
+    },
+    {
+      "timestamp": "2026-02-16T21:56:07.178685",
+      "rate": 64.1
+    },
+    {
+      "timestamp": "2026-02-16T21:56:10.272447",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:56:11.346700",
+      "rate": 64.29
+    },
+    {
+      "timestamp": "2026-02-16T21:56:14.608393",
+      "rate": 63.96
+    },
+    {
+      "timestamp": "2026-02-16T21:56:15.615678",
+      "rate": 63.96
+    },
+    {
+      "timestamp": "2026-02-16T21:56:18.727803",
+      "rate": 64.14
+    },
+    {
+      "timestamp": "2026-02-16T21:56:19.810191",
+      "rate": 64.14
+    },
+    {
+      "timestamp": "2026-02-16T21:56:23.025072",
+      "rate": 64.32
+    },
+    {
+      "timestamp": "2026-02-16T21:56:24.381099",
+      "rate": 64.32
+    },
+    {
+      "timestamp": "2026-02-16T21:56:27.615805",
+      "rate": 64.0
+    },
+    {
+      "timestamp": "2026-02-16T21:56:28.792694",
+      "rate": 64.0
+    },
+    {
+      "timestamp": "2026-02-16T21:56:31.971676",
+      "rate": 64.18
+    },
+    {
+      "timestamp": "2026-02-16T21:56:33.009485",
+      "rate": 64.18
+    },
+    {
+      "timestamp": "2026-02-16T21:56:36.201972",
+      "rate": 63.86
+    },
+    {
+      "timestamp": "2026-02-16T21:56:37.335929",
+      "rate": 63.86
+    },
+    {
+      "timestamp": "2026-02-16T21:56:40.447920",
+      "rate": 63.55
+    },
+    {
+      "timestamp": "2026-02-16T21:56:41.537934",
+      "rate": 63.55
+    },
+    {
+      "timestamp": "2026-02-16T21:56:44.805412",
+      "rate": 63.73
+    },
+    {
+      "timestamp": "2026-02-16T21:56:45.847008",
+      "rate": 63.73
+    },
+    {
+      "timestamp": "2026-02-16T21:56:49.026279",
+      "rate": 63.9
+    },
+    {
+      "timestamp": "2026-02-16T21:56:50.067987",
+      "rate": 63.9
+    },
+    {
+      "timestamp": "2026-02-16T21:57:58.964096",
+      "rate": 64.08
+    },
+    {
+      "timestamp": "2026-02-16T21:58:02.577671",
+      "rate": 63.77
+    },
+    {
+      "timestamp": "2026-02-16T21:58:04.385185",
+      "rate": 63.77
+    },
+    {
+      "timestamp": "2026-02-16T21:58:07.683066",
+      "rate": 63.94
+    },
+    {
+      "timestamp": "2026-02-16T21:58:08.736014",
+      "rate": 63.94
+    },
+    {
+      "timestamp": "2026-02-16T21:58:11.932282",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:58:13.059767",
+      "rate": 63.64
+    },
+    {
+      "timestamp": "2026-02-16T21:58:16.422067",
+      "rate": 63.33
+    },
+    {
+      "timestamp": "2026-02-16T21:58:17.706332",
+      "rate": 63.33
+    },
+    {
+      "timestamp": "2026-02-16T21:58:21.190423",
+      "rate": 63.03
+    },
+    {
+      "timestamp": "2026-02-16T21:58:22.251876",
+      "rate": 63.03
+    },
+    {
+      "timestamp": "2026-02-16T21:58:25.437161",
+      "rate": 63.21
+    },
+    {
+      "timestamp": "2026-02-16T21:58:26.482354",
+      "rate": 63.21
+    },
+    {
+      "timestamp": "2026-02-16T21:58:29.640142",
+      "rate": 62.91
+    },
+    {
+      "timestamp": "2026-02-16T21:58:31.213391",
+      "rate": 62.91
+    },
+    {
+      "timestamp": "2026-02-16T21:58:34.559439",
+      "rate": 63.08
+    },
+    {
+      "timestamp": "2026-02-16T21:58:35.623858",
+      "rate": 63.08
+    },
+    {
+      "timestamp": "2026-02-16T21:58:38.786044",
+      "rate": 63.26
+    },
+    {
+      "timestamp": "2026-02-16T21:58:39.778976",
+      "rate": 63.26
+    },
+    {
+      "timestamp": "2026-02-16T21:58:42.912866",
+      "rate": 62.96
+    },
+    {
+      "timestamp": "2026-02-16T21:58:43.931511",
+      "rate": 62.96
+    },
+    {
+      "timestamp": "2026-02-16T21:58:47.181129",
+      "rate": 63.13
+    },
+    {
+      "timestamp": "2026-02-16T21:58:48.486214",
+      "rate": 63.13
+    },
+    {
+      "timestamp": "2026-02-16T21:58:51.753278",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:58:52.524889",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:22.676302",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.610314",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.695045",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.771558",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.847143",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:38.921171",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.000760",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.096114",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.359271",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.434021",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.505004",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.577567",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.647252",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.724767",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.802882",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.881969",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:39.957558",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T21:59:43.696546",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.098886",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.189093",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.274615",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.370804",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.467351",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.565895",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.684448",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T22:04:41.982322",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.071565",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.160887",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.248492",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.334147",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.419335",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.513525",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.605134",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:42.709562",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:04:46.784817",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:39.942411",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.052966",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.134529",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.240045",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.333278",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.418508",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.513065",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.776205",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.857740",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:40.940870",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.018457",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.092504",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.178019",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.264403",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.342944",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:41.426115",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:13:45.286039",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:40.757699",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:40.842225",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:40.927978",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.006486",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.083869",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.160457",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.260029",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.512232",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.587766",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.661307",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.736827",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.810828",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.884000",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:41.962512",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:42.040053",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:42.116165",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:16:45.960469",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:01.683146",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:01.767697",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:01.888222",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.001760",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.137142",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.246675",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.414591",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.799627",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:02.907155",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.000667",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.091215",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.184695",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.290216",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.445738",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.566764",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-16T22:24:03.674171",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:22.981110",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.064640",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.145172",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.229691",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.310693",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.389220",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:23.489631",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:14:44.828093",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:44.913605",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:44.991121",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.066691",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.141118",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.215119",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.295766",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.392889",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:14:45.471446",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:37.901044",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:37.987602",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.062718",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.143225",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.246983",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.423140",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.498683",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.575420",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.655303",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.728814",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.802408",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.879950",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:38.956957",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:39.033519",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:43.814403",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:18:43.896961",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.241750",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.325857",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.403575",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.482094",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.586890",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.757000",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.840500",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.916544",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:31.991288",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.065850",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.138997",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.217003",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.293379",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:32.370458",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:37.108673",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:21:37.191219",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.581751",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.668857",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.749267",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.825924",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:18.930398",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.097601",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.173642",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.254148",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.328604",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.404169",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.480350",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.559368",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.638517",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:19.716128",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:24.529758",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:22:24.613698",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:42.870635",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.000265",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.121103",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.244036",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.415694",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.666928",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.797223",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:43.920928",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.032249",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.157721",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.278370",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.402478",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.524485",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:44.646160",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:53.101170",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:24:53.236095",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.559602",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.647609",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.726226",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.803743",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:39.907316",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.072100",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.150009",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.226516",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.302239",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.374669",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.448722",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.528112",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.617663",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:40.696180",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:45.642455",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:26:45.728026",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.322914",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.406488",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.483960",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.558948",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.665323",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.832470",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.911053",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:02.986652",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.060615",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.133030",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.204722",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.284194",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.366260",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:03.441839",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:08.793178",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:27:08.877075",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:10.897181",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:10.984810",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.064996",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.142606",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.242079",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.406900",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.483368",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.560910",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.633459",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.710668",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.782172",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.860666",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:11.937183",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:12.016192",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:17.432998",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T13:39:17.518004",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.568752",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.667976",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.765607",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.866226",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:38.979538",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.166614",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.253831",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.343356",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.428974",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.512600",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.598231",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.687746",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.774466",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:39.865315",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:47.660191",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T14:45:47.759773",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:16.779594",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:16.880780",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:16.984246",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.110342",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.243917",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.437513",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.538006",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.627534",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.718103",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.807660",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.898747",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:17.993154",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:18.088676",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:18.195205",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:24.298799",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:40:24.394450",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.336105",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.428634",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.529217",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.645802",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.795841",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T15:45:09.996959",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.083698",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.171377",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.265241",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.345135",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.424750",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.504278",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.582534",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:10.663283",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:16.702458",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T15:45:16.790997",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.295850",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.434361",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.565411",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.698973",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:23.874000",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.123082",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.261099",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.411339",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.543665",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.667019",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.791583",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:24.921211",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:25.051767",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:25.182221",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:35.228811",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:46:35.373363",
+      "rate": 63.3
+    },
+    {
+      "timestamp": "2026-02-17T16:54:21.497537",
+      "rate": 63.01
+    },
+    {
+      "timestamp": "2026-02-17T16:54:31.451752",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.216609",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.303229",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.384737",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.463379",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.570016",
+      "rate": 40.0
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.740370",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.823775",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.905879",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:01.985288",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.059905",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.135341",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.219348",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.300963",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:02.385387",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:08.052589",
+      "rate": 62.73
+    },
+    {
+      "timestamp": "2026-02-17T16:55:08.137028",
+      "rate": 62.73
+    }
+  ]
+}
