@@ -285,11 +285,9 @@ flowchart LR
 ```
 
 **URL pública da aplicação**:
-- `[URL_DA_APLICACAO_NO_RENDER]`
-
-> Observação operacional importante: o `Dockerfile` não copia `app/data` por padrão; retreino em container exige volume/artefato de dados controlado.
-
-> Estratégia adotada neste projeto: `DATA_DIR=/app/data` + volume/persistent disk montado nesse caminho.
+- API: https://passos-magicos-datathon.onrender.com/docs#/
+- Health: https://passos-magicos-datathon.onrender.com/health
+- Dashboard: https://passos-magicos-datathon.onrender.com/api/v1/monitoring/dashboard
 
 ---
 
