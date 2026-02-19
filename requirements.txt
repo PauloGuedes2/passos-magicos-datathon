@@ -1,5 +1,6 @@
 fastapi
 uvicorn
+newrelic
 pandas
 numpy
 scikit-learn==1.5.2

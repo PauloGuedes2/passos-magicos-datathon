@@ -73,6 +73,10 @@ class Configuracoes:
     PSI_TOP_FEATURES = int(os.getenv("PSI_TOP_FEATURES", "5"))
     HIGH_RISK_SHIFT_THRESHOLD_PCT = float(os.getenv("HIGH_RISK_SHIFT_THRESHOLD_PCT", "20.0"))
     DRIFT_REPORT_FILE = os.path.join(MONITORING_DIR, "drift_report.json")
+    APP_ENV = os.getenv("APP_ENV", os.getenv("ENVIRONMENT", "dev"))
+    SERVICE_NAME = os.getenv("SERVICE_NAME", "passos-magicos-datathon-api")
+    MODEL_VERSION = os.getenv("MODEL_VERSION", "unknown")
+    MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS = int(os.getenv("MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS", "300"))
 
     FEATURES_NUMERICAS = [
         "IDADE",

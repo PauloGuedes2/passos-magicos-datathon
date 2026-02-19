@@ -19,6 +19,7 @@ from evidently.metric_preset import DataDriftPreset, TargetDriftPreset
 from evidently.report import Report
 
 from src.config.settings import Configuracoes
+from src.infrastructure.monitoring.newrelic_model_metrics import publish_model_metrics
 from src.util.logger import logger
 
 
@@ -71,6 +72,7 @@ class ServicoMonitoramento:
             monitoramento_estrategico = ServicoMonitoramento._calcular_monitoramento_estrategico(
                 referencia, dados_atual
             )
+            missing_ratio = ServicoMonitoramento._calcular_missing_ratio(dados_atual)
             estrategico_html = ServicoMonitoramento._gerar_monitoramento_estrategico_html(
                 monitoramento_estrategico
             )
@@ -78,6 +80,7 @@ class ServicoMonitoramento:
                 psi_df=psi_df,
                 alertas_psi=drift_alertas,
                 monitoramento_estrategico=monitoramento_estrategico,
+                missing_ratio=missing_ratio,
             )
             return f"{relatorio.get_html()}{fairness_html}{psi_html}{estrategico_html}"
 
@@ -357,10 +360,39 @@ class ServicoMonitoramento:
         )
 
     @staticmethod
+    def _calcular_missing_ratio(df: pd.DataFrame) -> float:
+        """Calcula proporcao de valores ausentes no snapshot atual."""
+        try:
+            if df.empty:
+                return 0.0
+            total_celulas = float(df.shape[0] * df.shape[1])
+            if total_celulas <= 0:
+                return 0.0
+            total_missing = float(df.isna().sum().sum())
+            return round(total_missing / total_celulas, 6)
+        except Exception:
+            return 0.0
+
+    @staticmethod
+    def _obter_model_version() -> str:
+        """Obtém versao do modelo via metricas de treino ou variavel de ambiente."""
+        try:
+            if os.path.exists(Configuracoes.METRICS_FILE):
+                with open(Configuracoes.METRICS_FILE, "r", encoding="utf-8") as arquivo:
+                    metricas = json.load(arquivo)
+                versao = metricas.get("model_version")
+                if versao:
+                    return str(versao)
+        except Exception as erro:
+            logger.warning(f"Falha ao obter versao do modelo para observabilidade: {erro}")
+        return str(Configuracoes.MODEL_VERSION)
+
+    @staticmethod
     def _persistir_relatorio_drift(
         psi_df: pd.DataFrame,
         alertas_psi: list[str],
         monitoramento_estrategico: dict,
+        missing_ratio: float = 0.0,
     ) -> None:
         """Persistir relatorio consolidado de drift com PSI e indicadores estrategicos."""
         try:
@@ -438,6 +470,22 @@ class ServicoMonitoramento:
             }
             with open(Configuracoes.DRIFT_REPORT_FILE, "w", encoding="utf-8") as arquivo:
                 json.dump(relatorio, arquivo, indent=2, ensure_ascii=False)
+
+            number_of_drifted_features = 0
+            if not psi_df.empty and "drift_flag" in psi_df.columns:
+                number_of_drifted_features = int(psi_df["drift_flag"].fillna(False).astype(bool).sum())
+
+            summary = {
+                "drift_score": avg_psi,
+                "number_of_drifted_features": number_of_drifted_features,
+                "risk_rate": high_risk_rate,
+                "missing_ratio": round(float(missing_ratio), 6),
+                "model_version": ServicoMonitoramento._obter_model_version(),
+                "window_timestamp": timestamp,
+                "environment": Configuracoes.APP_ENV,
+                "service_name": Configuracoes.SERVICE_NAME,
+            }
+            publish_model_metrics(summary)
         except Exception as erro:
             logger.warning(f"Falha ao persistir relatorio de drift consolidado: {erro}")
 

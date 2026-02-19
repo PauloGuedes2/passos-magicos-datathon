@@ -8,6 +8,7 @@ Responsabilidades:
 
 import json
 import os
+import time
 import pandas as pd
 
 from src.application.feature_processor import ProcessadorFeatures
@@ -40,6 +41,8 @@ class ServicoRisco:
         self.processador = ProcessadorFeatures()
         self.logger = LoggerPredicao()
         self.repositorio = RepositorioHistorico()
+
+    _ultimo_snapshot_monitoramento = 0.0
 
     def prever_risco(self, dados_estudante: dict) -> dict:
         """Realiza a predição de risco.
@@ -114,8 +117,13 @@ class ServicoRisco:
     def _atualizar_dashboard_em_tempo_real() -> None:
         """Atualiza drift e dashboard profissional a cada request de predição."""
         try:
+            intervalo = max(0, int(Configuracoes.MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS))
+            agora = time.time()
+            if intervalo > 0 and (agora - ServicoRisco._ultimo_snapshot_monitoramento) < intervalo:
+                return
             _ = ServicoMonitoramento.gerar_dashboard()
             ProfessionalDashboardService().generate_dashboard()
+            ServicoRisco._ultimo_snapshot_monitoramento = agora
         except Exception as erro:
             logger.warning(f"Falha ao atualizar dashboard em tempo real: {erro}")
 

@@ -37,7 +37,11 @@ ENV PATH="/opt/venv/bin:$PATH"
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PYTHONPATH=/app \
-    DATA_DIR=/app/data
+    DATA_DIR=/app/data \
+    NEW_RELIC_LOG=stderr \
+    NEW_RELIC_LOG_LEVEL=info \
+    NEW_RELIC_CAPTURE_PARAMS=false \
+    NEW_RELIC_ATTRIBUTES_EXCLUDE=request.parameters.*,request.headers.authorization,request.headers.cookie
 
 # Application source
 COPY app/src/ ./src/
@@ -56,4 +60,4 @@ RUN chown -R appuser:appuser /app
 USER appuser
 
 # Render injects PORT automatically
-CMD sh -c "uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
+CMD sh -c "newrelic-admin run-program uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}"
