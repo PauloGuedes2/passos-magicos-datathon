@@ -6,7 +6,6 @@ Responsabilidades:
 - Garantir thread-safety
 """
 
-import hashlib
 import os
 from joblib import load
 from threading import Lock, RLock
@@ -61,35 +60,12 @@ class GerenciadorModelo:
                 raise FileNotFoundError(f"Modelo não encontrado em {Configuracoes.MODEL_PATH}")
 
             try:
-                self._validar_hash_modelo()
                 logger.info(f"Carregando modelo do disco: {Configuracoes.MODEL_PATH}...")
                 self._modelo = load(Configuracoes.MODEL_PATH)
                 logger.info("Modelo carregado com sucesso!")
             except Exception as erro:
                 logger.critical(f"Falha fatal ao carregar o modelo: {erro}")
                 raise erro
-
-    @staticmethod
-    def _validar_hash_modelo() -> None:
-        """Valida o hash SHA256 do modelo, quando configurado.
-
-        Exceções:
-        - RuntimeError: quando o hash configurado não corresponde ao arquivo
-        """
-        if not Configuracoes.MODEL_SHA256:
-            if Configuracoes.MODEL_SHA256_REQUIRED:
-                raise RuntimeError("Hash do modelo obrigatório não configurado.")
-            logger.warning("Hash do modelo não configurado. Verificação de integridade desabilitada.")
-            return
-
-        hash_esperado = Configuracoes.MODEL_SHA256.lower()
-        hash_atual = hashlib.sha256()
-        with open(Configuracoes.MODEL_PATH, "rb") as arquivo:
-            for bloco in iter(lambda: arquivo.read(8192), b""):
-                hash_atual.update(bloco)
-
-        if hash_atual.hexdigest().lower() != hash_esperado:
-            raise RuntimeError("Hash do modelo não confere. Possível artefato adulterado.")
 
     def obter_modelo(self) -> Any:
         """Retorna o modelo carregado.

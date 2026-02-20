@@ -1,0 +1,17 @@
+.git
+.gitignore
+.idea
+.pytest_cache
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+
+tests
+observability
+
+app/monitoring
+app/logs
+
+README.md
+LICENSE

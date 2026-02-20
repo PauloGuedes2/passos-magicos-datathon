@@ -7,11 +7,6 @@ ENV PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
-# Build dependencies for Python packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    gcc \
-    && rm -rf /var/lib/apt/lists/*
-
 # Isolated virtualenv
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"

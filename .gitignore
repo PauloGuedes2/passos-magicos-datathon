@@ -28,7 +28,3 @@ out/
 # OS files
 .DS_Store
 Thumbs.db
-
-# Local runtime artifacts
-app/monitoring/*.json
-app/monitoring/*.html
