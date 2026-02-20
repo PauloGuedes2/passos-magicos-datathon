@@ -77,6 +77,7 @@ class Configuracoes:
     SERVICE_NAME = os.getenv("SERVICE_NAME", "passos-magicos-datathon-api")
     MODEL_VERSION = os.getenv("MODEL_VERSION", "unknown")
     MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS = int(os.getenv("MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS", "300"))
+    MONITORING_REFRESH_HTML_ON_REQUEST = os.getenv("MONITORING_REFRESH_HTML_ON_REQUEST", "false").lower() in ("1", "true", "yes")
 
     FEATURES_NUMERICAS = [
         "IDADE",

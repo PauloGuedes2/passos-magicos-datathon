@@ -115,17 +115,21 @@ class ServicoRisco:
 
     @staticmethod
     def _atualizar_dashboard_em_tempo_real() -> None:
-        """Atualiza drift e dashboard profissional a cada request de predição."""
+        """Atualiza snapshot de monitoramento; dashboard HTML passa a ser opcional."""
         try:
             intervalo = max(0, int(Configuracoes.MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS))
             agora = time.time()
             if intervalo > 0 and (agora - ServicoRisco._ultimo_snapshot_monitoramento) < intervalo:
                 return
-            _ = ServicoMonitoramento.gerar_dashboard()
-            ProfessionalDashboardService().generate_dashboard()
-            ServicoRisco._ultimo_snapshot_monitoramento = agora
+
+            snapshot = ServicoMonitoramento.atualizar_snapshot_monitoramento()
+            if snapshot.get("updated") and Configuracoes.MONITORING_REFRESH_HTML_ON_REQUEST:
+                ProfessionalDashboardService().generate_dashboard()
+
+            if snapshot.get("updated"):
+                ServicoRisco._ultimo_snapshot_monitoramento = agora
         except Exception as erro:
-            logger.warning(f"Falha ao atualizar dashboard em tempo real: {erro}")
+            logger.warning(f"Falha ao atualizar snapshot de monitoramento: {erro}")
 
     @staticmethod
     def _obter_threshold() -> float:

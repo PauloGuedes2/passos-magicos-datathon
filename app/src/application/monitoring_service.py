@@ -33,6 +33,43 @@ class ServicoMonitoramento:
     """
 
     @staticmethod
+    def atualizar_snapshot_monitoramento() -> dict:
+        """Atualiza snapshot de monitoramento (drift + métricas customizadas)."""
+        if not os.path.exists(Configuracoes.REFERENCE_PATH):
+            return {"updated": False, "reason": "reference_not_found"}
+
+        if not os.path.exists(Configuracoes.LOG_PATH):
+            return {"updated": False, "reason": "logs_not_found"}
+
+        try:
+            referencia = pd.read_csv(Configuracoes.REFERENCE_PATH)
+            dados_atual_raw = ServicoMonitoramento._carregar_logs()
+            if isinstance(dados_atual_raw, str) or dados_atual_raw.empty:
+                return {"updated": False, "reason": "empty_or_invalid_logs"}
+
+            dados_atual = ServicoMonitoramento._montar_dados_atual(dados_atual_raw)
+            referencia, dados_atual = ServicoMonitoramento._filtrar_predicoes_validas(referencia, dados_atual)
+            if len(dados_atual) < 5:
+                return {"updated": False, "reason": "insufficient_samples"}
+
+            psi_df = ServicoMonitoramento._calcular_psi_features(referencia, dados_atual)
+            drift_alertas = ServicoMonitoramento._gerar_alertas_drift(psi_df)
+            monitoramento_estrategico = ServicoMonitoramento._calcular_monitoramento_estrategico(
+                referencia, dados_atual
+            )
+            missing_ratio = ServicoMonitoramento._calcular_missing_ratio(dados_atual)
+            ServicoMonitoramento._persistir_relatorio_drift(
+                psi_df=psi_df,
+                alertas_psi=drift_alertas,
+                monitoramento_estrategico=monitoramento_estrategico,
+                missing_ratio=missing_ratio,
+            )
+            return {"updated": True, "samples": int(len(dados_atual))}
+        except Exception as erro:
+            logger.warning(f"Falha ao atualizar snapshot de monitoramento: {erro}")
+            return {"updated": False, "reason": "internal_error"}
+
+    @staticmethod
     def gerar_dashboard() -> str:
         """Gera o relatório HTML comparando referência vs produção.
 
