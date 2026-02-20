@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-02-17T13:37:16.207589",
+  "timestamp": "2026-02-19T21:41:42.837841",
   "recall": 0.8333,
   "f1_score": 0.7041,
   "precision": 0.6096,
@@ -7,7 +7,7 @@
   "brier_score": 0.2181,
   "train_size": 1874,
   "test_size": 1156,
-  "model_version": "v2026.02.17",
+  "model_version": "v2026.02.19",
   "risk_threshold": 0.5015,
   "threshold_strategy": "f1",
   "threshold_justification": "Threshold otimizado para melhor equilibrio entre precision e recall (F1).",

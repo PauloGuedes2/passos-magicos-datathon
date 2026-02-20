@@ -517,12 +517,22 @@ class ServicoMonitoramento:
                 "number_of_drifted_features": number_of_drifted_features,
                 "risk_rate": high_risk_rate,
                 "missing_ratio": round(float(missing_ratio), 6),
+                "drift_status": drift_status,
+                "high_risk_change_pct": float(
+                    monitoramento_estrategico.get("high_risk_change_pct", 0.0) or 0.0
+                ),
+                "significant_shift_alert": bool(
+                    monitoramento_estrategico.get("significant_shift_alert", False)
+                ),
+                "top_drift_feature_1": top_drift_features[0] if len(top_drift_features) > 0 else "",
+                "top_drift_feature_2": top_drift_features[1] if len(top_drift_features) > 1 else "",
+                "top_drift_feature_3": top_drift_features[2] if len(top_drift_features) > 2 else "",
                 "model_version": ServicoMonitoramento._obter_model_version(),
                 "window_timestamp": timestamp,
                 "environment": Configuracoes.APP_ENV,
                 "service_name": Configuracoes.SERVICE_NAME,
             }
-            publish_model_metrics(summary)
+            publish_model_metrics(summary, psi_records=psi_records)
         except Exception as erro:
             logger.warning(f"Falha ao persistir relatorio de drift consolidado: {erro}")
 
