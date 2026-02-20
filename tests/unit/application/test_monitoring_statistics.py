@@ -9,7 +9,7 @@ def test_psi_computation():
     referencia = pd.Series([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     atual = pd.Series([2, 3, 4, 5, 6, 7, 8, 9, 10, 11])
 
-    psi = ServicoMonitoramento._calcular_psi(referencia, atual, bins=5)
+    psi = ServicoMonitoramento._calcular_psi_detalhado(referencia, atual, bins=5)["psi"]
 
     assert isinstance(psi, float)
     assert psi >= 0.0
@@ -41,16 +41,14 @@ def test_monitoramento_estrategico_alerta():
     assert isinstance(resultado["significant_shift_alert"], bool)
 
 
-def test_monitoramento_estrategico_html():
-    html = ServicoMonitoramento._gerar_monitoramento_estrategico_html(
+def test_calculo_missing_ratio():
+    df = pd.DataFrame(
         {
-            "reference_high_risk_rate_pct": 20.0,
-            "current_high_risk_rate_pct": 35.0,
-            "delta_high_risk_pp": 15.0,
-            "high_risk_change_pct": 75.0,
-            "significant_shift_alert": True,
-            "alert_message": "teste",
+            "a": [1, None],
+            "b": [None, None],
         }
     )
-    assert "Monitoramento Estratégico" in html
-    assert "ALERTA" in html
+
+    ratio = ServicoMonitoramento._calcular_missing_ratio(df)
+
+    assert ratio == 0.75

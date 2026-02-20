@@ -1,0 +1,534 @@
+{
+  "name": "Passos Mágicos - Observabilidade Máxima (Aplicação + Modelo)",
+  "description": "Dashboard completo para monitoramento executivo e técnico: modelo, API, ingestão, risco operacional e governança.",
+  "permissions": "PUBLIC_READ_WRITE",
+  "pages": [
+    {
+      "name": "1) Executivo",
+      "description": "Visão rápida para decisão",
+      "widgets": [
+        {
+          "title": "Snapshots (últimos 15 min)",
+          "layout": { "column": 1, "row": 1, "width": 2, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT count(*) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' SINCE 15 minutes ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Drift Score (último)",
+          "layout": { "column": 3, "row": 1, "width": 2, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(drift_score) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Status Drift (último)",
+          "layout": { "column": 5, "row": 1, "width": 2, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(drift_status) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Taxa Alto Risco (último)",
+          "layout": { "column": 7, "row": 1, "width": 2, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(risk_rate) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Mudança Alto Risco % (último)",
+          "layout": { "column": 9, "row": 1, "width": 2, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(high_risk_change_pct) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Shift Significativo",
+          "layout": { "column": 11, "row": 1, "width": 2, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(significant_shift_alert) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Drift Score no Tempo",
+          "layout": { "column": 1, "row": 3, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT average(drift_score) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' TIMESERIES AUTO SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Taxa Alto Risco no Tempo",
+          "layout": { "column": 7, "row": 3, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT average(risk_rate) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' TIMESERIES AUTO SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Performance do Modelo (último)",
+          "layout": { "column": 1, "row": 6, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(f1_score), latest(recall), latest(precision), latest(auc), latest(brier_score), latest(risk_threshold), latest(threshold_strategy) FROM ModelMonitoringPerformance WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Fairness por Grupo (último)",
+          "layout": { "column": 7, "row": 6, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(f1_score), latest(recall), latest(precision), latest(support) FROM ModelMonitoringFairnessGroup WHERE service_name = 'passos-magicos-datathon-api' FACET group_value SINCE 24 hours ago"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "2) Modelo - Deep Dive",
+      "description": "Drift, PSI, threshold, fairness e explicabilidade",
+      "widgets": [
+        {
+          "title": "PSI por Feature (Top 20)",
+          "layout": { "column": 1, "row": 1, "width": 6, "height": 4 },
+          "visualization": { "id": "viz.bar" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT average(psi) FROM ModelMonitoringPsiFeature WHERE service_name = 'passos-magicos-datathon-api' FACET feature SINCE 24 hours ago LIMIT 20"
+              }
+            ]
+          }
+        },
+        {
+          "title": "PSI no Tempo por Feature (Top 8)",
+          "layout": { "column": 7, "row": 1, "width": 6, "height": 4 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT average(psi) FROM ModelMonitoringPsiFeature WHERE service_name = 'passos-magicos-datathon-api' FACET feature TIMESERIES AUTO SINCE 24 hours ago LIMIT 8"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Features com Drift (drift_flag=true)",
+          "layout": { "column": 1, "row": 5, "width": 4, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT uniqueCount(feature) FROM ModelMonitoringPsiFeature WHERE service_name = 'passos-magicos-datathon-api' AND drift_flag IS true SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "PSI Médio (último período)",
+          "layout": { "column": 5, "row": 5, "width": 4, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT average(psi) FROM ModelMonitoringPsiFeature WHERE service_name = 'passos-magicos-datathon-api' SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Top 3 Features Mais Instáveis",
+          "layout": { "column": 9, "row": 5, "width": 4, "height": 2 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT average(psi) AS 'psi_medio' FROM ModelMonitoringPsiFeature WHERE service_name = 'passos-magicos-datathon-api' FACET feature SINCE 24 hours ago LIMIT 3"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Estratégias de Threshold",
+          "layout": { "column": 1, "row": 7, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(recall), latest(f1_score), latest(threshold), latest(is_active), latest(human_reviews), latest(high_risk_estimated) FROM ModelMonitoringThresholdStrategy WHERE service_name = 'passos-magicos-datathon-api' FACET strategy SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Threshold por Estratégia (último)",
+          "layout": { "column": 7, "row": 7, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.bar" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(threshold) FROM ModelMonitoringThresholdStrategy WHERE service_name = 'passos-magicos-datathon-api' FACET strategy SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Fairness - F1 por Grupo",
+          "layout": { "column": 1, "row": 10, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.bar" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(f1_score) FROM ModelMonitoringFairnessGroup WHERE service_name = 'passos-magicos-datathon-api' FACET group_value SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Fairness - Recall/Precision por Grupo",
+          "layout": { "column": 7, "row": 10, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(recall), latest(precision), latest(support) FROM ModelMonitoringFairnessGroup WHERE service_name = 'passos-magicos-datathon-api' FACET group_value SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Importância de Features (Top 20)",
+          "layout": { "column": 1, "row": 13, "width": 12, "height": 4 },
+          "visualization": { "id": "viz.bar" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(importance) FROM ModelMonitoringFeatureImportance WHERE service_name = 'passos-magicos-datathon-api' FACET feature SINCE 24 hours ago LIMIT 20"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "3) Aplicação Ponta a Ponta",
+      "description": "Latência, throughput, erros, endpoints e logs",
+      "widgets": [
+        {
+          "title": "Throughput (rpm)",
+          "layout": { "column": 1, "row": 1, "width": 3, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT rate(count(*), 1 minute) FROM Transaction WHERE appName = 'passos-magicos-api' SINCE 30 minutes ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Latência p95",
+          "layout": { "column": 4, "row": 1, "width": 3, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT percentile(duration, 95) FROM Transaction WHERE appName = 'passos-magicos-api' SINCE 30 minutes ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Taxa de Erro (%)",
+          "layout": { "column": 7, "row": 1, "width": 3, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT percentage(count(*), WHERE error IS true) FROM Transaction WHERE appName = 'passos-magicos-api' SINCE 30 minutes ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Apdex (t=0.5s)",
+          "layout": { "column": 10, "row": 1, "width": 3, "height": 2 },
+          "visualization": { "id": "viz.billboard" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT apdex(duration, t:0.5) FROM Transaction WHERE appName = 'passos-magicos-api' SINCE 30 minutes ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Latência p50/p95/p99",
+          "layout": { "column": 1, "row": 3, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT percentile(duration, 50, 95, 99) FROM Transaction WHERE appName = 'passos-magicos-api' TIMESERIES AUTO SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Throughput no Tempo",
+          "layout": { "column": 7, "row": 3, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT rate(count(*), 1 minute) FROM Transaction WHERE appName = 'passos-magicos-api' TIMESERIES AUTO SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Endpoints Mais Lentos (p95)",
+          "layout": { "column": 1, "row": 6, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT percentile(duration, 95) AS 'p95', count(*) AS 'req' FROM Transaction WHERE appName = 'passos-magicos-api' FACET name SINCE 24 hours ago LIMIT 15"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Endpoints com Mais Erros",
+          "layout": { "column": 7, "row": 6, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT count(*) AS 'erros' FROM TransactionError WHERE appName = 'passos-magicos-api' FACET transactionName SINCE 24 hours ago LIMIT 15"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Erros 4xx vs 5xx",
+          "layout": { "column": 1, "row": 9, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.pie" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT count(*) FROM TransactionError WHERE appName = 'passos-magicos-api' FACET if(httpResponseCode LIKE '4%', '4xx', if(httpResponseCode LIKE '5%', '5xx', 'outros')) SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Logs WARN/ERROR por Host",
+          "layout": { "column": 7, "row": 9, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.bar" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT count(*) FROM Log WHERE (appName = 'passos-magicos-api' OR service_name = 'passos-magicos-datathon-api') AND level IN ('WARN','ERROR') FACET hostname SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Últimas Mensagens de Erro",
+          "layout": { "column": 1, "row": 12, "width": 12, "height": 4 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(message) FROM Log WHERE (appName = 'passos-magicos-api' OR service_name = 'passos-magicos-datathon-api') AND (level IN ('ERROR','WARN') OR message LIKE '%Erro%' OR message LIKE '%Falha%') FACET hostname SINCE 24 hours ago LIMIT 60"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Logs INFO por Host",
+          "layout": { "column": 1, "row": 16, "width": 4, "height": 3 },
+          "visualization": { "id": "viz.bar" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT count(*) FROM Log WHERE (appName = 'passos-magicos-api' OR service_name = 'passos-magicos-datathon-api') AND level = 'INFO' FACET hostname SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Sucesso vs Erro (logs)",
+          "layout": { "column": 5, "row": 16, "width": 4, "height": 3 },
+          "visualization": { "id": "viz.pie" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT count(*) FROM Log WHERE (appName = 'passos-magicos-api' OR service_name = 'passos-magicos-datathon-api') FACET if(level IN ('ERROR','WARN'), 'erro_warn', 'sucesso_info_debug') SINCE 24 hours ago"
+              }
+            ]
+          }
+        },
+        {
+          "title": "Últimas Mensagens de Sucesso",
+          "layout": { "column": 9, "row": 16, "width": 4, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              {
+                "accountIds": ["0000000000"],
+                "query": "SELECT latest(message) FROM Log WHERE (appName = 'passos-magicos-api' OR service_name = 'passos-magicos-datathon-api') AND level = 'INFO' FACET hostname SINCE 24 hours ago LIMIT 60"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "4) Diagnóstico de Ingestão",
+      "description": "Página anti 'No chart data available'",
+      "widgets": [
+        {
+          "title": "Contagem por Evento (60 min)",
+          "layout": { "column": 1, "row": 1, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS snapshots FROM ModelMonitoringSnapshot SINCE 60 minutes ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS psi_feature FROM ModelMonitoringPsiFeature SINCE 60 minutes ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS performance FROM ModelMonitoringPerformance SINCE 60 minutes ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS threshold FROM ModelMonitoringThresholdStrategy SINCE 60 minutes ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS fairness FROM ModelMonitoringFairnessGroup SINCE 60 minutes ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS feat_importance FROM ModelMonitoringFeatureImportance SINCE 60 minutes ago" }
+            ]
+          }
+        },
+        {
+          "title": "Contagem por Evento (24 h)",
+          "layout": { "column": 7, "row": 1, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS snapshots FROM ModelMonitoringSnapshot SINCE 24 hours ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS psi_feature FROM ModelMonitoringPsiFeature SINCE 24 hours ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS performance FROM ModelMonitoringPerformance SINCE 24 hours ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS threshold FROM ModelMonitoringThresholdStrategy SINCE 24 hours ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS fairness FROM ModelMonitoringFairnessGroup SINCE 24 hours ago" },
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) AS feat_importance FROM ModelMonitoringFeatureImportance SINCE 24 hours ago" }
+            ]
+          }
+        },
+        {
+          "title": "Eventos por Ambiente/Serviço",
+          "layout": { "column": 1, "row": 4, "width": 12, "height": 3 },
+          "visualization": { "id": "viz.table" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) FROM ModelMonitoringSnapshot FACET environment, service_name SINCE 24 hours ago" }
+            ]
+          }
+        },
+        {
+          "title": "Freshness - Snapshot por 5 min",
+          "layout": { "column": 1, "row": 7, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) FROM ModelMonitoringSnapshot WHERE service_name = 'passos-magicos-datathon-api' TIMESERIES 5 minutes SINCE 24 hours ago" }
+            ]
+          }
+        },
+        {
+          "title": "Freshness - API Transaction por 5 min",
+          "layout": { "column": 7, "row": 7, "width": 6, "height": 3 },
+          "visualization": { "id": "viz.line" },
+          "rawConfiguration": {
+            "nrqlQueries": [
+              { "accountIds": ["0000000000"], "query": "SELECT count(*) FROM Transaction WHERE appName = 'passos-magicos-api' TIMESERIES 5 minutes SINCE 24 hours ago" }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "variables": []
+}

@@ -13,7 +13,6 @@ import pandas as pd
 
 from src.application.feature_processor import ProcessadorFeatures
 from src.application.monitoring_service import ServicoMonitoramento
-from src.application.professional_dashboard_service import ProfessionalDashboardService
 from src.config.settings import Configuracoes
 from src.domain.student import EntradaEstudante, Estudante
 from src.infrastructure.data.historical_repository import RepositorioHistorico
@@ -105,7 +104,7 @@ class ServicoRisco:
 
             features = dados_features.to_dict(orient="records")[0]
             self.logger.registrar_predicao(features=features, dados_predicao=resultado)
-            self._atualizar_dashboard_em_tempo_real()
+            self._atualizar_snapshot_monitoramento()
 
             return resultado
 
@@ -114,8 +113,8 @@ class ServicoRisco:
             raise erro
 
     @staticmethod
-    def _atualizar_dashboard_em_tempo_real() -> None:
-        """Atualiza snapshot de monitoramento; dashboard HTML passa a ser opcional."""
+    def _atualizar_snapshot_monitoramento() -> None:
+        """Atualiza snapshot de monitoramento e publica eventos de observabilidade."""
         try:
             intervalo = max(0, int(Configuracoes.MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS))
             agora = time.time()
@@ -123,9 +122,6 @@ class ServicoRisco:
                 return
 
             snapshot = ServicoMonitoramento.atualizar_snapshot_monitoramento()
-            if snapshot.get("updated") and Configuracoes.MONITORING_REFRESH_HTML_ON_REQUEST:
-                ProfessionalDashboardService().generate_dashboard()
-
             if snapshot.get("updated"):
                 ServicoRisco._ultimo_snapshot_monitoramento = agora
         except Exception as erro:

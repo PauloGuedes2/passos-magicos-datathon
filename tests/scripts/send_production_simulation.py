@@ -23,20 +23,21 @@ warnings.simplefilter(action="ignore", category=FutureWarning)
 
 # --- 1. ConfiguraAAo de Path ---
 DIRETORIO_ATUAL = os.path.dirname(os.path.abspath(__file__))
-RAIZ_PROJETO = os.path.dirname(DIRETORIO_ATUAL)
+RAIZ_PROJETO = os.path.dirname(os.path.dirname(DIRETORIO_ATUAL))
 APP_DIR = os.path.join(RAIZ_PROJETO, "app")
 if APP_DIR not in sys.path:
     sys.path.insert(0, APP_DIR)
 if RAIZ_PROJETO not in sys.path:
     sys.path.insert(0, RAIZ_PROJETO)
 
-# ruff: noqa: E402
 from src.config.settings import Configuracoes
 
 # --- 2. ConfiguraAAes da API ---
 PORTA = int(os.getenv("PORT", 8000))
 URL_API = f"http://localhost:{PORTA}/api/v1/predict/smart"
-DELAY = 0.05  # Acelerado para teste
+# DEFAULT_API_URL = "https://passos-magicos-datathon.onrender.com/api/v1/predict/smart"
+# URL_API = os.getenv("API_URL", DEFAULT_API_URL).strip()
+DELAY = 0.1  # Acelerado para teste
 
 
 def limpar_genero(valor):
@@ -334,24 +335,21 @@ def _enviar_payload(payload):
     return resposta
 
 
-def _gerar_dashboard_local():
+def _atualizar_snapshot_local():
     """
-    Atualiza drift e gera dashboard profissional a partir dos artefatos persistidos.
+    Atualiza snapshot de monitoramento a partir dos artefatos persistidos.
     """
     from src.application.monitoring_service import ServicoMonitoramento
-    from src.application.professional_dashboard_service import ProfessionalDashboardService
 
-    # Atualiza drift_report.json com base nos logs mais recentes.
-    _ = ServicoMonitoramento.gerar_dashboard()
-    caminho = ProfessionalDashboardService().generate_dashboard()
-    print(f"Dashboard profissional gerado em: {caminho}")
+    resultado = ServicoMonitoramento.atualizar_snapshot_monitoramento()
+    print(f"Snapshot de monitoramento atualizado: {resultado}")
 
 
 def simular_trafego_producao(
     max_requests: int | None = None,
     delay: float = DELAY,
-    gerar_dashboard: bool = False,
-    dashboard_a_cada_request: bool = True,
+    atualizar_snapshot: bool = False,
+    snapshot_a_cada_request: bool = True,
 ):
     """
     Inicia a simulacao de trafego de producao.
@@ -417,8 +415,8 @@ def simular_trafego_producao(
                     f"#{contador} | [OK] {origem} | {payload['RA']} | {payload['GENERO']} | {payload['FASE']} | "
                     f"{dados_resposta.get('risk_label')}"
                 )
-                if dashboard_a_cada_request:
-                    _gerar_dashboard_local()
+                if snapshot_a_cada_request:
+                    _atualizar_snapshot_local()
             else:
                 erros += 1
                 print(f"#{contador} | [ERROR] {resposta.status_code} | {resposta.text}")
@@ -441,16 +439,16 @@ def simular_trafego_producao(
         f"max_requests={max_requests if max_requests is not None else 'infinito'}"
     )
 
-    if gerar_dashboard:
-        _gerar_dashboard_local()
+    if atualizar_snapshot:
+        _atualizar_snapshot_local()
 
 
 def _parse_args():
     """
-    Parse de argumentos CLI para facilitar testes do dashboard.
+    Parse de argumentos CLI para facilitar testes de snapshot de monitoramento.
     """
     parser = argparse.ArgumentParser(
-        description="Simula trafego de producao para alimentar monitoramento/dashboard."
+        description="Simula trafego de producao para alimentar monitoramento."
     )
     parser.add_argument(
         "--max-requests",
@@ -465,26 +463,42 @@ def _parse_args():
         help="Delay entre requests em segundos (padrao: 0.05)",
     )
     parser.add_argument(
-        "--gerar-dashboard",
-        action="store_true",
-        help="Gera o professional_dashboard.html ao final da simulacao.",
+        "--api-url",
+        type=str,
+        default=URL_API,
+        help="URL completa do endpoint de predicao smart.",
     )
     parser.add_argument(
-        "--dashboard-a-cada-request",
+        "--atualizar-snapshot",
         action="store_true",
-        default=True,
-        help="Atualiza drift e dashboard a cada resposta 200 da API (sempre ativo por padrao).",
+        help="Atualiza snapshot de monitoramento ao final da simulacao.",
+    )
+    parser.set_defaults(snapshot_a_cada_request=True)
+    parser.add_argument(
+        "--snapshot-a-cada-request",
+        dest="snapshot_a_cada_request",
+        action="store_true",
+        help="Atualiza snapshot a cada resposta 200 da API.",
+    )
+    parser.add_argument(
+        "--sem-snapshot-a-cada-request",
+        dest="snapshot_a_cada_request",
+        action="store_false",
+        help="Desativa atualização de snapshot a cada resposta 200 da API.",
     )
     return parser.parse_args()
 
 
 def main() -> int:
+    global URL_API
     args = _parse_args()
+    URL_API = str(args.api_url).strip()
+    print(f"[INFO] Endpoint alvo: {URL_API}")
     simular_trafego_producao(
         max_requests=args.max_requests,
         delay=args.delay,
-        gerar_dashboard=args.gerar_dashboard,
-        dashboard_a_cada_request=args.dashboard_a_cada_request,
+        atualizar_snapshot=args.atualizar_snapshot,
+        snapshot_a_cada_request=args.snapshot_a_cada_request,
     )
     return 0
 

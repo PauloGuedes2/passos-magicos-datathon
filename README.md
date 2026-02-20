@@ -1,7 +1,7 @@
 ﻿[![Python](https://img.shields.io/badge/Python-3.11-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-API-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.5.2-F7931E?style=for-the-badge&logo=scikit-learn&logoColor=white)](https://scikit-learn.org/)
-[![Evidently](https://img.shields.io/badge/Evidently-0.6.0-0B3A53?style=for-the-badge)](https://www.evidentlyai.com/)
+[![New Relic](https://img.shields.io/badge/New%20Relic-Observability-1CE783?style=for-the-badge&logo=newrelic&logoColor=white)](https://onenr.io/0yw49WynLR3)
 [![Docker](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 [![Status](https://img.shields.io/badge/Status-Produ%C3%A7%C3%A3o%20Candidata-2E7D32?style=for-the-badge)](https://passos-magicos-datathon.onrender.com/docs#/)
 
@@ -21,7 +21,7 @@
 - [9) Link do Vídeo de Apresentação](#9-link-do-vídeo-de-apresentação)
 - [10) Exemplos de Chamadas à API](#10-exemplos-de-chamadas-à-api)
 - [11) Sistema em Produção](#11-sistema-em-produção)
-- [12) O Que o Relatório HTML Oferece](#12-o-que-o-relatório-html-oferece)
+- [12) O Que o Dashboard de Observabilidade Oferece](#12-o-que-o-dashboard-de-observabilidade-oferece)
 - [13) Métricas Reais Observadas](#13-métricas-reais-observadas)
 - [14) Cenários Reais de Exposição](#14-cenários-reais-de-exposição)
 - [15) Limitações](#15-limitações)
@@ -50,7 +50,7 @@ Em contexto de vulnerabilidade social, o custo de não agir cedo é alto para o 
 O sistema implementa um fluxo de ML ponta a ponta preparado para operação real:
 - predição online de risco (`/api/v1/predict/full` e `/api/v1/predict/smart`);
 - tratamento de cold start com revisão humana obrigatória quando não há histórico;
-- monitoramento contínuo de estabilidade (drift via Evidently + PSI);
+- monitoramento contínuo de estabilidade (drift via PSI);
 - retreinamento controlado por quality gate para reduzir risco de regressão;
 - logging estruturado para rastreabilidade técnica e análise posterior.
 
@@ -98,12 +98,12 @@ A solução é um **sistema completo de ML em produção candidata**, composto p
 | API de inferência | Expõe predição completa e predição inteligente com histórico | `app/main.py`, `app/src/api/controller.py` |
 | Pipeline de treinamento | Treina modelo com anti-leakage temporal, calibração e threshold estratégico | `app/train.py`, `app/src/infrastructure/model/ml_pipeline.py` |
 | Sistema de retreinamento | Endpoint para acionar treino e recarregar modelo em memória | `app/src/api/training_controller.py`, `app/src/application/training_service.py` |
-| Monitoramento | Drift (Evidently + PSI), métricas estratégicas e persistência de relatório | `app/src/application/monitoring_service.py` |
+| Monitoramento | Drift (PSI), métricas estratégicas e persistência de relatório | `app/src/application/monitoring_service.py` |
 | Governança de fairness | Estratégia de threshold com restrições + monitoramento de FPR/FNR por grupo | `app/src/infrastructure/model/ml_pipeline.py`, `app/src/application/monitoring_service.py` |
 | Cold start | Fallback para aluno sem histórico com revisão humana obrigatória | `app/src/application/risk_service.py` |
 | Controle de promoção | Quality gate por recall mínimo e comparação com baseline em produção | `app/src/infrastructure/model/ml_pipeline.py` |
 | Logging estruturado | Persistência JSONL de predições em formato técnico | `app/src/infrastructure/logging/prediction_logger.py` |
-| Dashboard executivo | Geração de dashboard HTML profissional consolidado | `app/src/application/professional_dashboard_service.py` |
+| Observabilidade executiva | Dashboard no New Relic com visão consolidada de modelo e aplicação | seção `Observability & Monitoring` |
 
 ### Arquitetura resumida
 
@@ -116,7 +116,6 @@ flowchart LR
     Pred --> Model[GerenciadorModelo]
     Pred --> Log[LoggerPredicao]
     Pred --> Mon[ServicoMonitoramento]
-    Mon --> Dash[ProfessionalDashboardService]
 ```
 
 ---
@@ -133,7 +132,7 @@ flowchart LR
 | Threshold estratégico | Ajustar trade-off risco de FN/FP por estratégia | Modelo alinhado ao objetivo do negócio |
 | Quality gate de promoção | Evitar regressão silenciosa em produção | Controle mínimo de qualidade antes de promover |
 | Cold start com revisão humana | Evitar decisão automática cega sem histórico | Segurança operacional para novos alunos |
-| Monitoramento Evidently + PSI | Detectar mudança de distribuição | Gatilhos antecipados de revisão de modelo |
+| Monitoramento PSI + New Relic | Detectar mudança de distribuição | Gatilhos antecipados de revisão de modelo |
 | Logs JSONL estruturados | Rastreabilidade e auditoria | Base para observabilidade e pós-análise |
 
 ---
@@ -188,7 +187,7 @@ flowchart TD
 | Testes | pytest |
 | Containerização | Docker + Docker Compose |
 | Observabilidade técnica | logging + JSONL |
-| Drift monitoring | Evidently + PSI custom |
+| Drift monitoring | PSI custom |
 | Deploy | Local e cloud-ready (containerizado) |
 
 ---
@@ -201,10 +200,10 @@ datathon-tech5/
 │   ├── data/                 # Dataset fonte (.xlsx)
 │   ├── logs/                 # Logs de inferência (JSONL)
 │   ├── models/               # Modelo ativo e backup (.joblib)
-│   ├── monitoring/           # Métricas, referência, drift e dashboard HTML
+│   ├── monitoring/           # Métricas, referência e drift
 │   ├── src/
 │   │   ├── api/              # Controladores FastAPI
-│   │   ├── application/      # Regras de negócio (risco, treino, monitoramento, dashboard)
+│   │   ├── application/      # Regras de negócio (risco, treino e monitoramento)
 │   │   ├── config/           # Configurações centrais
 │   │   ├── domain/           # Contratos Pydantic
 │   │   ├── infrastructure/   # Dados, modelo e logging técnico
@@ -248,7 +247,8 @@ python main.py
 Acessos:
 - Health: `http://localhost:8000/health`
 - OpenAPI: `http://localhost:8000/docs`
-- Dashboard: `http://localhost:8000/api/v1/monitoring/dashboard`
+- Observabilidade principal (New Relic): `https://onenr.io/0yw49WynLR3`
+- JSON local do dashboard (import manual): `observability/newrelic-dashboard-local.json`
 
 #### Treinamento local
 
@@ -308,7 +308,7 @@ flowchart LR
 **URL pública da aplicação**:
 - API: https://passos-magicos-datathon.onrender.com/docs#/
 - Health: https://passos-magicos-datathon.onrender.com/health
-- Dashboard: https://passos-magicos-datathon.onrender.com/api/v1/monitoring/dashboard
+- Observabilidade principal (New Relic): https://onenr.io/0yw49WynLR3
 
 ---
 
@@ -329,7 +329,6 @@ flowchart LR
 | `POST` | `/api/v1/predict/full` | Predição com payload completo |
 | `POST` | `/api/v1/predict/smart` | Predição com enriquecimento por histórico |
 | `POST` | `/api/v1/train/retrain` | Retreinamento e reload do modelo |
-| `GET` | `/api/v1/monitoring/dashboard` | Dashboard profissional HTML |
 | `GET` | `/api/v1/monitoring/feature-importance` | Ranking global de importância |
 
 ### `curl` reais
@@ -391,7 +390,7 @@ curl -X POST http://localhost:8000/api/v1/train/retrain
 - Versão registrada em `train_metrics.json`.
 
 ### Monitoramento
-- Drift com Evidently + PSI custom.
+- Drift com PSI custom.
 - Relatório consolidado em `app/monitoring/drift_report.json`.
 
 ### Fairness
@@ -425,16 +424,16 @@ sequenceDiagram
     Risk->>Model: predict_proba
     Model-->>Risk: probabilidade
     Risk->>Log: registrar JSONL
-    Risk->>Mon: atualizar drift/dashboard
+    Risk->>Mon: atualizar snapshot de monitoramento
     Risk-->>API: resultado + revisão humana (se necessário)
     API-->>Cliente: resposta final
 ```
 
 ---
 
-## 12) O Que o Relatório HTML Oferece
+## 12) O Que o Dashboard de Observabilidade Oferece
 
-O dashboard profissional (`professional_dashboard.html`) consolida:
+O dashboard no New Relic consolida:
 
 - **Data drift**: mudança de distribuição das features.
 - **Target drift (quando disponível)**: desvio no comportamento do alvo ao longo do tempo.
@@ -535,7 +534,7 @@ O pipeline suporta `f1`, `recall`, `cost`, `fairness_f1`. O modelo promovido atu
 Há cold start determinístico: histórico zerado, `ALUNO_NOVO=1` e marcação de `requires_human_review=true`, evitando decisão automática sem contexto.
 
 ### 4) Como monitorar drift na prática?
-Com Evidently + PSI custom, persistindo `drift_report.json` com métricas por feature, alertas, status consolidado e histórico da taxa de ALTO_RISCO.
+Com PSI custom, persistindo `drift_report.json` com métricas por feature, alertas, status consolidado e histórico da taxa de ALTO_RISCO.
 
 ### 5) Fairness está resolvido?
 Não completamente. Há mecanismos de governança (exclusão de feature sensível no modelo, monitoramento por grupo e estratégia de threshold com constraints), mas o artefato atual mostra gap de FPR de 13.0 p.p., exigindo mitigação contínua.
@@ -591,11 +590,7 @@ curl -X POST http://localhost:8000/api/v1/predict/smart \
 curl -X POST http://localhost:8000/api/v1/train/retrain
 ```
 
-6. Abra o dashboard de monitoramento.
-
-```text
-http://localhost:8000/api/v1/monitoring/dashboard
-```
+6. Abra o dashboard de observabilidade no New Relic.
 
 7. (Opcional) execute a simulação de produção para alimentar logs.
 
@@ -609,7 +604,91 @@ PYTHONPATH=app python tests/scripts/send_production_simulation.py --max-requests
 - `predict/smart` retorna `risk_probability`, `risk_segment` e `requires_human_review`.
 - `train/retrain` retorna status de sucesso.
 - `app/logs/predictions.jsonl` cresce após chamadas de predição.
-- `app/monitoring/drift_report.json` e `app/monitoring/professional_dashboard.html` são atualizados.
+- `app/monitoring/drift_report.json` é atualizado.
+
+---
+
+## Observability & Monitoring
+
+### New Relic APM integration
+
+- A API é executada com `newrelic-admin run-program uvicorn ...` no container.
+- Com isso, todos os endpoints FastAPI passam a ter monitoramento APM automático:
+  latência, throughput, taxa de erro e traces distribuídos.
+- O agente usa variáveis de ambiente, sem chave hardcoded:
+  - `NEW_RELIC_LICENSE_KEY`
+  - `NEW_RELIC_APP_NAME`
+  - `NEW_RELIC_LOG_LEVEL=info`
+- Logs do agente são enviados para `stderr` (`NEW_RELIC_LOG=stderr`).
+
+### Custom model metrics (PSI + New Relic)
+
+- Quando um snapshot de monitoramento é gerado (drift/PSI), o projeto publica eventos customizados no New Relic:
+  - `ModelMonitoringSnapshot` (visão consolidada)
+  - `ModelMonitoringPsiFeature` (PSI por feature)
+  - `ModelMonitoringPerformance` (recall/precision/F1/AUC/Brier/threshold)
+  - `ModelMonitoringThresholdStrategy` (comparação de estratégias de limiar)
+  - `ModelMonitoringFairnessGroup` (métricas por grupo de fairness)
+  - `ModelMonitoringFeatureImportance` (top features de importância global)
+- O envio é protegido por `try/except`, não interrompe o fluxo da API e falha de forma segura.
+- Dashboard recomendado (import manual local): `observability/newrelic-dashboard-local.json`
+
+Exemplos de NRQL:
+
+```sql
+SELECT count(*) FROM ModelMonitoringSnapshot SINCE 30 minutes ago
+```
+
+```sql
+SELECT latest(drift_score), latest(risk_rate), latest(drift_status)
+FROM ModelMonitoringSnapshot
+SINCE 60 minutes ago
+```
+
+```sql
+SELECT average(psi) FROM ModelMonitoringPsiFeature FACET feature SINCE 60 minutes ago
+```
+
+```sql
+SELECT latest(f1_score), latest(recall), latest(auc)
+FROM ModelMonitoringPerformance
+SINCE 24 hours ago
+```
+
+### Privacy and LGPD safety
+
+- O monitoramento customizado envia apenas métricas agregadas.
+- Não são enviados para New Relic:
+  - nomes de alunos
+  - RA
+  - features brutas
+  - atributos sensíveis
+  - payloads completos de requisição
+  - target labels individuais
+- Captura de parâmetros de request é desabilitada (`NEW_RELIC_CAPTURE_PARAMS=false` + exclusões de atributos sensíveis).
+
+### Enable in production
+
+Defina no ambiente de execução:
+
+```bash
+NEW_RELIC_LICENSE_KEY=...
+NEW_RELIC_APP_NAME=passos-magicos-datathon
+NEW_RELIC_LOG_LEVEL=info
+APP_ENV=prod
+SERVICE_NAME=passos-magicos-datathon-api
+MODEL_VERSION=vYYYY.MM.DD
+MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS=300
+```
+
+### Snapshot mode (job-only)
+
+- O snapshot (drift + métricas customizadas no New Relic) é atualizado no fluxo de predição.
+- Para gerar snapshot sob demanda (ex.: cron), execute:
+
+```bash
+python -c "from src.application.monitoring_service import ServicoMonitoramento; ServicoMonitoramento.atualizar_snapshot_monitoramento()"
+```
 
 ---
 
