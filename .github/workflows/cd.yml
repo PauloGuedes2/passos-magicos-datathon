@@ -234,6 +234,32 @@ jobs:
             const owner = context.repo.owner;
             const repo = context.repo.repo;
 
+            async function ensureBranch(branch, sourceBranch) {
+              try {
+                await github.rest.git.getRef({ owner, repo, ref: `heads/${branch}` });
+                core.info(`Branch '${branch}' already exists.`);
+                return;
+              } catch (error) {
+                if (error.status !== 404) throw error;
+              }
+
+              const source = await github.rest.git.getRef({
+                owner,
+                repo,
+                ref: `heads/${sourceBranch}`
+              });
+
+              await github.rest.git.createRef({
+                owner,
+                repo,
+                ref: `refs/heads/${branch}`,
+                sha: source.data.object.sha
+              });
+              core.info(`Created branch '${branch}' from '${sourceBranch}'.`);
+            }
+
+            await ensureBranch("release", "main");
+
             function parseSemver(tag) {
               const m = /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag || "");
               if (!m) return null;
