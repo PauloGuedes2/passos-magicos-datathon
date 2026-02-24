@@ -327,11 +327,13 @@ flowchart LR
 flowchart TD
     T[Trigger: push em develop/main] --> B[Job: build-and-publish]
     B --> B1[Checkout]
-    B1 --> B2[Build version]
-    B2 --> B3[Prepare image metadata]
-    B3 --> B4[Docker login GHCR]
-    B4 --> B5[Build and push image]
-    B5 --> C[Job: post-deploy-checks]
+    B1 --> B2[Testes + cobertura]
+    B2 --> B3[Summary de cobertura]
+    B3 --> B4[Build version]
+    B4 --> B5[Build local da imagem Docker]
+    B5 --> D{branch main?}
+    D -- sim --> C[Job: post-deploy-checks]
+    D -- nao --> E[Fim em develop]
     C --> C1[Wait for rollout]
     C1 --> C2[Health check]
     C2 --> C3[Smoke test predict/smart]
@@ -361,11 +363,10 @@ flowchart TD
 #### `cd.yml` (entrega contínua)
 
 - **Build and publish**:
+  - executa testes com cobertura e publica resumo no Step Summary;
   - calcula versão curta a partir do commit (`sha`);
-  - normaliza nome da imagem;
-  - autentica no GHCR;
-  - builda e publica tags `sha` e `latest`.
-- **Deploy Render**:
+  - builda imagem Docker local para validação (sem push para registry).
+- **Post-deploy checks (somente `main`)**:
   - o deploy é acionado automaticamente pelo Render a cada push em `develop` e `main`;
   - aguarda rollout;
   - valida `/health`;
