@@ -1,0 +1,73 @@
+name: Security
+
+on:
+  pull_request:
+  schedule:
+    - cron: "0 8 * * 1"
+  workflow_dispatch:
+
+jobs:
+  python-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install dependencies and security tools
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+          pip install pip-audit bandit
+
+      - name: Run pip-audit
+        run: pip-audit -r requirements.txt -f json -o pip-audit-report.json || true
+
+      - name: Run bandit
+        run: bandit -r app -f json -o bandit-report.json || true
+
+      - name: Upload Python security reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: python-security-reports
+          path: |
+            pip-audit-report.json
+            bandit-report.json
+
+  container-security:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build local image
+        run: docker build -t passos-magicos:security-scan .
+
+      - name: Run Trivy image scan
+        uses: aquasecurity/trivy-action@0.28.0
+        with:
+          image-ref: passos-magicos:security-scan
+          format: json
+          output: trivy-image-report.json
+          severity: CRITICAL,HIGH
+          ignore-unfixed: true
+
+      - name: Upload container security report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: container-security-report
+          path: trivy-image-report.json

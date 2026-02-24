@@ -1,0 +1,82 @@
+name: Model Card
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "app/monitoring/train_metrics.json"
+      - "app/monitoring/drift_report.json"
+      - ".github/workflows/model-card.yml"
+
+jobs:
+  generate-model-card:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate model card markdown
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          metrics_path = Path("app/monitoring/train_metrics.json")
+          drift_path = Path("app/monitoring/drift_report.json")
+          out_dir = Path("artifacts")
+          out_dir.mkdir(parents=True, exist_ok=True)
+          out_path = out_dir / "model_card.md"
+
+          metrics = json.loads(metrics_path.read_text(encoding="utf-8")) if metrics_path.exists() else {}
+          drift = json.loads(drift_path.read_text(encoding="utf-8")) if drift_path.exists() else {}
+
+          lines = [
+              "# Model Card",
+              "",
+              "## Identification",
+              f"- Model version: `{metrics.get('model_version', 'unknown')}`",
+              f"- Generated at: `{metrics.get('timestamp', 'unknown')}`",
+              "",
+              "## Performance",
+              f"- Recall: `{metrics.get('recall', 'n/a')}`",
+              f"- Precision: `{metrics.get('precision', 'n/a')}`",
+              f"- F1 score: `{metrics.get('f1_score', 'n/a')}`",
+              f"- AUC: `{metrics.get('auc', 'n/a')}`",
+              f"- Brier score: `{metrics.get('brier_score', 'n/a')}`",
+              "",
+              "## Decision Policy",
+              f"- Risk threshold: `{metrics.get('risk_threshold', 'n/a')}`",
+              f"- Threshold strategy: `{metrics.get('threshold_strategy', 'n/a')}`",
+              f"- Justification: {metrics.get('threshold_justification', 'n/a')}",
+              "",
+              "## Fairness Snapshot",
+              f"- Max FPR gap (%): `{metrics.get('max_fpr_gap_pct', 'n/a')}`",
+              f"- Max FNR gap (%): `{metrics.get('max_fnr_gap_pct', 'n/a')}`",
+              "",
+              "## Drift Snapshot",
+              f"- Drift status: `{drift.get('status', 'n/a')}`",
+              f"- PSI mean: `{drift.get('psi_mean', 'n/a')}`",
+              f"- Drift timestamp: `{drift.get('timestamp', 'n/a')}`",
+              "",
+              "## Limitations",
+              "- Requires periodic retraining and monitoring of data drift.",
+              "- Fairness metrics depend on data representativeness by group.",
+              "- Predictions near threshold should remain under human review.",
+              "",
+          ]
+
+          out_path.write_text("\n".join(lines), encoding="utf-8")
+          print(out_path.read_text(encoding="utf-8"))
+          PY
+
+      - name: Add model card to workflow summary
+        run: cat artifacts/model_card.md >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload model card
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-card
+          path: artifacts/model_card.md

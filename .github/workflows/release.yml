@@ -1,0 +1,77 @@
+name: Release
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: read
+
+jobs:
+  create-release:
+    if: ${{ github.event_name == 'workflow_dispatch' || github.head_ref == 'develop' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+
+      - name: Determine release tag
+        id: tag
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            title="${{ github.event.pull_request.title }}"
+            from_title="$(echo "$title" | sed -nE 's/^release: (v[0-9]+\.[0-9]+\.[0-9]+)$/\1/p')"
+            if [ -n "$from_title" ]; then
+              echo "release_tag=$from_title" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+          fi
+
+          latest="$(git tag -l 'v*' --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || true)"
+          if [ -z "$latest" ]; then
+            next="v0.1.0"
+          else
+            major="$(echo "$latest" | cut -d. -f1 | tr -d 'v')"
+            minor="$(echo "$latest" | cut -d. -f2)"
+            patch="$(echo "$latest" | cut -d. -f3)"
+            next="v${major}.${minor}.$((patch + 1))"
+          fi
+
+          echo "release_tag=$next" >> "$GITHUB_OUTPUT"
+
+      - name: Build release notes
+        run: |
+          tag="${{ steps.tag.outputs.release_tag }}"
+          target_sha="${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}"
+          {
+            echo "## Release ${tag}"
+            echo
+            echo "- Commit: \`${target_sha}\`"
+            echo "- Image tag suggested: \`${target_sha:0:7}\`"
+            if [ "${{ github.event_name }}" = "pull_request" ]; then
+              echo "- PR origem: #${{ github.event.pull_request.number }} (\`${{ github.event.pull_request.head.ref }} -> ${{ github.event.pull_request.base.ref }}\`)"
+            fi
+            echo "- Pipeline date (UTC): \`$(date -u +"%Y-%m-%dT%H:%M:%SZ")\`"
+            echo "- Tipo: \`pre-release (pré-main)\`"
+          } > release-notes.md
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.tag.outputs.release_tag }}
+          target_commitish: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.sha || github.sha }}
+          draft: true
+          prerelease: true
+          body_path: release-notes.md

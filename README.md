@@ -18,6 +18,7 @@
 - [6) Stack Tecnológica](#6-stack-tecnológica)
 - [7) Estrutura do Projeto](#7-estrutura-do-projeto)
 - [8) Deploy e Execução](#8-deploy-e-execução)
+- [8.1) CI/CD com GitHub Actions](#cicd-com-github-actions)
 - [9) Link do Vídeo de Apresentação](#9-link-do-vídeo-de-apresentação)
 - [10) Exemplos de Chamadas à API](#10-exemplos-de-chamadas-à-api)
 - [11) Sistema em Produção](#11-sistema-em-produção)
@@ -196,28 +197,26 @@ flowchart TD
 
 ```text
 datathon-tech5/
-├── app/
-│   ├── data/                 # Dataset fonte (.xlsx)
-│   ├── logs/                 # Logs de inferência (JSONL)
-│   ├── models/               # Modelo ativo e backup (.joblib)
-│   ├── monitoring/           # Métricas, referência e drift
-│   ├── src/
-│   │   ├── api/              # Controladores FastAPI
-│   │   ├── application/      # Regras de negócio (risco, treino e monitoramento)
-│   │   ├── config/           # Configurações centrais
-│   │   ├── domain/           # Contratos Pydantic
-│   │   ├── infrastructure/   # Dados, modelo e logging técnico
-│   │   └── util/             # Logger da aplicação
-│   ├── main.py               # Entrada da API
-│   └── train.py              # Entrada do pipeline de treino
-├── tests/
-│   ├── scripts/              # Simulação de tráfego de produção
-│   └── unit/                 # Suíte unitária e integração local
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-├── RELATORIO_TECNICO_COMPLETO.md
-└── BLOCO_DEFESA_BANCA.md
++-- app/
+¦   +-- data/                 # Dataset fonte (.xlsx)
+¦   +-- logs/                 # Logs de inferência (JSONL)
+¦   +-- models/               # Modelo ativo e backup (.joblib)
+¦   +-- monitoring/           # Métricas, referência e drift
+¦   +-- src/
+¦   ¦   +-- api/              # Controladores FastAPI
+¦   ¦   +-- application/      # Regras de negócio (risco, treino e monitoramento)
+¦   ¦   +-- config/           # Configurações centrais
+¦   ¦   +-- domain/           # Contratos Pydantic
+¦   ¦   +-- infrastructure/   # Dados, modelo e logging técnico
+¦   ¦   +-- util/             # Logger da aplicação
+¦   +-- main.py               # Entrada da API
+¦   +-- train.py              # Entrada do pipeline de treino
++-- tests/
+¦   +-- scripts/              # Simulação de tráfego de produção
+¦   +-- unit/                 # Suíte unitária e integração local
++-- Dockerfile
++-- docker-compose.yml
++-- requirements.txt
 ```
 
 ---
@@ -263,7 +262,7 @@ python train.py
 PYTHONPATH=app pytest -q -p no:cacheprovider
 ```
 
-Resultado validado no repositório: **119 passed, 2 warnings**.
+Resultado validado no repositório: **99 passed, 2 warnings**.
 
 ### Docker
 
@@ -309,12 +308,119 @@ flowchart LR
 - API: https://passos-magicos-datathon.onrender.com/docs#/
 - Health: https://passos-magicos-datathon.onrender.com/health
 - Observabilidade principal (New Relic): https://onenr.io/0yw49WynLR3
+### CI/CD com GitHub Actions
 
+A automação de CI/CD foi estruturada em workflows independentes para separar qualidade de código, segurança, deploy, governança de release e governança de modelo.
+
+```mermaid
+flowchart LR
+    D[Push em develop] --> CD[Workflow CD]
+    CD --> PR[Job open-release-pr<br/>PR: develop -> main<br/>titulo: release vX.Y.Z]
+    PR --> REL[Workflow Release<br/>draft + prerelease]
+    REL --> GATE[Workflow Release Gate]
+    GATE --> M[Merge em main]
+    M --> CDM[Workflow CD em main]
+```
+
+```mermaid
+flowchart TD
+    T[Trigger: push em develop/main] --> B[Job: build-and-publish]
+    B --> B1[Checkout]
+    B1 --> B2[Testes + cobertura]
+    B2 --> B3[Summary de cobertura]
+    B3 --> B4[Build version]
+    B4 --> B5[Build local da imagem Docker]
+    B5 --> D{branch main?}
+    D -- sim --> C[Job: post-deploy-checks]
+    D -- nao --> PR[Job: open-release-pr]
+    C --> C1[Wait for rollout]
+    C1 --> C2[Health check]
+    C2 --> C3[Smoke test predict/smart]
+```
+
+#### `ci.yml` (integração contínua)
+
+- **Checkout**: baixa o código do repositório na VM do runner.
+- **Setup Python 3.11 + cache pip**: prepara ambiente alinhado ao projeto e acelera instalações.
+- **Install dependencies**: instala `requirements-dev.txt` (inclui runtime + testes).
+- **Run tests**: executa `pytest` com saída JUnit para rastreabilidade.
+- **Upload test report**: publica relatório de testes como artifact.
+- **Validate Docker build**: valida que a imagem sobe corretamente a partir do `Dockerfile`.
+
+#### `security.yml` (segurança de dependências e container)
+
+- **Python security job**:
+  - instala ferramentas de segurança;
+  - executa `pip-audit` nas dependências Python;
+  - executa `bandit` no código-fonte;
+  - publica os relatórios gerados.
+- **Container security job**:
+  - builda a imagem local;
+  - executa `trivy` para vulnerabilidades de imagem;
+  - publica relatório de scan do container.
+
+#### `cd.yml` (entrega contínua)
+
+- **Build and publish**:
+  - executa testes com cobertura e publica resumo no Step Summary;
+  - calcula versão curta a partir do commit (`sha`);
+  - builda imagem Docker local para validação (sem push para registry).
+- **Post-deploy checks (somente `main`)**:
+  - o deploy é acionado automaticamente pelo Render a cada push em `develop` e `main`;
+  - aguarda rollout;
+  - valida `/health`;
+  - executa smoke test em `/api/v1/predict/smart`.
+- **Open release PR (somente `develop`)**:
+  - cria ou atualiza automaticamente PR `develop` -> `main`;
+  - define título `release: vX.Y.Z` com versão semântica incremental.
+
+#### `retrain-check.yml` (MLOps operacional)
+
+- **Backup baseline metrics**: salva baseline atual (`train_metrics.json`) antes do novo treino.
+- **Run retraining**: executa `python app/train.py`.
+- **Validate model quality gate**:
+  - bloqueia se `recall` ficar abaixo do mínimo;
+  - bloqueia se `f1_score` cair além do limite frente ao baseline.
+- **Upload monitoring artifacts**: publica `train_metrics`, `drift_report` e `reference_data`.
+
+#### `release.yml` (governança de versão)
+
+- Dispara no PR de release (`develop` -> `main`).
+- Usa a versão proposta no título do PR (`release: vX.Y.Z`) e, em fallback, calcula a próxima versão semântica automaticamente.
+- Gera notas de release com commit, tag de imagem sugerida e timestamp UTC.
+- Publica uma release versionada em modo `draft`/`prerelease` antes do merge em `main`.
+
+#### `release-gate.yml` (bloqueio de merge em `main`)
+
+- Valida PRs para `main` garantindo fluxo `develop` -> `main`.
+- Exige título no padrão `release: vX.Y.Z`.
+- Exige existência da release correspondente em modo `draft` e `prerelease`.
+- Deve ser configurado como status check obrigatório na branch protection de `main`.
+
+#### `quality-metrics.yml` (qualidade e cobertura)
+
+- Executa testes com `coverage` + JUnit.
+- Gera sumário com total de testes, falhas, erros, skips e cobertura de linha.
+- Publica artifacts de qualidade e adiciona resumo na UI do GitHub Actions.
+
+#### `model-regression.yml` (regressão de modelo)
+
+- Salva baseline de métricas, treina modelo candidato e compara candidato vs baseline.
+- Métricas avaliadas:
+  - melhor maior: `f1_score`, `recall`, `precision`, `auc`;
+  - melhor menor: `brier_score`.
+- Falha o workflow quando detecta regressão acima das tolerâncias definidas.
+
+#### `model-card.yml` (documentação de modelo)
+
+- Gera automaticamente um `model_card.md` a partir de `train_metrics.json` e `drift_report.json`.
+- Inclui versão do modelo, métricas principais, política de threshold, snapshot de fairness e drift.
+- Publica o model card como artifact e também no summary da execução.
 ---
 
 ## 9) Link do Vídeo de Apresentação
 
-### 🎥 Vídeo de Apresentação do Projeto
+### Vídeo de Apresentação do Projeto
 [Link para o vídeo no YouTube]
 
 ---
@@ -454,7 +560,7 @@ O dashboard no New Relic consolida:
 
 ## 13) Métricas Reais Observadas
 
-Fonte: `app/monitoring/train_metrics.json` (timestamp: `2026-02-17T13:37:16.207589`)
+Fonte: `app/monitoring/train_metrics.json` (timestamp: `2026-02-19T23:48:52.571734`)
 
 | Métrica | Valor |
 |---|---|
@@ -514,7 +620,7 @@ Cálculo sobre `app/monitoring/reference_data.csv`:
 Limitações observáveis no código e artefatos:
 - Sem autenticação/autorização nativas na API.
 - Sem rate limiting efetivo implementado no app (apesar de variáveis no compose).
-- Sem orquestração automática de retreino/CI-CD MLOps completo.
+- Orquestração de CI/CD e retreino está presente via GitHub Actions, mas ainda sem esteira MLOps completa (registry de modelos, aprovação formal de promoção e lineage ponta a ponta).
 - Sem tracking formal de experimentos/lineage.
 - Fairness online completo depende de enriquecimento posterior com rótulo real.
 - `ANO_INGRESSO` com limite fixo em validação (`<= 2026`), exigindo manutenção anual.
