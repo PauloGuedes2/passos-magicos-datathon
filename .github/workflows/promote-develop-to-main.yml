@@ -1,0 +1,108 @@
+name: Promote Develop to Main
+
+on:
+  workflow_run:
+    workflows:
+      - CD
+    types:
+      - completed
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  open-release-pr:
+    if: ${{ github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.head_branch == 'develop' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Create or update release PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+
+            function parseSemver(tag) {
+              const m = /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag || "");
+              if (!m) return null;
+              return { major: Number(m[1]), minor: Number(m[2]), patch: Number(m[3]) };
+            }
+
+            function compareSemver(a, b) {
+              if (a.major !== b.major) return a.major - b.major;
+              if (a.minor !== b.minor) return a.minor - b.minor;
+              return a.patch - b.patch;
+            }
+
+            const tags = await github.paginate(github.rest.repos.listTags, {
+              owner,
+              repo,
+              per_page: 100
+            });
+
+            const semverTags = tags
+              .map(t => t.name)
+              .map(name => ({ name, parsed: parseSemver(name) }))
+              .filter(t => t.parsed !== null)
+              .sort((x, y) => compareSemver(x.parsed, y.parsed));
+
+            let next = "v0.1.0";
+            if (semverTags.length > 0) {
+              const latest = semverTags[semverTags.length - 1].parsed;
+              next = `v${latest.major}.${latest.minor}.${latest.patch + 1}`;
+            }
+
+            const head = "develop";
+            const base = "main";
+            const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.payload.workflow_run.id}`;
+            const title = `release: ${next}`;
+            const body = [
+              `PR de release automático gerado após sucesso do workflow CD em \`develop\`.`,
+              ``,
+              `- Versão proposta: \`${next}\``,
+              `- Branch origem: \`develop\``,
+              `- Branch destino: \`main\``,
+              `- Execução de referência: ${runUrl}`
+            ].join("\n");
+
+            const openPrs = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: "open",
+              base,
+              head: `${owner}:${head}`,
+              per_page: 100
+            });
+
+            if (openPrs.length > 0) {
+              const pr = openPrs[0];
+              await github.rest.pulls.update({
+                owner,
+                repo,
+                pull_number: pr.number,
+                title,
+                body
+              });
+              core.info(`Updated existing PR #${pr.number} (${title}).`);
+              return;
+            }
+
+            try {
+              const created = await github.rest.pulls.create({
+                owner,
+                repo,
+                title,
+                head,
+                base,
+                body
+              });
+              core.info(`Created PR #${created.data.number} (${title}).`);
+            } catch (error) {
+              if (String(error.message).includes("No commits between")) {
+                core.info("No new commits between develop and main. PR not created.");
+                return;
+              }
+              throw error;
+            }

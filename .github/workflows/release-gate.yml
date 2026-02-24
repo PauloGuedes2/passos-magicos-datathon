@@ -1,0 +1,87 @@
+name: Release Gate
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - edited
+      - ready_for_review
+    branches:
+      - main
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  validate-release-draft:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Validate release draft exists for PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const pr = context.payload.pull_request;
+
+            if (!pr) {
+              core.setFailed("Pull request payload not found.");
+              return;
+            }
+
+            if (pr.base.ref !== "main") {
+              core.info("PR is not targeting main. Gate skipped.");
+              return;
+            }
+
+            if (pr.head.ref !== "develop") {
+              core.setFailed(
+                `Fluxo inválido para release: esperado head=develop, recebido head=${pr.head.ref}.`
+              );
+              return;
+            }
+
+            const match = /^release: (v\d+\.\d+\.\d+)$/.exec(pr.title || "");
+            if (!match) {
+              core.setFailed(
+                "Título do PR deve seguir o padrão `release: vX.Y.Z` para permitir merge em main."
+              );
+              return;
+            }
+
+            const expectedTag = match[1];
+            const releases = await github.paginate(github.rest.repos.listReleases, {
+              owner,
+              repo,
+              per_page: 100
+            });
+
+            const release = releases.find(r => r.tag_name === expectedTag);
+            if (!release) {
+              core.setFailed(
+                `Release ${expectedTag} não encontrada. Aguarde o workflow Release criar a draft/prerelease.`
+              );
+              return;
+            }
+
+            if (!release.draft || !release.prerelease) {
+              core.setFailed(
+                `Release ${expectedTag} existe, mas deve estar em modo draft e prerelease antes do merge.`
+              );
+              return;
+            }
+
+            const target = String(release.target_commitish || "");
+            const headSha = String(pr.head.sha || "");
+            if (target && headSha && target !== headSha) {
+              core.setFailed(
+                `Release ${expectedTag} está associada a ${target}, mas o PR atual está em ${headSha}.`
+              );
+              return;
+            }
+
+            core.info(`Gate aprovado: release ${expectedTag} (draft/prerelease) encontrada.`);

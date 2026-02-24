@@ -312,6 +312,31 @@ flowchart LR
 
 A automação de CI/CD foi estruturada em workflows independentes para separar qualidade de código, segurança, deploy, governança de release e governança de modelo.
 
+```mermaid
+flowchart LR
+    D[Push em develop] --> CD[Workflow CD]
+    CD --> P[Promote Develop to Main]
+    P --> PR[PR: develop -> main<br/>titulo: release vX.Y.Z]
+    PR --> REL[Workflow Release<br/>draft + prerelease]
+    REL --> GATE[Workflow Release Gate]
+    GATE --> M[Merge em main]
+    M --> CDM[Workflow CD em main]
+```
+
+```mermaid
+flowchart TD
+    T[Trigger: push em develop/main] --> B[Job: build-and-publish]
+    B --> B1[Checkout]
+    B1 --> B2[Build version]
+    B2 --> B3[Prepare image metadata]
+    B3 --> B4[Docker login GHCR]
+    B4 --> B5[Build and push image]
+    B5 --> C[Job: post-deploy-checks]
+    C --> C1[Wait for rollout]
+    C1 --> C2[Health check]
+    C2 --> C3[Smoke test predict/smart]
+```
+
 #### `ci.yml` (integração contínua)
 
 - **Checkout**: baixa o código do repositório na VM do runner.
@@ -341,7 +366,7 @@ A automação de CI/CD foi estruturada em workflows independentes para separar q
   - autentica no GHCR;
   - builda e publica tags `sha` e `latest`.
 - **Deploy Render**:
-  - o deploy é acionado automaticamente pelo Render a cada push em `main`;
+  - o deploy é acionado automaticamente pelo Render a cada push em `develop` e `main`;
   - aguarda rollout;
   - valida `/health`;
   - executa smoke test em `/api/v1/predict/smart`.
@@ -357,9 +382,23 @@ A automação de CI/CD foi estruturada em workflows independentes para separar q
 
 #### `release.yml` (governança de versão)
 
-- Dispara em tags `v*`.
+- Dispara no PR de release (`develop` -> `main`).
+- Usa a versão proposta no título do PR (`release: vX.Y.Z`) e, em fallback, calcula a próxima versão semântica automaticamente.
 - Gera notas de release com commit, tag de imagem sugerida e timestamp UTC.
-- Publica release no GitHub automaticamente.
+- Publica uma release versionada em modo `draft`/`prerelease` antes do merge em `main`.
+
+#### `promote-develop-to-main.yml` (promoção automática)
+
+- É acionado ao concluir com sucesso o workflow `CD` na branch `develop`.
+- Cria (ou atualiza) automaticamente PR de `develop` para `main`.
+- O título do PR segue versão de release proposta (`release: vX.Y.Z`) calculada a partir da última tag semântica.
+
+#### `release-gate.yml` (bloqueio de merge em `main`)
+
+- Valida PRs para `main` garantindo fluxo `develop` -> `main`.
+- Exige título no padrão `release: vX.Y.Z`.
+- Exige existência da release correspondente em modo `draft` e `prerelease`.
+- Deve ser configurado como status check obrigatório na branch protection de `main`.
 
 #### `quality-metrics.yml` (qualidade e cobertura)
 
