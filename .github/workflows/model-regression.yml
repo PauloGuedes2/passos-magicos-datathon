@@ -1,0 +1,99 @@
+name: Model Regression
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 10 * * 3"
+
+jobs:
+  regression-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: "pip"
+          cache-dependency-path: |
+            requirements.txt
+            requirements-dev.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements-dev.txt
+
+      - name: Save baseline metrics
+        run: |
+          mkdir -p app/monitoring
+          if [ -f app/monitoring/train_metrics.json ]; then
+            cp app/monitoring/train_metrics.json app/monitoring/train_metrics_baseline.json
+          fi
+
+      - name: Train candidate model
+        run: python app/train.py
+
+      - name: Compare candidate vs baseline
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          baseline_path = Path("app/monitoring/train_metrics_baseline.json")
+          candidate_path = Path("app/monitoring/train_metrics.json")
+
+          if not candidate_path.exists():
+            raise SystemExit("Candidate metrics not found: app/monitoring/train_metrics.json")
+
+          candidate = json.loads(candidate_path.read_text(encoding="utf-8"))
+          baseline = json.loads(baseline_path.read_text(encoding="utf-8")) if baseline_path.exists() else None
+
+          higher_is_better = ["f1_score", "recall", "precision", "auc"]
+          lower_is_better = ["brier_score"]
+          tolerance = {
+              "f1_score": 0.03,
+              "recall": 0.03,
+              "precision": 0.05,
+              "auc": 0.03,
+              "brier_score": 0.03,
+          }
+
+          if baseline is None:
+            print("No baseline metrics found. Skipping regression gate.")
+            raise SystemExit(0)
+
+          failures = []
+          for metric in higher_is_better:
+            old = float(baseline.get(metric, 0.0))
+            new = float(candidate.get(metric, 0.0))
+            if new < (old - tolerance[metric]):
+              failures.append(f"{metric}: baseline={old:.4f}, candidate={new:.4f}")
+
+          for metric in lower_is_better:
+            old = float(baseline.get(metric, 1.0))
+            new = float(candidate.get(metric, 1.0))
+            if new > (old + tolerance[metric]):
+              failures.append(f"{metric}: baseline={old:.4f}, candidate={new:.4f}")
+
+          if failures:
+            print("Model regression detected:")
+            for item in failures:
+              print(f"- {item}")
+            raise SystemExit(1)
+
+          print("Model regression gate passed.")
+          PY
+
+      - name: Upload model regression artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: model-regression-artifacts
+          path: |
+            app/monitoring/train_metrics.json
+            app/monitoring/train_metrics_baseline.json
+            app/monitoring/drift_report.json

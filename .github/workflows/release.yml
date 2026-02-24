@@ -1,0 +1,36 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Build release notes
+        id: notes
+        run: |
+          tag="${GITHUB_REF_NAME}"
+          {
+            echo "## Release ${tag}"
+            echo
+            echo "- Commit: \`${GITHUB_SHA}\`"
+            echo "- Image tag suggested: \`${GITHUB_SHA::7}\`"
+            echo "- Pipeline date (UTC): \`$(date -u +"%Y-%m-%dT%H:%M:%SZ")\`"
+          } > release-notes.md
+
+      - name: Publish GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          body_path: release-notes.md
