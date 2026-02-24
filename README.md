@@ -315,11 +315,11 @@ A automação de CI/CD foi estruturada em workflows independentes para separar q
 ```mermaid
 flowchart LR
     D[Push em develop] --> CD[Workflow CD]
-    CD --> PR[Job open-release-pr<br/>PR: develop -> main<br/>titulo: release vX.Y.Z]
-    PR --> REL[Workflow Release<br/>draft + prerelease]
-    REL --> GATE[Workflow Release Gate]
-    GATE --> M[Merge em main]
-    M --> CDM[Workflow CD em main]
+    CD --> PR1[Job open-release-pr<br/>PR: develop -> release]
+    PR1 --> REL[Job release-pr-draft-and-gate<br/>draft + prerelease]
+    REL --> PR2[Job open-release-to-main-pr<br/>PR: release -> main]
+    PR2 --> M[Merge em main]
+    M --> PDC[post-deploy-checks]
 ```
 
 ```mermaid
@@ -330,9 +330,13 @@ flowchart TD
     B2 --> B3[Summary de cobertura]
     B3 --> B4[Build version]
     B4 --> B5[Build local da imagem Docker]
-    B5 --> D{branch main?}
-    D -- sim --> C[Job: post-deploy-checks]
-    D -- nao --> PR[Job: open-release-pr]
+    B5 --> D{branch develop?}
+    D -- sim --> PR[Job: open-release-pr]
+    D -- nao --> E[Fim]
+    PR --> R[Job: release-pr-draft-and-gate]
+    R --> PR2[Job: open-release-to-main-pr]
+    PR2 --> MPR[Merge PR release->main]
+    MPR --> C[Job: post-deploy-checks]
     C --> C1[Wait for rollout]
     C1 --> C2[Health check]
     C2 --> C3[Smoke test predict/smart]
@@ -366,13 +370,19 @@ flowchart TD
   - calcula versão curta a partir do commit (`sha`);
   - builda imagem Docker local para validação (sem push para registry).
 - **Post-deploy checks (somente `main`)**:
-  - o deploy é acionado automaticamente pelo Render a cada push em `develop` e `main`;
+  - executa somente após merge do PR `release` -> `main`;
   - aguarda rollout;
   - valida `/health`;
   - executa smoke test em `/api/v1/predict/smart`.
 - **Open release PR (somente `develop`)**:
-  - cria ou atualiza automaticamente PR `develop` -> `main`;
+  - cria ou atualiza automaticamente PR `develop` -> `release`;
   - define título `release: vX.Y.Z` com versão semântica incremental.
+  - se o `GITHUB_TOKEN` não puder abrir PR, use o secret `RELEASE_PR_TOKEN`.
+- **Release draft + gate (somente `develop`)**:
+  - cria/atualiza release versionada em modo `draft` e `prerelease` antes do merge;
+  - valida no mesmo workflow as regras de gate da release.
+- **Open PR `release` -> `main` (somente `develop`)**:
+  - após conclusão da etapa de release, cria/atualiza automaticamente o PR final para `main`.
 
 #### `retrain-check.yml` (MLOps operacional)
 
@@ -383,19 +393,12 @@ flowchart TD
   - bloqueia se `f1_score` cair além do limite frente ao baseline.
 - **Upload monitoring artifacts**: publica `train_metrics`, `drift_report` e `reference_data`.
 
-#### `release.yml` (governança de versão)
+#### Governança de release (concatenada no `cd.yml`)
 
-- Dispara no PR de release (`develop` -> `main`).
-- Usa a versão proposta no título do PR (`release: vX.Y.Z`) e, em fallback, calcula a próxima versão semântica automaticamente.
-- Gera notas de release com commit, tag de imagem sugerida e timestamp UTC.
-- Publica uma release versionada em modo `draft`/`prerelease` antes do merge em `main`.
-
-#### `release-gate.yml` (bloqueio de merge em `main`)
-
-- Valida PRs para `main` garantindo fluxo `develop` -> `main`.
-- Exige título no padrão `release: vX.Y.Z`.
-- Exige existência da release correspondente em modo `draft` e `prerelease`.
-- Deve ser configurado como status check obrigatório na branch protection de `main`.
+- O fluxo `develop -> release` foi consolidado em jobs no próprio `cd.yml`.
+- O job `open-release-pr` cria/atualiza o PR `develop` -> `release`.
+- O job `release-pr-draft-and-gate` cria/atualiza a release `draft`/`prerelease` e valida o gate no mesmo run.
+- O job `open-release-to-main-pr` cria/atualiza o PR `release` -> `main` ao final da release.
 
 #### `quality-metrics.yml` (qualidade e cobertura)
 

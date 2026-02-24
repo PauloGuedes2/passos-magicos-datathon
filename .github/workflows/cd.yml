@@ -5,18 +5,24 @@ on:
     branches:
       - develop
       - main
+  pull_request:
+    types:
+      - closed
+    branches:
+      - main
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pull-requests: write
 
 concurrency:
-  group: cd-production
+  group: cd-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build-and-publish:
+    if: ${{ github.event_name == 'push' }}
     runs-on: ubuntu-latest
     timeout-minutes: 30
     outputs:
@@ -85,7 +91,6 @@ jobs:
           tests = failures = errors = skipped = 0
           passed = 0
           duration = 0.0
-
           if junit_path.exists():
             root = ET.parse(junit_path).getroot()
             suites = root if root.tag == "testsuites" else [root]
@@ -183,8 +188,7 @@ jobs:
   post-deploy-checks:
     runs-on: ubuntu-latest
     timeout-minutes: 20
-    needs: build-and-publish
-    if: ${{ github.ref_name == 'main' }}
+    if: ${{ github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main' && github.event.pull_request.head.ref == 'release' }}
     environment: production
     steps:
       - name: Wait for rollout
@@ -217,20 +221,50 @@ jobs:
     timeout-minutes: 10
     needs: build-and-publish
     if: ${{ github.event_name == 'push' && github.ref_name == 'develop' }}
+    outputs:
+      pr_number: ${{ steps.pr.outputs.pr_number }}
+      release_tag: ${{ steps.pr.outputs.release_tag }}
     steps:
       - name: Create or update release PR
+        id: pr
         uses: actions/github-script@v7
         with:
+          github-token: ${{ secrets.RELEASE_PR_TOKEN != '' && secrets.RELEASE_PR_TOKEN || github.token }}
           script: |
             const owner = context.repo.owner;
             const repo = context.repo.repo;
+
+            async function ensureBranch(branch, sourceBranch) {
+              try {
+                await github.rest.git.getRef({ owner, repo, ref: `heads/${branch}` });
+                core.info(`Branch '${branch}' already exists.`);
+                return;
+              } catch (error) {
+                if (error.status !== 404) throw error;
+              }
+
+              const source = await github.rest.git.getRef({
+                owner,
+                repo,
+                ref: `heads/${sourceBranch}`
+              });
+
+              await github.rest.git.createRef({
+                owner,
+                repo,
+                ref: `refs/heads/${branch}`,
+                sha: source.data.object.sha
+              });
+              core.info(`Created branch '${branch}' from '${sourceBranch}'.`);
+            }
+
+            await ensureBranch("release", "main");
 
             function parseSemver(tag) {
               const m = /^v(\d+)\.(\d+)\.(\d+)$/.exec(tag || "");
               if (!m) return null;
               return { major: Number(m[1]), minor: Number(m[2]), patch: Number(m[3]) };
             }
-
             function compareSemver(a, b) {
               if (a.major !== b.major) return a.major - b.major;
               if (a.minor !== b.minor) return a.minor - b.minor;
@@ -238,11 +272,8 @@ jobs:
             }
 
             const tags = await github.paginate(github.rest.repos.listTags, {
-              owner,
-              repo,
-              per_page: 100
+              owner, repo, per_page: 100
             });
-
             const semverTags = tags
               .map(t => t.name)
               .map(name => ({ name, parsed: parseSemver(name) }))
@@ -256,7 +287,7 @@ jobs:
             }
 
             const head = "develop";
-            const base = "main";
+            const base = "release";
             const runUrl = `${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`;
             const title = `release: ${next}`;
             const body = [
@@ -264,45 +295,273 @@ jobs:
               "",
               `- Versão proposta: \`${next}\``,
               `- Branch origem: \`develop\``,
-              `- Branch destino: \`main\``,
+              `- Branch destino: \`release\``,
               `- Execução de referência: ${runUrl}`
             ].join("\n");
 
             const openPrs = await github.paginate(github.rest.pulls.list, {
-              owner,
-              repo,
-              state: "open",
-              base,
-              head: `${owner}:${head}`,
-              per_page: 100
+              owner, repo, state: "open", base, head: `${owner}:${head}`, per_page: 100
             });
 
             if (openPrs.length > 0) {
               const pr = openPrs[0];
               await github.rest.pulls.update({
-                owner,
-                repo,
-                pull_number: pr.number,
-                title,
-                body
+                owner, repo, pull_number: pr.number, title, body
               });
+              core.setOutput("pr_number", String(pr.number));
+              core.setOutput("release_tag", next);
               core.info(`Updated existing PR #${pr.number} (${title}).`);
               return;
             }
 
             try {
               const created = await github.rest.pulls.create({
-                owner,
-                repo,
-                title,
-                head,
-                base,
-                body
+                owner, repo, title, head, base, body
               });
+              core.setOutput("pr_number", String(created.data.number));
+              core.setOutput("release_tag", next);
               core.info(`Created PR #${created.data.number} (${title}).`);
             } catch (error) {
+              if (
+                error.status === 403 &&
+                String(error.message || "").includes("not permitted to create or approve pull requests")
+              ) {
+                core.setFailed(
+                  "Permissão bloqueada para criar PR via GitHub Actions. " +
+                  "Habilite em Settings > Actions > General a opção de criar PRs, " +
+                  "ou configure RELEASE_PR_TOKEN (PAT com repo/pull_requests write)."
+                );
+                return;
+              }
               if (String(error.message).includes("No commits between")) {
-                core.info("No new commits between develop and main. PR not created.");
+                core.info("No new commits between develop and release. PR not created.");
+                return;
+              }
+              throw error;
+            }
+
+  release-pr-draft-and-gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: open-release-pr
+    if: ${{ github.event_name == 'push' && github.ref_name == 'develop' && needs.open-release-pr.outputs.release_tag != '' }}
+    steps:
+      - name: Create or update draft prerelease for PR
+        id: release_upsert
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.RELEASE_PR_TOKEN != '' && secrets.RELEASE_PR_TOKEN || github.token }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const releaseTag = "${{ needs.open-release-pr.outputs.release_tag }}";
+
+            if (!releaseTag) {
+              core.setFailed("Release tag not available from open-release-pr step.");
+              return;
+            }
+
+            const targetSha = context.sha;
+            const notes = [
+              `## Release ${releaseTag}`,
+              "",
+              `- Commit: \`${targetSha}\``,
+              `- Image tag suggested: \`${targetSha.substring(0, 7)}\``,
+              "- Tipo: `pre-release (pré-main)`"
+            ].join("\n");
+
+            const releases = await github.paginate(github.rest.repos.listReleases, {
+              owner, repo, per_page: 100
+            });
+            const existing = releases.find(r => r.tag_name === releaseTag);
+
+            if (existing) {
+              const updated = await github.rest.repos.updateRelease({
+                owner,
+                repo,
+                release_id: existing.id,
+                tag_name: releaseTag,
+                target_commitish: targetSha,
+                name: releaseTag,
+                body: notes,
+                draft: true,
+                prerelease: true
+              });
+              core.setOutput("release_id", String(updated.data.id));
+              core.setOutput("release_tag", releaseTag);
+              core.info(`Updated existing release ${releaseTag}.`);
+            } else {
+              const created = await github.rest.repos.createRelease({
+                owner,
+                repo,
+                tag_name: releaseTag,
+                target_commitish: targetSha,
+                name: releaseTag,
+                body: notes,
+                draft: true,
+                prerelease: true
+              });
+              core.setOutput("release_id", String(created.data.id));
+              core.setOutput("release_tag", releaseTag);
+              core.info(`Created new release ${releaseTag}.`);
+            }
+
+      - name: Validate release gate conditions
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.RELEASE_PR_TOKEN != '' && secrets.RELEASE_PR_TOKEN || github.token }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const expectedTag = "${{ steps.release_upsert.outputs.release_tag }}";
+            const expectedReleaseId = "${{ steps.release_upsert.outputs.release_id }}";
+
+            if (!expectedTag) {
+              core.setFailed("Release tag is empty.");
+              return;
+            }
+
+            async function sleep(ms) {
+              return new Promise(resolve => setTimeout(resolve, ms));
+            }
+
+            let rel = null;
+
+            // Prefer direct lookup by release id when available.
+            if (expectedReleaseId) {
+              try {
+                const byId = await github.rest.repos.getRelease({
+                  owner,
+                  repo,
+                  release_id: Number(expectedReleaseId)
+                });
+                rel = byId.data;
+              } catch (error) {
+                core.warning(`Direct lookup by release id failed: ${error.message}`);
+              }
+            }
+
+            // Fallback with retry by tag to absorb API eventual consistency.
+            if (!rel) {
+              for (let attempt = 1; attempt <= 5; attempt++) {
+                try {
+                  const byTag = await github.rest.repos.getReleaseByTag({
+                    owner,
+                    repo,
+                    tag: expectedTag
+                  });
+                  rel = byTag.data;
+                  break;
+                } catch (error) {
+                  if (error.status !== 404) throw error;
+                  core.info(`Release ${expectedTag} not visible yet (attempt ${attempt}/5).`);
+                  await sleep(2000);
+                }
+              }
+            }
+
+            if (!rel) {
+              core.setFailed(`Release ${expectedTag} não encontrada.`);
+              return;
+            }
+            if (!rel.draft || !rel.prerelease) {
+              core.setFailed(`Release ${expectedTag} deve estar em draft/prerelease.`);
+              return;
+            }
+            core.info(`Gate aprovado: release ${expectedTag} pronta antes da main.`);
+
+  open-release-to-main-pr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    needs: release-pr-draft-and-gate
+    if: ${{ github.event_name == 'push' && github.ref_name == 'develop' }}
+    steps:
+      - name: Sync release branch with develop
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.RELEASE_PR_TOKEN != '' && secrets.RELEASE_PR_TOKEN || github.token }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const targetSha = context.sha;
+
+            try {
+              await github.rest.git.getRef({ owner, repo, ref: "heads/release" });
+              await github.rest.git.updateRef({
+                owner,
+                repo,
+                ref: "heads/release",
+                sha: targetSha,
+                force: true
+              });
+              core.info(`Updated release branch to ${targetSha}.`);
+            } catch (error) {
+              if (error.status === 404) {
+                await github.rest.git.createRef({
+                  owner,
+                  repo,
+                  ref: "refs/heads/release",
+                  sha: targetSha
+                });
+                core.info(`Created release branch at ${targetSha}.`);
+                return;
+              }
+              throw error;
+            }
+
+      - name: Create or update PR release -> main
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.RELEASE_PR_TOKEN != '' && secrets.RELEASE_PR_TOKEN || github.token }}
+          script: |
+            const owner = context.repo.owner;
+            const repo = context.repo.repo;
+            const releaseTag = "${{ needs.open-release-pr.outputs.release_tag }}";
+            const title = `release->main: ${releaseTag || "ready"}`;
+            const body = [
+              "PR automático para promoção de `release` para `main` após conclusão da etapa de release.",
+              "",
+              `- Tag de referência: \`${releaseTag || "n/a"}\``,
+              `- Execução de referência: ${context.serverUrl}/${owner}/${repo}/actions/runs/${context.runId}`
+            ].join("\n");
+
+            const head = "release";
+            const base = "main";
+            const openPrs = await github.paginate(github.rest.pulls.list, {
+              owner, repo, state: "open", base, head: `${owner}:${head}`, per_page: 100
+            });
+
+            if (openPrs.length > 0) {
+              await github.rest.pulls.update({
+                owner,
+                repo,
+                pull_number: openPrs[0].number,
+                title,
+                body
+              });
+              core.info(`Updated existing PR #${openPrs[0].number} (${head} -> ${base}).`);
+              return;
+            }
+
+            try {
+              const created = await github.rest.pulls.create({
+                owner, repo, title, head, base, body
+              });
+              core.info(`Created PR #${created.data.number} (${head} -> ${base}).`);
+            } catch (error) {
+              if (String(error.message).includes("No commits between")) {
+                core.info("No new commits between release and main. PR not created.");
+                return;
+              }
+              if (
+                error.status === 403 &&
+                String(error.message || "").includes("not permitted to create or approve pull requests")
+              ) {
+                core.setFailed(
+                  "Permissão bloqueada para criar PR via GitHub Actions. " +
+                  "Habilite em Settings > Actions > General a opção de criar PRs, " +
+                  "ou configure RELEASE_PR_TOKEN (PAT com repo/pull_requests write)."
+                );
                 return;
               }
               throw error;
