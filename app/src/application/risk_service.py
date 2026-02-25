@@ -9,12 +9,14 @@ Responsabilidades:
 import json
 import os
 import time
+from datetime import datetime
+
 import pandas as pd
 
 from src.application.feature_processor import ProcessadorFeatures
 from src.application.monitoring_service import ServicoMonitoramento
 from src.config.settings import Configuracoes
-from src.domain.student import EntradaEstudante, Estudante
+from src.domain.student import EntradaEstudante
 from src.infrastructure.data.historical_repository import RepositorioHistorico
 from src.infrastructure.logging.prediction_logger import LoggerPredicao
 from src.util.logger import logger
@@ -30,7 +32,7 @@ class ServicoRisco:
     - Persistir logs de predição
     """
 
-    def __init__(self, modelo):
+    def __init__(self, modelo, model_version: str | None = None):
         """Inicializa o serviço com o modelo.
 
         Parâmetros:
@@ -40,6 +42,7 @@ class ServicoRisco:
         self.processador = ProcessadorFeatures()
         self.logger = LoggerPredicao()
         self.repositorio = RepositorioHistorico()
+        self.model_version = str(model_version or Configuracoes.MODEL_VERSION)
 
     _ultimo_snapshot_monitoramento = 0.0
 
@@ -103,7 +106,11 @@ class ServicoRisco:
             }
 
             features = dados_features.to_dict(orient="records")[0]
-            self.logger.registrar_predicao(features=features, dados_predicao=resultado)
+            self.logger.registrar_predicao(
+                features=features,
+                dados_predicao=resultado,
+                versao_modelo=self.model_version,
+            )
             self._atualizar_snapshot_monitoramento()
 
             return resultado
@@ -202,15 +209,13 @@ class ServicoRisco:
         Retorno:
         - dict: resultado da predição
         """
-        historico = self.repositorio.obter_historico_estudante(
-            entrada.RA, entrada.ANO_REFERENCIA
-        )
+        historico = self.repositorio.obter_historico_estudante(entrada.RA, entrada.ANO_REFERENCIA)
         requer_revisao_humana = False
 
         if historico:
-            logger.info(f"Histórico encontrado para RA: {entrada.RA}")
+            logger.info(f"Historico encontrado para RA: {entrada.RA}")
         else:
-            logger.info(f"Aluno novo ou sem histórico (RA: {entrada.RA})")
+            logger.info(f"Aluno novo ou sem historico (RA: {entrada.RA})")
             requer_revisao_humana = True
             historico = {
                 "INDE_ANTERIOR": 0.0,
@@ -224,14 +229,20 @@ class ServicoRisco:
                 "ALUNO_NOVO": 1,
             }
 
-        dados_completos = entrada.model_dump()
+        ano_referencia = entrada.ANO_REFERENCIA if entrada.ANO_REFERENCIA is not None else datetime.now().year
+        dados_completos = {
+            "RA": entrada.RA,
+            "ANO_REFERENCIA": ano_referencia,
+        }
         dados_completos.update(historico)
 
-        estudante = Estudante(**dados_completos)
-        resultado = self.prever_risco(estudante.model_dump())
+        resultado = self.prever_risco(dados_completos)
         resultado["requires_human_review"] = (
             resultado.get("requires_human_review", False) or requer_revisao_humana
         )
         resultado["requires_human_review"] = bool(resultado["requires_human_review"])
         resultado["top_risk_drivers"] = self._gerar_top_risk_drivers(dados_completos)
         return resultado
+
+
+
