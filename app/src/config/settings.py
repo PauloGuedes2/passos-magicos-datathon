@@ -24,6 +24,7 @@ class Configuracoes:
     DEFAULT_DATA_DIR = os.path.join(BASE_DIR, "data")
     DATA_DIR = os.path.abspath(os.getenv("DATA_DIR", DEFAULT_DATA_DIR))
     MODEL_DIR = os.path.join(BASE_DIR, "models")
+    MODEL_VERSIONS_DIR = os.path.join(MODEL_DIR, "versions")
     LOG_DIR = os.path.join(BASE_DIR, "logs")
     MONITORING_DIR = os.path.join(BASE_DIR, "monitoring")
 
@@ -73,6 +74,7 @@ class Configuracoes:
     APP_ENV = os.getenv("APP_ENV", os.getenv("ENVIRONMENT", "dev"))
     SERVICE_NAME = os.getenv("SERVICE_NAME", "passos-magicos-datathon-api")
     MODEL_VERSION = os.getenv("MODEL_VERSION", "unknown")
+    MAX_MODEL_VERSIONS = int(os.getenv("MAX_MODEL_VERSIONS", "3"))
     MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS = int(os.getenv("MONITORING_SNAPSHOT_MIN_INTERVAL_SECONDS", "300"))
 
     FEATURES_NUMERICAS = [

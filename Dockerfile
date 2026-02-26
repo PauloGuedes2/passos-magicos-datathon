@@ -44,6 +44,8 @@ COPY app/main.py .
 
 # Initial model artifact (required for first API boot)
 COPY app/models/ ./models/
+# Monitoring artifacts (required for New Relic custom model metrics without retraining)
+COPY app/monitoring/ ./monitoring/
 
 # Embedded dataset for Render Free
 RUN mkdir -p /app/data

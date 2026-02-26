@@ -965,7 +965,13 @@ class PipelineML:
         os.makedirs(os.path.dirname(Configuracoes.MODEL_PATH), exist_ok=True)
         dump(modelo, Configuracoes.MODEL_PATH)
 
-        metricas["model_version"] = datetime.now().strftime("v%Y.%m.%d")
+        metricas["model_version"] = datetime.now().strftime("v%Y.%m.%d-%H%M%S")
+        try:
+            from src.infrastructure.model.model_manager import GerenciadorModelo
+
+            GerenciadorModelo().registrar_modelo_versionado(modelo, metricas["model_version"])
+        except Exception as erro:
+            logger.warning(f"Falha ao registrar snapshot versionado do modelo: {erro}")
         modelo_ref = modelo_importancia if modelo_importancia is not None else modelo
 
         # Extrair importância de features do RandomForest

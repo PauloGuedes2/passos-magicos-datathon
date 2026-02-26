@@ -31,12 +31,6 @@ def _app_com_servico(servico: ServicoRisco) -> TestClient:
 def _payload_smart():
     return {
         "RA": "RA999",
-        "IDADE": 12,
-        "ANO_INGRESSO": 2023,
-        "GENERO": "Feminino",
-        "TURMA": "1A",
-        "INSTITUICAO_ENSINO": "Publica",
-        "FASE": "1A",
         "ANO_REFERENCIA": 2024,
     }
 

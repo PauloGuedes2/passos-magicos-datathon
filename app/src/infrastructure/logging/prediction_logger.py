@@ -39,7 +39,7 @@ class LoggerPredicao:
                     cls._instancia = super(LoggerPredicao, cls).__new__(cls)
         return cls._instancia
 
-    def registrar_predicao(self, features: dict, dados_predicao: dict, versao_modelo: str = "2.1.0"):
+    def registrar_predicao(self, features: dict, dados_predicao: dict, versao_modelo: str | None = None):
         """Escreve um registro de predição de forma atômica.
 
         Parâmetros:
@@ -54,7 +54,7 @@ class LoggerPredicao:
             "prediction_id": str(uuid.uuid4()),
             "correlation_id": dados_predicao.get("correlation_id", str(uuid.uuid4())),
             "timestamp": datetime.now().isoformat(),
-            "model_version": versao_modelo,
+            "model_version": str(versao_modelo or Configuracoes.MODEL_VERSION),
             "input_features": features,
             "prediction_result": {
                 "class": dados_predicao.get("prediction"),

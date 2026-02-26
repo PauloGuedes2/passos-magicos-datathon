@@ -55,12 +55,6 @@ def test_cenario_historico_apenas_ano_mais_antigo():
     )()
     entrada = EntradaEstudante(
         RA="X2",
-        IDADE=11,
-        ANO_INGRESSO=2024,
-        GENERO="Feminino",
-        TURMA="1B",
-        INSTITUICAO_ENSINO="Publica",
-        FASE="1B",
         ANO_REFERENCIA=2024,
     )
     resposta = servico.prever_risco_inteligente(entrada)
