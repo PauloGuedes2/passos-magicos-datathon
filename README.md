@@ -27,7 +27,7 @@
 - [14) Cenários Reais de Exposição](#14-cenários-reais-de-exposição)
 - [15) Limitações](#15-limitações)
 - [16) Perguntas Relevantes](#16-perguntas-relevantes)
-- [17) Hands-on (Guia Pratico)](#17-hands-on-guia-pratico)
+- [17) Hands-on (Guia Prático)](#17-hands-on-guia-prático)
 - [18) Licença MIT](#18-licença-mit)
 
 ---
@@ -49,7 +49,7 @@ Em contexto de vulnerabilidade social, o custo de não agir cedo é alto para o 
 
 ### Valor funcional entregue pela solução
 O sistema implementa um fluxo de ML ponta a ponta preparado para operação real:
-- predição online de risco (`/api/v1/predict/full` e `/api/v1/predict/smart`);
+- predição online de risco (`/api/v1/predict/smart`);
 - tratamento de cold start com revisão humana obrigatória quando não há histórico;
 - monitoramento contínuo de estabilidade (drift via PSI);
 - retreinamento controlado por quality gate para reduzir risco de regressão;
@@ -96,7 +96,7 @@ A solução é um **sistema completo de ML em produção candidata**, composto p
 
 | Componente | O que faz | Evidência no código |
 |---|---|---|
-| API de inferência | Expõe predição completa e predição inteligente com histórico | `app/main.py`, `app/src/api/controller.py` |
+| API de inferência | Expõe predição inteligente com histórico | `app/main.py`, `app/src/api/controller.py` |
 | Pipeline de treinamento | Treina modelo com anti-leakage temporal, calibração e threshold estratégico | `app/train.py`, `app/src/infrastructure/model/ml_pipeline.py` |
 | Sistema de retreinamento | Endpoint para acionar treino e recarregar modelo em memória | `app/src/api/training_controller.py`, `app/src/application/training_service.py` |
 | Monitoramento | Drift (PSI), métricas estratégicas e persistência de relatório | `app/src/application/monitoring_service.py` |
@@ -308,6 +308,12 @@ flowchart LR
 - API: https://passos-magicos-datathon.onrender.com/docs#/
 - Health: https://passos-magicos-datathon.onrender.com/health
 - Observabilidade principal (New Relic): https://onenr.io/0yw49WynLR3
+
+**Nota importante sobre Render Free (sem disco persistente)**:
+- No plano Free, o filesystem do serviço é efêmero e pode ser recriado em restart/deploy.
+- Sem `Persistent Disk`, artefatos gerados em runtime podem ser perdidos (`app/models`, `app/monitoring`, `app/logs`).
+- Consequência prática: se os artefatos de monitoramento não estiverem na imagem, as métricas customizadas de modelo no New Relic podem não ser publicadas até novo retreino.
+
 ### CI/CD com GitHub Actions
 
 A automação de CI/CD foi estruturada em workflows independentes para separar qualidade de código, segurança, deploy, governança de release e governança de modelo.
@@ -435,8 +441,8 @@ flowchart TD
 | Método | Endpoint | Descrição |
 |---|---|---|
 | `GET` | `/health` | Saúde do serviço e disponibilidade do modelo |
-| `POST` | `/api/v1/predict/full` | Predição com payload completo |
-| `POST` | `/api/v1/predict/smart` | Predição com enriquecimento por histórico |
+| `POST` | `/api/v1/predict/smart` | Predição com enriquecimento por histórico (query opcional: `model_version`) |
+| `GET` | `/api/v1/models/versions` | Lista versões disponíveis para usar em `model_version` |
 | `POST` | `/api/v1/train/retrain` | Retreinamento e reload do modelo |
 | `GET` | `/api/v1/monitoring/feature-importance` | Ranking global de importância |
 
@@ -447,16 +453,23 @@ curl -X GET http://localhost:8000/health
 ```
 
 ```bash
+curl -X GET http://localhost:8000/api/v1/models/versions
+```
+
+```bash
 curl -X POST http://localhost:8000/api/v1/predict/smart \
   -H "Content-Type: application/json" \
   -d '{
     "RA": "123",
-    "IDADE": 10,
-    "ANO_INGRESSO": 2020,
-    "GENERO": "Masculino",
-    "TURMA": "A",
-    "INSTITUICAO_ENSINO": "Escola",
-    "FASE": "1A",
+    "ANO_REFERENCIA": 2024
+  }'
+```
+
+```bash
+curl -X POST "http://localhost:8000/api/v1/predict/smart?model_version=v2026.02.25-120000" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "RA": "123",
     "ANO_REFERENCIA": 2024
   }'
 ```
@@ -653,7 +666,7 @@ Quality gate: bloqueio por recall mínimo e critério de não degradação relev
 
 ---
 
-## 17) Hands-on (Guia Pratico)
+## 17) Hands-on (Guia Prático)
 
 ### Roteiro rápido (15-20 min)
 
@@ -683,12 +696,6 @@ curl -X POST http://localhost:8000/api/v1/predict/smart \
   -H "Content-Type: application/json" \
   -d '{
     "RA": "1001",
-    "IDADE": 11,
-    "ANO_INGRESSO": 2021,
-    "GENERO": "Feminino",
-    "TURMA": "1A",
-    "INSTITUICAO_ENSINO": "Publica",
-    "FASE": "1A",
     "ANO_REFERENCIA": 2024
   }'
 ```
@@ -741,6 +748,11 @@ PYTHONPATH=app python tests/scripts/send_production_simulation.py --max-requests
   - `ModelMonitoringFeatureImportance` (top features de importância global)
 - O envio é protegido por `try/except`, não interrompe o fluxo da API e falha de forma segura.
 - Dashboard recomendado (import manual local): `observability/newrelic-dashboard-local.json`
+- Pré-requisitos para publicar métricas customizadas no New Relic sem retreino:
+  - `app/monitoring/reference_data.csv` precisa existir (sem ele o snapshot retorna `reference_not_found`).
+  - `app/logs/predictions.jsonl` precisa ter amostras válidas (mínimo 5) para cálculo de drift.
+  - `NEW_RELIC_LICENSE_KEY` e `NEW_RELIC_APP_NAME` devem estar definidos.
+- Se `train_metrics.json` não existir, apenas eventos de snapshot/PSI são enviados (sem performance/fairness/feature importance).
 
 Exemplos de NRQL:
 

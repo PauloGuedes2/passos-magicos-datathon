@@ -1,68 +1,37 @@
-"""Controlador de predição da API.
+"""Controlador de predicao da API."""
 
-Responsabilidades:
-- Definir rotas de predição
-- Resolver dependências do serviço de risco
-- Traduzir erros em respostas HTTP
-"""
+from fastapi import APIRouter, Depends, HTTPException
 
-from fastapi import APIRouter, HTTPException, Depends
-
-from src.application.model_runtime_service import obter_modelo_runtime
+from src.application.model_runtime_service import listar_versoes_modelo_runtime, obter_modelo_runtime
 from src.application.risk_service import ServicoRisco
-from src.domain.student import Estudante, EntradaEstudante
+from src.domain.student import EntradaEstudante
 
 
-def obter_servico_risco():
-    """Dependência para obter uma instância do serviço de risco.
-
-    Responsabilidades:
-    - Validar se o modelo está carregado
-    - Criar o serviço com o modelo em memória
-
-    Retorno:
-    - ServicoRisco: instância pronta para uso
-
-    Exceções:
-    - HTTPException: quando o modelo não está disponível
-    """
+def obter_servico_risco(model_version: str | None = None):
+    """Dependencia para obter uma instancia do servico de risco."""
     try:
-        modelo = obter_modelo_runtime()
-        return ServicoRisco(modelo=modelo)
+        modelo, versao_resolvida = obter_modelo_runtime(model_version=model_version)
+        return ServicoRisco(modelo=modelo, model_version=versao_resolvida)
+    except FileNotFoundError as erro:
+        raise HTTPException(status_code=404, detail=str(erro))
     except RuntimeError as erro:
-        raise HTTPException(status_code=503, detail=f"Modelo de ML não inicializado. {str(erro)}")
+        raise HTTPException(status_code=503, detail=f"Modelo de ML nao inicializado. {str(erro)}")
 
 
 class ControladorPredicao:
-    """Controlador de predição.
-
-    Responsabilidades:
-    - Registrar rotas de predição
-    - Expor endpoints de predição completa e inteligente
-    """
+    """Controlador de predicao."""
 
     def __init__(self):
-        """Inicializa o controlador.
-
-        Responsabilidades:
-        - Instanciar o roteador
-        - Registrar as rotas disponíveis
-        """
         self.roteador = APIRouter()
         self._registrar_rotas()
 
     def _registrar_rotas(self):
-        """Registra as rotas de predição.
-
-        Responsabilidades:
-        - Configurar endpoint de predição completa
-        - Configurar endpoint de predição inteligente
-        """
         self.roteador.add_api_route(
-            path="/predict/full",
-            endpoint=self._predizer,
-            methods=["POST"],
+            path="/models/versions",
+            endpoint=self._listar_versoes_modelo,
+            methods=["GET"],
             response_model=dict,
+            summary="Lista versoes disponiveis do modelo",
         )
 
         self.roteador.add_api_route(
@@ -70,46 +39,27 @@ class ControladorPredicao:
             endpoint=self._predizer_inteligente,
             methods=["POST"],
             response_model=dict,
-            summary="Predição com busca automática de histórico",
+            summary="Predicao com busca automatica de historico",
         )
 
     @staticmethod
-    async def _predizer(estudante: Estudante, servico: ServicoRisco = Depends(obter_servico_risco)):
-        """Predição tradicional com modelo completo do aluno.
-
-        Parâmetros:
-        - estudante (Estudante): dados completos do aluno
-        - servico (ServicoRisco): serviço de risco injetado
-
-        Retorno:
-        - dict: resultado da predição
-
-        Exceções:
-        - HTTPException: erro interno durante a predição
-        """
+    async def _listar_versoes_modelo():
+        """Lista versoes disponiveis para selecao no endpoint de predicao."""
         try:
-            return servico.prever_risco(estudante.model_dump())
-        except (ValueError, TypeError, KeyError) as erro:
-            raise HTTPException(status_code=400, detail=str(erro))
-        except RuntimeError as erro:
-            raise HTTPException(status_code=503, detail=str(erro))
+            versoes = listar_versoes_modelo_runtime()
+            return {
+                "available_model_versions": versoes,
+                "default_model_version": versoes[0] if versoes else None,
+            }
+        except Exception as erro:
+            raise HTTPException(status_code=503, detail=f"Falha ao listar versoes de modelo. {erro}")
 
     @staticmethod
     async def _predizer_inteligente(
-        entrada: EntradaEstudante, servico: ServicoRisco = Depends(obter_servico_risco)
+        entrada: EntradaEstudante,
+        servico: ServicoRisco = Depends(obter_servico_risco),
     ):
-        """Predição inteligente com busca automática de histórico.
-
-        Parâmetros:
-        - entrada (EntradaEstudante): dados básicos do aluno
-        - servico (ServicoRisco): serviço de risco injetado
-
-        Retorno:
-        - dict: resultado da predição
-
-        Exceções:
-        - HTTPException: erro interno durante a predição
-        """
+        """Predicao inteligente com busca automatica de historico."""
         try:
             return servico.prever_risco_inteligente(entrada)
         except (ValueError, TypeError, KeyError) as erro:

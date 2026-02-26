@@ -27,6 +27,7 @@ def test_prever_risco_sucesso(estudante_exemplo):
     assert isinstance(resultado["requires_human_review"], bool)
     assert resultado["risk_segment"] == "ALTO_RISCO"
     logger_mock.registrar_predicao.assert_called_once()
+    assert logger_mock.registrar_predicao.call_args.kwargs["versao_modelo"] == "unknown"
 
 
 def test_prever_risco_limite_threshold(estudante_exemplo):

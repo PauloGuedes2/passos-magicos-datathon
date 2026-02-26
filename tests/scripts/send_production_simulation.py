@@ -21,7 +21,7 @@ import requests
 # Suprime avisos de pandas
 warnings.simplefilter(action="ignore", category=FutureWarning)
 
-# --- 1. ConfiguraAAo de Path ---
+# --- 1. Configuracao de Path ---
 DIRETORIO_ATUAL = os.path.dirname(os.path.abspath(__file__))
 RAIZ_PROJETO = os.path.dirname(os.path.dirname(DIRETORIO_ATUAL))
 APP_DIR = os.path.join(RAIZ_PROJETO, "app")
@@ -32,70 +32,21 @@ if RAIZ_PROJETO not in sys.path:
 
 from src.config.settings import Configuracoes
 
-# --- 2. ConfiguraAAes da API ---
-# PORTA = int(os.getenv("PORT", 8000))
-# URL_API = f"http://localhost:{PORTA}/api/v1/predict/smart"
-DEFAULT_API_URL = "https://passos-magicos-datathon.onrender.com/api/v1/predict/smart"
+# --- 2. Configuracoes da API ---
+PORTA = int(os.getenv("PORT", 8000))
+DEFAULT_API_URL = f"http://localhost:{PORTA}/api/v1/predict/smart"
+# DEFAULT_API_URL = "https://passos-magicos-datathon.onrender.com/api/v1/predict/smart"
 URL_API = os.getenv("API_URL", DEFAULT_API_URL).strip()
 DELAY = 0.1  # Acelerado para teste
-
-
-def limpar_genero(valor):
-    """
-    Converte Menino/Menina/Garota para o padrao da API.
-
-    ParAmetros:
-    - valor (Any): valor original do genero
-
-    Retorno:
-    - str: genero normalizado
-    """
-    if pd.isna(valor):
-        return "Outro"
-    texto = str(valor).lower().strip()
-
-    if any(item in texto for item in ["fem", "menina", "mulher", "garota"]):
-        return "Feminino"
-    if any(item in texto for item in ["masc", "menino", "homem", "garoto"]):
-        return "Masculino"
-    return "Outro"
-
-
-def limpar_fase(valor):
-    """
-    Remove espacos e caracteres especiais da FASE (Ex: 'FASE 5' -> 'FASE5').
-
-    ParAmetros:
-    - valor (Any): valor original da fase
-
-    Retorno:
-    - str: fase sanitizada
-    """
-    if pd.isna(valor):
-        return "0"
-    texto = str(valor).upper().strip()
-    if re.fullmatch(r"[0-9A-Z]+", texto):
-        return texto
-    match = re.search(r"\b(ALFA)\b", texto)
-    if match:
-        return match.group(1)
-    match = re.search(r"\b([0-9]{1,2}[A-Z])\b", texto)
-    if match:
-        return match.group(1)
-    match = re.search(r"\b([0-9]{1,2})\b", texto)
-    if match:
-        return match.group(1)
-    limpo = re.sub(r"[^A-Z0-9]", "", texto)
-    return limpo if limpo else "0"
 
 
 def obter_coluna(row, nomes_possiveis):
     """
     Retorna o primeiro valor encontrado em possiveis nomes de coluna.
 
-    ParAmetros:
+    Parametros:
     - row (pd.Series): linha do DataFrame
-    - nomes_possiveis (list[str]): nomes de colunas possAveis
+    - nomes_possiveis (list[str]): nomes de colunas possiveis
 
     Retorno:
     - Any: valor encontrado ou None
@@ -166,7 +117,7 @@ def normalizar_colunas(df):
     """
     Normaliza nomes de colunas e ajustes de RA.
 
-    ParAmetros:
+    Parametros:
     - df (pd.DataFrame): dados originais
 
     Retorno:
@@ -191,7 +142,7 @@ def obter_stream_infinito(df):
     """
     Gera um stream infinito de linhas embaralhadas.
 
-    ParAmetros:
+    Parametros:
     - df (pd.DataFrame): dados de origem
 
     Retorno:
@@ -201,61 +152,6 @@ def obter_stream_infinito(df):
         df_embaralhado = df.sample(frac=1).reset_index(drop=True)
         for _, row in df_embaralhado.iterrows():
             yield row
-
-
-def _normalizar_idade(idade_raw, ano_referencia=None):
-    """
-    Normaliza a idade a partir de valores brutos.
-
-    ParAmetros:
-    - idade_raw (Any): valor original
-
-    Retorno:
-    - int: idade normalizada
-    """
-    if idade_raw:
-        try:
-            valor = float(idade_raw)
-            if 4 <= valor <= 25:
-                return int(valor)
-            if valor > 1900:
-                ano_base = ano_referencia if ano_referencia else 2024
-                valor = ano_base - valor
-                if 4 <= valor <= 25:
-                    return int(valor)
-        except Exception:
-            pass
-
-    try:
-        data_nasc = pd.to_datetime(idade_raw, errors="coerce")
-        if pd.notna(data_nasc):
-            ano_base = ano_referencia if ano_referencia else 2024
-            idade_calc = int(ano_base - data_nasc.year)
-            if 4 <= idade_calc <= 25:
-                return idade_calc
-    except Exception:
-        pass
-    return None
-
-
-def _normalizar_ano_ingresso(ano_raw):
-    """
-    Normaliza o ano de ingresso.
-
-    ParAmetros:
-    - ano_raw (Any): valor original
-
-    Retorno:
-    - int: ano de ingresso normalizado
-    """
-    if ano_raw:
-        try:
-            valor = int(float(ano_raw))
-            if 2000 <= valor <= 2026:
-                return valor
-        except Exception:
-            pass
-    return None
 
 
 def _montar_payload(row, chaves):
@@ -269,10 +165,6 @@ def _montar_payload(row, chaves):
     Retorno:
     - dict: payload pronto para envio
     """
-    idade_raw = obter_coluna(row, chaves["idade"])
-    ano_raw = obter_coluna(row, chaves["ano_ingresso"])
-    genero_raw = obter_coluna(row, chaves["genero"])
-    fase_raw = obter_coluna(row, chaves["fase"])
     ano_ref_raw = obter_coluna(row, chaves["ano_referencia"])
 
     ano_ref_final = None
@@ -282,39 +174,13 @@ def _montar_payload(row, chaves):
         except Exception:
             ano_ref_final = None
 
-    idade_final = _normalizar_idade(idade_raw, ano_ref_final)
-    ano_final = _normalizar_ano_ingresso(ano_raw)
-    genero_final = limpar_genero(genero_raw)
-    if pd.isna(fase_raw):
-        fase_final = "N/A"
-    else:
-        fase_final = str(fase_raw)
-
-    if idade_final is None:
-        return None
-
     payload = {
         "RA": str(row["RA"]),
-        "NOME": str(row.get("NOME", f"Aluno {row['RA']}")),
-        "IDADE": idade_final,
-        "ANO_INGRESSO": ano_final,
-        "GENERO": genero_final,
-        "TURMA": str(obter_coluna(row, chaves["turma"]) or "N/A"),
-        "INSTITUICAO_ENSINO": str(obter_coluna(row, chaves["instituicao"]) or "N/A"),
-        "FASE": fase_final,
         "ANO_REFERENCIA": ano_ref_final,
     }
 
     if payload.get("ANO_REFERENCIA") is None:
         payload.pop("ANO_REFERENCIA", None)
-    if payload.get("IDADE") is None:
-        payload.pop("IDADE", None)
-    if payload.get("ANO_INGRESSO") is None:
-        payload.pop("ANO_INGRESSO", None)
-
-    for chave, valor in payload.items():
-        if str(valor).lower() in ["nan", "nat", "none"]:
-            payload[chave] = "N/A"
 
     return payload
 
@@ -323,7 +189,7 @@ def _enviar_payload(payload):
     """
     Envia o payload para a API.
 
-    ParAmetros:
+    Parametros:
     - payload (dict): dados da requisicao
 
     Retorno:
@@ -382,12 +248,6 @@ def simular_trafego_producao(
     print(f"[OK] Dados carregados: {len(dados)} linhas.")
 
     chaves = {
-        "idade": ["IDADE", "IDADE 2024", "IDADE_ALUNO", "ANO_NASC", "ANO NASC", "DATA DE NASC"],
-        "ano_ingresso": ["ANO_INGRESSO", "ANO INGRESSO"],
-        "genero": ["GENERO", "SEXO"],
-        "turma": ["TURMA", "TURMA 2024"],
-        "instituicao": ["INSTITUICAO_ENSINO", "INSTITUICAO DE ENSINO", "ESCOLA", "INSTITUICAO"],
-        "fase": ["FASE", "FASE 2024", "FASE_TURMA"],
         "ano_referencia": ["ANO_REFERENCIA", "ANO REFERENCIA", "ANO_REF"],
     }
 
@@ -412,7 +272,8 @@ def simular_trafego_producao(
                 dados_resposta = resposta.json()
                 sucesso += 1
                 print(
-                    f"#{contador} | [OK] {origem} | {payload['RA']} | {payload['GENERO']} | {payload['FASE']} | "
+                    f"#{contador} | [OK] {origem} | RA={payload['RA']} | "
+                    f"ANO_REF={payload.get('ANO_REFERENCIA', 'N/A')} | "
                     f"{dados_resposta.get('risk_label')}"
                 )
                 if snapshot_a_cada_request:
@@ -484,7 +345,7 @@ def _parse_args():
         "--sem-snapshot-a-cada-request",
         dest="snapshot_a_cada_request",
         action="store_false",
-        help="Desativa atualização de snapshot a cada resposta 200 da API.",
+        help="Desativa atualizacao de snapshot a cada resposta 200 da API.",
     )
     return parser.parse_args()
 
@@ -508,3 +369,4 @@ if __name__ == "__main__":
         main()
     except KeyboardInterrupt:
         print("\nEncerrado.")
+

@@ -40,16 +40,10 @@ def estudante_exemplo():
 
 @pytest.fixture()
 def entrada_estudante_exemplo():
-    """Retorna um dicionário com dados básicos de aluno."""
+    """Retorna um dicionario com dados minimos para predicao smart."""
     return {
         "RA": "123",
-        "IDADE": 10,
-        "ANO_INGRESSO": 2020,
         "ANO_REFERENCIA": 2023,
-        "GENERO": "Masculino",
-        "TURMA": "A",
-        "INSTITUICAO_ENSINO": "Escola",
-        "FASE": "1A",
     }
 
 
@@ -78,3 +72,4 @@ def dataframe_base():
             }
         ]
     )
+
