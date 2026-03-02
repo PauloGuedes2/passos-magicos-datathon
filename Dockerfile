@@ -38,7 +38,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     NEW_RELIC_CAPTURE_PARAMS=false \
     B2_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com \
     B2_KEY_ID=d91f580bb7ab \
-    B2_APPLICATION_KEY=0050b6b7e1318c080c4fe81766da8f2f1ab9ddf092 \
+    B2_APPLICATION_KEY=005c28f1ac499317c3a62a33b4ba3854112c9701d7 \
     B2_BUCKET_NAME=passos-magicos-dados \
     NEW_RELIC_ATTRIBUTES_EXCLUDE=request.parameters.*,request.headers.authorization,request.headers.cookie 
 
