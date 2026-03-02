@@ -1,30 +1,26 @@
-"""Ponto de entrada da API FastAPI.
-
-Responsabilidades:
-- Configurar a aplicação FastAPI
-- Registrar rotas e eventos
-- Inicializar recursos no startup
-"""
+"""Ponto de entrada da API FastAPI."""
 
 import os
+import sys
+from pathlib import Path
+from contextlib import asynccontextmanager
+
+# Garante que o diretório 'app' esteja no path para importações do 'src'
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 import uvicorn
-from fastapi import FastAPI, HTTPException, File, UploadFile, Request
 import boto3
+from fastapi import FastAPI, HTTPException, File, UploadFile, Request
+from fastapi.responses import HTMLResponse
+
 from src.api.controller import ControladorPredicao
 from src.api.monitoring_controller import ControladorMonitoramento
 from src.api.training_controller import ControladorTreinamento
 from src.application.model_runtime_service import carregar_modelo_runtime, obter_modelo_runtime
 from src.util.logger import logger
-from fastapi.responses import HTMLResponse
 from src.config.settings import Configuracoes
 
-app = FastAPI(
-    title="Passos Mágicos",
-    description="API com Monitoramento e Treinamento para predição de risco de defasagem escolar",
-    version="1.0.0",
-)
-
+# Configuração do cliente B2 (S3 compatível)
 B2_KEY_ID = os.getenv("B2_KEY_ID")
 if B2_KEY_ID:
     s3_client = boto3.client(
@@ -56,21 +52,30 @@ def sincronizar_dados_nuvem():
     except Exception as e:
         logger.error(f"Erro na sincronização: {e}")
 
-@app.on_event("startup")
-async def evento_inicializacao():
-    """Executa ações de inicialização da aplicação.
-
-    Responsabilidades:
-    - Registrar log de inicialização
-    - Carregar o modelo na memória
-
-    Retorno:
-    - None: não retorna valor
-    """
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Gerencia o ciclo de vida da aplicação (Startup e Shutdown)."""
     logger.info("Inicializando recursos da API...")
+    
+    # Cria pasta de dados se não existir
+    os.makedirs(Configuracoes.DATA_DIR, exist_ok=True)
+    
+    # Sincroniza arquivos da nuvem (Backblaze) para o local (Render)
+    if s3_client:
+        sincronizar_dados_nuvem()
+    
+    # Carrega o modelo de ML na memória
     carregar_modelo_runtime()
+    yield
 
+app = FastAPI(
+    title="Passos Mágicos",
+    description="API com Monitoramento e Treinamento para predição de risco de defasagem escolar",
+    version="1.1.0",
+    lifespan=lifespan
+)
 
+# Inclusão de Rotas
 controlador_predicao = ControladorPredicao()
 app.include_router(controlador_predicao.roteador, prefix="/api/v1", tags=["Predição"])
 
@@ -80,8 +85,6 @@ app.include_router(controlador_monitoramento.roteador, prefix="/api/v1/monitorin
 controlador_treinamento = ControladorTreinamento()
 app.include_router(controlador_treinamento.roteador, prefix="/api/v1", tags=["Treinamento"])
 
-
-    
 @app.get("/admin/upload", response_class=HTMLResponse, tags=["Interface"])
 async def pagina_upload():
     """Retorna a interface visual para upload de arquivos."""
@@ -91,16 +94,16 @@ async def pagina_upload():
         <head>
             <title>Datathon - Upload de Dados</title>
             <style>
-                body { font-family: sans-serif; margin: 40px; line-height: 1.6; }
-                .container { max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; }
+                body { font-family: sans-serif; margin: 40px; line-height: 1.6; background-color: #f4f4f9; }
+                .container { max-width: 500px; margin: auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: white; }
                 input[type="file"] { margin: 20px 0; }
                 input[type="submit"] { background: #007bff; color: white; border: none; padding: 10px 20px; cursor: pointer; border-radius: 4px; }
             </style>
         </head>
         <body>
             <div class="container">
-                <h2>Enviar Novo Arquivo de Dados em .CSV .XLSX</h2>
-                <form action="/api/v1/upload-arquivo" enctype="multipart/form-data" method="post">
+                <h2>Inserir Novos Dados (Excel/CSV)</h2>
+                <form action="/api/v1/admin/upload" enctype="multipart/form-data" method="post">
                     <input name="file" type="file" accept=".xlsx, .csv" required>
                     <br>
                     <input type="submit" value="Fazer Upload">
@@ -109,39 +112,36 @@ async def pagina_upload():
         </body>
     </html>
     """
-@app.post("/api/v1/upload-arquivo", tags=["Interface"])
+
+@app.post("/api/v1/admin/upload", tags=["Interface"])
 async def receber_arquivo(file: UploadFile = File(...)):
-    """Salva o arquivo enviado na pasta data do projeto."""
+    """Salva o arquivo no Backblaze (Nuvem) e localmente."""
     try:
-        # Usa o DATA_DIR definido nas suas configurações
-        from src.config.settings import Configuracoes
+        conteudo = await file.read()
         
-        caminho_destino = os.path.join(Configuracoes.DATA_DIR, file.filename)
+        # 1. Salva na Nuvem (Persistência para o Render)
+        if s3_client:
+            bucket = os.getenv("B2_BUCKET_NAME")
+            s3_client.put_object(Bucket=bucket, Key=file.filename, Body=conteudo)
         
-        # Cria a pasta caso ela não exista
+        # 2. Salva Localmente (Para uso imediato)
+        caminho_local = os.path.join(Configuracoes.DATA_DIR, file.filename)
         os.makedirs(Configuracoes.DATA_DIR, exist_ok=True)
-        
-        with open(caminho_destino, "wb") as buffer:
-            content = await file.read()
-            buffer.write(content)
+        with open(caminho_local, "wb") as buffer:
+            buffer.write(conteudo)
             
         return {"status": "sucesso", "arquivo": file.filename}
     except Exception as e:
+        logger.error(f"Erro no upload: {e}")
         return {"status": "erro", "detalhes": str(e)}
-    
+
 @app.get("/health", tags=["Infraestrutura"])
 def checar_saude():
-    """Endpoint de health check.
-
-    Retorno:
-    - dict: status da aplicação
-    """
     try:
         obter_modelo_runtime()
-        return {"status": "ok"}
+        return {"status": "ok", "cloud_storage": "ativo" if s3_client else "inativo"}
     except Exception as erro:
         raise HTTPException(status_code=503, detail=str(erro))
-
 
 if __name__ == "__main__":
     porta = int(os.getenv("PORT", 8000))
