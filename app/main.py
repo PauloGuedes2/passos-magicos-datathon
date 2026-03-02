@@ -22,6 +22,7 @@ from src.config.settings import Configuracoes
 
 # Configuração do cliente B2 (S3 compatível)
 B2_KEY_ID = os.getenv("B2_KEY_ID")
+logger.info(f"Configurações de Backblaze - Endpoint: {os.getenv('B2_ENDPOINT_URL')}, Bucket: {os.getenv('B2_BUCKET_NAME')}, Chave ID Configurada: {'Sim' if B2_KEY_ID else 'Não'}")
 if B2_KEY_ID:
     s3_client = boto3.client(
         "s3",
