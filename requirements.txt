@@ -8,4 +8,5 @@ joblib
 openpyxl
 pydantic
 boto3
+botocore
 python-multipart
