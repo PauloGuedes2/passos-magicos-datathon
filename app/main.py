@@ -134,7 +134,10 @@ async def receber_arquivo(file: UploadFile = File(...)):
         # 1. Salva na Nuvem (Persistência para o Render)
         if s3_client:
             bucket = os.getenv("B2_BUCKET_NAME")
-            s3_client.put_object(Bucket=bucket, Key=file.filename, Body=conteudo)
+            s3_client.put_object(Bucket=bucket, 
+                Key=file.filename, 
+                Body=conteudo,
+                ContentSHA256='UNSIGNED-PAYLOAD')
         
         # 2. Salva Localmente (Para uso imediato)
         caminho_local = os.path.join(Configuracoes.DATA_DIR, file.filename)
