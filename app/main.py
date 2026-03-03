@@ -20,16 +20,26 @@ from src.application.model_runtime_service import carregar_modelo_runtime, obter
 from src.util.logger import logger
 from src.config.settings import Configuracoes
 
+
+def _obter_env_limpo(nome: str, padrao: str | None = None) -> str | None:
+    """Lê variável de ambiente removendo espaços/aspas acidentais."""
+    valor = os.getenv(nome, padrao)
+    if valor is None:
+        return None
+
+    valor_limpo = valor.strip().strip('"').strip("'")
+    return valor_limpo or None
+
 # Configuração do cliente B2 (S3 compatível)
-B2_KEY_ID = os.getenv("B2_KEY_ID")
+B2_KEY_ID = _obter_env_limpo("B2_KEY_ID")
 
 if B2_KEY_ID:
     s3_client = boto3.client(
         "s3",
-        endpoint_url=os.getenv("B2_ENDPOINT_URL"),
+        endpoint_url=_obter_env_limpo("B2_ENDPOINT_URL"),
         aws_access_key_id=B2_KEY_ID,
-        aws_secret_access_key=os.getenv("B2_APPLICATION_KEY"),    
-        region_name="us-east-005",
+        aws_secret_access_key=_obter_env_limpo("B2_APPLICATION_KEY"),
+        region_name=_obter_env_limpo("B2_REGION", "us-east-005"),
         
         # Configuração extra para compatibilidade total com B2
         config=Config(
@@ -48,7 +58,10 @@ def sincronizar_dados_nuvem():
         return
 
     try:
-        bucket = os.getenv("B2_BUCKET_NAME")
+        bucket = _obter_env_limpo("B2_BUCKET_NAME")
+        if not bucket:
+            logger.warning("Sincronização ignorada: B2_BUCKET_NAME não configurado.")
+            return
         objetos = s3_client.list_objects_v2(Bucket=bucket).get('Contents', [])
         
         for obj in objetos:
@@ -130,7 +143,9 @@ async def receber_arquivo(file: UploadFile = File(...)):
         
         # 1. Salva na Nuvem (Persistência para o Render)
         if s3_client:
-            bucket = os.getenv("B2_BUCKET_NAME")
+            bucket = _obter_env_limpo("B2_BUCKET_NAME")
+            if not bucket:
+                raise ValueError("B2_BUCKET_NAME não configurado para upload em nuvem.")
             s3_client.put_object(Bucket=bucket, Key=file.filename, Body=conteudo)
         
         # 2. Salva Localmente (Para uso imediato)
