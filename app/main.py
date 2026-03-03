@@ -12,7 +12,7 @@ import uvicorn
 import boto3
 from fastapi import FastAPI, HTTPException, File, UploadFile, Request
 from fastapi.responses import HTMLResponse
-
+from botocore.config import Config
 from src.api.controller import ControladorPredicao
 from src.api.monitoring_controller import ControladorMonitoramento
 from src.api.training_controller import ControladorTreinamento
@@ -28,8 +28,15 @@ if B2_KEY_ID:
         "s3",
         endpoint_url=os.getenv("B2_ENDPOINT_URL"),
         aws_access_key_id=B2_KEY_ID,
-        aws_secret_access_key=os.getenv("B2_APPLICATION_KEY"),
-        region_name="us-east-005"
+        aws_secret_access_key=os.getenv("B2_APPLICATION_KEY"),    
+        region_name="us-east-005",
+        
+        # Configuração extra para compatibilidade total com B2
+        config=Config(
+            signature_version='s3v4',
+            retries={'max_attempts': 3, 'mode': 'standard'},
+            s3={'addressing_style': 'path'} # Força o estilo de caminho para evitar erros de DNS
+        )
     )
 else:
     s3_client = None
