@@ -28,7 +28,7 @@ if B2_KEY_ID:
         "s3",
         endpoint_url=os.getenv("B2_ENDPOINT_URL"),
         aws_access_key_id=B2_KEY_ID,
-        aws_secret_access_key=os.getenv("B2_APPLICATION_KEY")
+        aws_secret_access_key=os.getenv("B2_APPLICATION_KEY"),
         region_name="us-east-005"
     )
 else:
