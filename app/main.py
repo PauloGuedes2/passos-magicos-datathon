@@ -22,14 +22,14 @@ from src.config.settings import Configuracoes
 
 # Configuração do cliente B2 (S3 compatível)
 B2_KEY_ID = os.getenv("B2_KEY_ID")
-logger.info(f"Configurações de Backblaze - Endpoint: {os.getenv('B2_ENDPOINT_URL')}, Bucket: {os.getenv('B2_BUCKET_NAME')}, Chave ID Configurada: {'Sim' if B2_KEY_ID else 'Não'}")
-print(f"ChaveID: {os.getenv('B2_KEY_ID')}, Application Key: {os.getenv('B2_APPLICATION_KEY')}")  # Evita imprimir a chave real, mas confirma se está presente
+
 if B2_KEY_ID:
     s3_client = boto3.client(
         "s3",
         endpoint_url=os.getenv("B2_ENDPOINT_URL"),
         aws_access_key_id=B2_KEY_ID,
         aws_secret_access_key=os.getenv("B2_APPLICATION_KEY")
+        region_name="us-east-005"
     )
 else:
     s3_client = None
