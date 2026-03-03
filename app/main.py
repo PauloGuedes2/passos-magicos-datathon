@@ -23,52 +23,16 @@ from src.application.model_runtime_service import carregar_modelo_runtime, obter
 from src.util.logger import logger
 from src.config.settings import Configuracoes
 
-
-def _obter_env_limpo(nome: str, padrao: str | None = None) -> str | None:
-    """Lê variável de ambiente removendo espaços/aspas acidentais."""
-    valor = os.getenv(nome, padrao)
-    if valor is None:
-        return None
-
-    valor_limpo = valor.strip().strip('"').strip("'")
-    return valor_limpo or None
-
-def _normalizar_endpoint_b2(endpoint: str | None) -> str | None:
-    """Garante endpoint HTTPS sem sufixos inesperados (ex.: trailing slash)."""
-    if not endpoint:
-        return None
-
-    endpoint = endpoint.rstrip("/")
-    if not endpoint.startswith(("http://", "https://")):
-        endpoint = f"https://{endpoint}"
-    return endpoint
-
-
-def _obter_regiao_b2(endpoint: str | None, regiao_env: str | None) -> str:
-    """Resolve região para assinatura S3v4 (prioriza variável explícita)."""
-    if regiao_env:
-        return regiao_env
-
-    if endpoint:
-        hostname = urlparse(endpoint).hostname or ""
-        correspondencia = re.search(r"s3\.([a-z0-9-]+)\.backblazeb2\.com$", hostname)
-        if correspondencia:
-            return correspondencia.group(1)
-
-    return "us-east-005"
-
 # Configuração do cliente B2 (S3 compatível)
-B2_KEY_ID = _obter_env_limpo("B2_KEY_ID")
-B2_ENDPOINT_URL = _normalizar_endpoint_b2(_obter_env_limpo("B2_ENDPOINT_URL"))
-B2_REGION = _obter_regiao_b2(B2_ENDPOINT_URL, _obter_env_limpo("B2_REGION"))
+B2_KEY_ID = os.getenv("B2_KEY_ID")
 
 if B2_KEY_ID:
     s3_client = boto3.client(
         "s3",
-        endpoint_url=B2_ENDPOINT_URL,
+        endpoint_url=os.getenv("B2_ENDPOINT_URL"),
         aws_access_key_id=B2_KEY_ID,
-        aws_secret_access_key=_obter_env_limpo("B2_APPLICATION_KEY"),
-        region_name=B2_REGION,
+        aws_secret_access_key=os.getenv("B2_APPLICATION_KEY"),    
+        region_name="us-east-005",
         
         # Configuração extra para compatibilidade total com B2
         config=Config(
@@ -87,10 +51,7 @@ def sincronizar_dados_nuvem():
         return
 
     try:
-        bucket = _obter_env_limpo("B2_BUCKET_NAME")
-        if not bucket:
-            logger.warning("Sincronização ignorada: B2_BUCKET_NAME não configurado.")
-            return
+        bucket = os.getenv("B2_BUCKET_NAME")
         objetos = s3_client.list_objects_v2(Bucket=bucket).get('Contents', [])
         
         for obj in objetos:
@@ -172,11 +133,8 @@ async def receber_arquivo(file: UploadFile = File(...)):
         
         # 1. Salva na Nuvem (Persistência para o Render)
         if s3_client:
-            bucket = _obter_env_limpo("B2_BUCKET_NAME")
-            if bucket:
-                s3_client.put_object(Bucket=bucket, Key=file.filename, Body=conteudo)
-            else:
-                logger.warning("Upload em nuvem ignorado: B2_BUCKET_NAME não configurado.")
+            bucket = os.getenv("B2_BUCKET_NAME")
+            s3_client.put_object(Bucket=bucket, Key=file.filename, Body=conteudo)
         
         # 2. Salva Localmente (Para uso imediato)
         caminho_local = os.path.join(Configuracoes.DATA_DIR, file.filename)
