@@ -1,5 +1,3 @@
-"""Ponto de entrada da API FastAPI."""
-
 import os
 import sys
 from pathlib import Path
