@@ -2,6 +2,7 @@ import os
 import sys
 from pathlib import Path
 from contextlib import asynccontextmanager
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 import uvicorn
 import boto3
 from fastapi import FastAPI, HTTPException, File, UploadFile, Request
@@ -16,10 +17,6 @@ from src.api.training_controller import ControladorTreinamento
 from src.application.model_runtime_service import carregar_modelo_runtime, obter_modelo_runtime
 from src.util.logger import logger
 from src.config.settings import Configuracoes
-
-
-# Garante que o diretório 'app' esteja no path para importações do 'src'
-sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 
 # Configuração do cliente B2 (S3 compatível)
