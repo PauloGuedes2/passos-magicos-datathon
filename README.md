@@ -444,7 +444,9 @@ flowchart TD
 | `POST` | `/api/v1/predict/smart` | Predição com enriquecimento por histórico (query opcional: `model_version`) |
 | `GET` | `/api/v1/models/versions` | Lista versões disponíveis para usar em `model_version` |
 | `POST` | `/api/v1/train/retrain` | Retreinamento e reload do modelo |
-| `GET` | `/api/v1/monitoring/feature-importance` | Ranking global de importância |
+| `GET` | `/api/v1/monitoring/feature-importance` | Ranking global de importância de features |
+| `GET` | `/admin/upload` | Interface HTML para upload de arquivos com novos dados |
+| `POST` | `/api/v1/admin/upload` | Endpoint para upload de arquivos (Excel/CSV) para novos dados com persistência em nuvem |
 
 ### `curl` reais
 
@@ -454,6 +456,10 @@ curl -X GET http://localhost:8000/health
 
 ```bash
 curl -X GET http://localhost:8000/api/v1/models/versions
+```
+
+```bash
+curl -X GET http://localhost:8000/api/v1/monitoring/feature-importance
 ```
 
 ```bash
@@ -476,6 +482,17 @@ curl -X POST "http://localhost:8000/api/v1/predict/smart?model_version=v2026.02.
 
 ```bash
 curl -X POST http://localhost:8000/api/v1/train/retrain
+```
+
+```bash
+# Interface de upload (acesso no navegador ou para download do formulário HTML)
+curl -X GET http://localhost:8000/admin/upload
+```
+
+```bash
+# Upload de arquivo
+curl -X POST http://localhost:8000/api/v1/admin/upload \
+  -F "file=@caminho/para/dados.xlsx"
 ```
 
 ### Exemplo de retorno (`/predict/smart`)

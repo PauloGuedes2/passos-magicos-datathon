@@ -36,7 +36,7 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
     NEW_RELIC_LOG=stderr \
     NEW_RELIC_LOG_LEVEL=info \
     NEW_RELIC_CAPTURE_PARAMS=false \
-    NEW_RELIC_ATTRIBUTES_EXCLUDE=request.parameters.*,request.headers.authorization,request.headers.cookie
+    NEW_RELIC_ATTRIBUTES_EXCLUDE=request.parameters.*,request.headers.authorization,request.headers.cookie 
 
 # Application source
 COPY app/src/ ./src/

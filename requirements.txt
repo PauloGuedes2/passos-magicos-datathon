@@ -7,3 +7,6 @@ scikit-learn==1.5.2
 joblib
 openpyxl
 pydantic
+boto3
+botocore
+python-multipart
