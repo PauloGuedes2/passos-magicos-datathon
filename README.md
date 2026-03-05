@@ -50,6 +50,7 @@ Em contexto de vulnerabilidade social, o custo de não agir cedo é alto para o 
 ### Valor funcional entregue pela solução
 O sistema implementa um fluxo de ML ponta a ponta preparado para operação real:
 - predição online de risco (`/api/v1/predict/smart`);
+- ingestão administrativa de novos dados (`/admin/upload` e `/api/v1/admin/upload`) para alimentar retreinamento;
 - tratamento de cold start com revisão humana obrigatória quando não há histórico;
 - monitoramento contínuo de estabilidade (drift via PSI);
 - retreinamento controlado por quality gate para reduzir risco de regressão;
@@ -103,6 +104,7 @@ A solução é um **sistema completo de ML em produção candidata**, composto p
 | Governança de fairness | Estratégia de threshold com restrições + monitoramento de FPR/FNR por grupo | `app/src/infrastructure/model/ml_pipeline.py`, `app/src/application/monitoring_service.py` |
 | Cold start | Fallback para aluno sem histórico com revisão humana obrigatória | `app/src/application/risk_service.py` |
 | Controle de promoção | Quality gate por recall mínimo e comparação com baseline em produção | `app/src/infrastructure/model/ml_pipeline.py` |
+| Administração de dados | Interface/endpoint de upload para novos arquivos de treino com persistência em nuvem | `app/main.py` |
 | Logging estruturado | Persistência JSONL de predições em formato técnico | `app/src/infrastructure/logging/prediction_logger.py` |
 | Observabilidade executiva | Dashboard no New Relic com visão consolidada de modelo e aplicação | seção `Observability & Monitoring` |
 
@@ -110,13 +112,26 @@ A solução é um **sistema completo de ML em produção candidata**, composto p
 
 ```mermaid
 flowchart LR
-    Cliente --> API[FastAPI]
+    Cliente[Cliente de Predição] --> API[FastAPI]
+    Admin[Operador Admin] --> UI[GET /admin/upload]
+    Admin --> Upload[POST /api/v1/admin/upload]
+    Upload --> B2[(Backblaze B2)]
+    Upload --> DataDir[(app/data)]
+    B2 --> Sync[Sync no Startup]
+    Sync --> DataDir
+
     API --> Pred[ServicoRisco]
     Pred --> Proc[ProcessadorFeatures]
     Pred --> Hist[RepositorioHistorico]
     Pred --> Model[GerenciadorModelo]
     Pred --> Log[LoggerPredicao]
     Pred --> Mon[ServicoMonitoramento]
+
+    API --> Retrain[POST /api/v1/train/retrain]
+    Retrain --> Train[PipelineML]
+    DataDir --> Train
+    Train --> Artifacts[(models/monitoring)]
+    Artifacts --> Model
 ```
 
 ---
@@ -162,7 +177,9 @@ Fluxo implementado de ponta a ponta:
 
 ```mermaid
 flowchart TD
-    A[Carregamento dos dados] --> B[Criação do target]
+    U[Upload admin de novos dados] --> A[Carregamento dos dados]
+    A --> V{Validação de contrato}
+    V --> B[Criação do target]
     B --> C[Features históricas com lag]
     C --> D[Remoção de colunas proibidas]
     D --> E[Split temporal treino/teste]
@@ -172,6 +189,7 @@ flowchart TD
     H --> I[Seleção de threshold estratégico]
     I --> J[Quality gate]
     J -->|aprovado| K[Promoção do modelo e artefatos]
+    K --> M[Reload do modelo em memória]
     J -->|reprovado| L[Modelo atual permanece]
 ```
 
@@ -291,17 +309,20 @@ docker compose up --build
 - O deploy é **containerizado** via `Dockerfile`.
 
 **Arquitetura simplificada de deploy**:
-- Render Web Service -> Container FastAPI/Uvicorn -> volume lógico de artefatos (`models`, `monitoring`, `logs`).
+- Render Web Service -> Container FastAPI/Uvicorn + integração Backblaze B2 -> volume lógico de artefatos (`models`, `monitoring`, `logs`) e dados (`app/data`).
 
 ### Desenho de arquitetura de deploy
 
 ```mermaid
 flowchart LR
     U[Usuário / Cliente] --> R[Render Web Service]
+    A[Operador Admin] --> R
     R --> C[Container FastAPI + Uvicorn]
     C --> M[(app/models)]
     C --> O[(app/monitoring)]
     C --> L[(app/logs)]
+    C --> D[(app/data)]
+    C <--> B2[(Backblaze B2 - S3 compatível)]
 ```
 
 **URL pública da aplicação**:
@@ -309,10 +330,17 @@ flowchart LR
 - Health: https://passos-magicos-datathon.onrender.com/health
 - Observabilidade principal (New Relic): https://onenr.io/0yw49WynLR3
 
+**Variáveis recomendadas para fluxo administrativo com persistência em nuvem**:
+- `B2_KEY_ID`
+- `B2_APPLICATION_KEY`
+- `B2_BUCKET_NAME`
+- `B2_ENDPOINT_URL`
+- `DATA_DIR` (ex.: `/app/data`)
+
 **Nota importante sobre Render Free (sem disco persistente)**:
 - No plano Free, o filesystem do serviço é efêmero e pode ser recriado em restart/deploy.
 - Sem `Persistent Disk`, artefatos gerados em runtime podem ser perdidos (`app/models`, `app/monitoring`, `app/logs`).
-- Consequência prática: se os artefatos de monitoramento não estiverem na imagem, as métricas customizadas de modelo no New Relic podem não ser publicadas até novo retreino.
+- Consequência prática: se os artefatos de monitoramento não estiverem na imagem, as métricas customizadas de modelo no New Relic podem não ser publicadas até novo retreinamento.
 
 ### CI/CD com GitHub Actions
 
@@ -326,6 +354,7 @@ flowchart LR
     REL --> PR2[Job open-release-to-main-pr<br/>PR: release -> main]
     PR2 --> M[Merge em main]
     M --> PDC[post-deploy-checks]
+    M --> RC[retrain-check<br/>quality gate de modelo]
 ```
 
 ```mermaid
@@ -346,6 +375,8 @@ flowchart TD
     C --> C1[Wait for rollout]
     C1 --> C2[Health check]
     C2 --> C3[Smoke test predict/smart]
+    B --> RCHK[Job: retrain-check]
+    RCHK --> GATE[Valida recall/F1 e artefatos]
 ```
 
 #### `ci.yml` (integração contínua)
@@ -380,6 +411,7 @@ flowchart TD
   - aguarda rollout;
   - valida `/health`;
   - executa smoke test em `/api/v1/predict/smart`.
+  - observação: o smoke test técnico pode enviar payload expandido; para uso público, seguir o contrato de entrada (`RA` obrigatório e `ANO_REFERENCIA` opcional).
 - **Open release PR (somente `develop`)**:
   - cria ou atualiza automaticamente PR `develop` -> `release`;
   - define título `release: vX.Y.Z` com versão semântica incremental.
@@ -443,10 +475,12 @@ flowchart TD
 | `GET` | `/health` | Saúde do serviço e disponibilidade do modelo |
 | `POST` | `/api/v1/predict/smart` | Predição com enriquecimento por histórico (query opcional: `model_version`) |
 | `GET` | `/api/v1/models/versions` | Lista versões disponíveis para usar em `model_version` |
-| `POST` | `/api/v1/train/retrain` | Retreinamento e reload do modelo |
+| `POST` | `/api/v1/train/retrain` | Retreinamento e reload do modelo (não é acionado automaticamente pelo upload) |
 | `GET` | `/api/v1/monitoring/feature-importance` | Ranking global de importância de features |
 | `GET` | `/admin/upload` | Interface HTML para upload de arquivos com novos dados |
 | `POST` | `/api/v1/admin/upload` | Endpoint para upload de arquivos (Excel/CSV) para novos dados com persistência em nuvem |
+
+> Observação de contrato: para `POST /api/v1/predict/smart`, o payload público esperado é `RA` (obrigatório) e `ANO_REFERENCIA` (opcional).
 
 ### `curl` reais
 
@@ -523,6 +557,18 @@ curl -X POST http://localhost:8000/api/v1/admin/upload \
 - Endpoint síncrono: `POST /api/v1/train/retrain`.
 - Fluxo: carga de dados -> treino -> promoção (se passar quality gate) -> reload em memória.
 
+### Administração de dados (novo fluxo operacional)
+- Interface web para upload: `GET /admin/upload`.
+- Upload de arquivo para dados de treino: `POST /api/v1/admin/upload`.
+- Recomenda-se convenção de nome de arquivo para governança (ex.: `base_YYYYMMDD_HHMM.xlsx`, sem pastas e sem caracteres especiais).
+- O upload salva no diretório local (`app/data`) e, quando configurado, também no Backblaze B2.
+- O upload não dispara treino automaticamente; é necessário chamar `POST /api/v1/train/retrain`.
+- No startup, a API pode sincronizar arquivos do B2 para o `DATA_DIR`, reduzindo perda de dados no Render Free.
+- A sincronização no startup baixa somente arquivos que ainda não existem localmente.
+- O carregamento de treino lê todos os `*.xlsx` e `*.csv` presentes no `DATA_DIR`; uploads sucessivos acumulam dados para o próximo retreinamento.
+- Em ambiente sem B2 configurado, o serviço opera em modo local e o `/health` retorna `cloud_storage: inativo`.
+- Esse fluxo habilita atualização de base para retreinamentos sem depender de novo deploy.
+
 ### Versionamento
 - Modelo ativo: `app/models/model_passos_magicos.joblib`
 - Backup: `app/models/model_passos_magicos.joblib.bak`
@@ -568,6 +614,29 @@ sequenceDiagram
     API-->>Cliente: resposta final
 ```
 
+### Desenho do fluxo administrativo (upload -> retreinamento)
+
+```mermaid
+sequenceDiagram
+    participant Admin
+    participant API
+    participant B2 as Backblaze B2
+    participant Data as app/data
+    participant Train as Pipeline de Treino
+    participant Model as Modelo Runtime
+
+    Admin->>API: GET /admin/upload
+    API-->>Admin: Formulário HTML
+    Admin->>API: POST /api/v1/admin/upload (arquivo)
+    API->>B2: put_object (se configurado)
+    API->>Data: salvar arquivo local
+    Admin->>API: POST /api/v1/train/retrain
+    API->>Train: carregar dados e treinar
+    Train-->>API: quality gate + artefatos
+    API->>Model: reload modelo promovido
+    API-->>Admin: status de retreinamento
+```
+
 ---
 
 ## 12) O Que o Dashboard de Observabilidade Oferece
@@ -587,7 +656,7 @@ O dashboard no New Relic consolida:
 ### Como isso auxilia gestores
 - antecipa risco de sobrecarga de atendimento;
 - justifica ajustes de threshold com base em dados;
-- acelera decisão de retreino e mitigação de risco operacional.
+- acelera decisão de retreinamento e mitigação de risco operacional.
 
 ---
 
@@ -639,6 +708,7 @@ Cálculo sobre `app/monitoring/reference_data.csv`:
 | Cenário | Comportamento atual do sistema | Resposta esperada da operação |
 |---|---|---|
 | Aluno novo (sem histórico) | Fallback + `requires_human_review=true` | Revisão humana prioritária |
+| Atualização de dados via administração | Upload persiste arquivo em `app/data` e opcionalmente em B2 | Acionar retreinamento e validar métricas pós-promoção |
 | Drift de dados | PSI e status de drift atualizados | Investigar fonte de mudança e impacto |
 | Mudança de distribuição | Variação em taxa ALTO_RISCO e `top_drift_features` | Recalibrar threshold e/ou retreinar |
 | Piora de recall | Quality gate bloqueia promoção abaixo de `MIN_RECALL` | Revisar modelo e política de threshold |
@@ -653,10 +723,12 @@ Cálculo sobre `app/monitoring/reference_data.csv`:
 Limitações observáveis no código e artefatos:
 - Sem autenticação/autorização nativas na API.
 - Sem rate limiting efetivo implementado no app (apesar de variáveis no compose).
-- Orquestração de CI/CD e retreino está presente via GitHub Actions, mas ainda sem esteira MLOps completa (registry de modelos, aprovação formal de promoção e lineage ponta a ponta).
+- Fluxo de upload administrativo ainda sem validações robustas de payload (tipo/tamanho/conteúdo) e sem controle de acesso por perfil.
+- Fluxo administrativo não possui deduplicação/versionamento dos arquivos de entrada no `DATA_DIR`; requer governança operacional para evitar acúmulo indevido.
+- Orquestração de CI/CD e retreinamento está presente via GitHub Actions, mas ainda sem esteira MLOps completa (registry de modelos, aprovação formal de promoção e lineage ponta a ponta).
 - Sem tracking formal de experimentos/lineage.
 - Fairness online completo depende de enriquecimento posterior com rótulo real.
-- `ANO_INGRESSO` com limite fixo em validação (`<= 2026`), exigindo manutenção anual.
+- `ANO_INGRESSO`/`ANO_REFERENCIA` seguem limites fixos no contrato de entrada, exigindo revisão periódica.
 - As trilhas de clusterização e LLM não estão implementadas em produção neste código.
 
 ---
@@ -678,7 +750,7 @@ Com PSI custom, persistindo `drift_report.json` com métricas por feature, alert
 ### 5) Fairness está resolvido?
 Não completamente. Há mecanismos de governança (exclusão de feature sensível no modelo, monitoramento por grupo e estratégia de threshold com constraints), mas o artefato atual mostra gap de FPR de 13.0 p.p., exigindo mitigação contínua.
 
-### 6) O que impede regressão de modelo em retreino?
+### 6) O que impede regressão de modelo em retreinamento?
 Quality gate: bloqueio por recall mínimo e critério de não degradação relevante de F1 frente ao baseline em produção.
 
 ---
@@ -717,15 +789,22 @@ curl -X POST http://localhost:8000/api/v1/predict/smart \
   }'
 ```
 
-5. Rode retreinamento via endpoint.
+5. (Opcional) Faça upload de novos dados via rota administrativa.
+
+```bash
+curl -X POST http://localhost:8000/api/v1/admin/upload \
+  -F "file=@caminho/para/dados.xlsx"
+```
+
+6. Rode retreinamento via endpoint.
 
 ```bash
 curl -X POST http://localhost:8000/api/v1/train/retrain
 ```
 
-6. Abra o dashboard de observabilidade no New Relic.
+7. Abra o dashboard de observabilidade no New Relic.
 
-7. (Opcional) execute a simulação de produção para alimentar logs.
+8. (Opcional) execute a simulação de produção para alimentar logs.
 
 ```bash
 PYTHONPATH=app python tests/scripts/send_production_simulation.py --max-requests 50
@@ -734,8 +813,10 @@ PYTHONPATH=app python tests/scripts/send_production_simulation.py --max-requests
 ### Checklist de validação prática
 
 - `/health` retorna `{"status":"ok"}`.
+- `/health` expõe `cloud_storage` como `ativo` (B2 configurado) ou `inativo` (modo local).
 - `predict/smart` retorna `risk_probability`, `risk_segment` e `requires_human_review`.
 - `train/retrain` retorna status de sucesso.
+- Upload em `/api/v1/admin/upload` retorna `{"status":"sucesso","arquivo":"..."}` antes de retreinar.
 - `app/logs/predictions.jsonl` cresce após chamadas de predição.
 - `app/monitoring/drift_report.json` é atualizado.
 
@@ -765,7 +846,7 @@ PYTHONPATH=app python tests/scripts/send_production_simulation.py --max-requests
   - `ModelMonitoringFeatureImportance` (top features de importância global)
 - O envio é protegido por `try/except`, não interrompe o fluxo da API e falha de forma segura.
 - Dashboard recomendado (import manual local): `observability/newrelic-dashboard-local.json`
-- Pré-requisitos para publicar métricas customizadas no New Relic sem retreino:
+- Pré-requisitos para publicar métricas customizadas no New Relic sem retreinamento:
   - `app/monitoring/reference_data.csv` precisa existir (sem ele o snapshot retorna `reference_not_found`).
   - `app/logs/predictions.jsonl` precisa ter amostras válidas (mínimo 5) para cálculo de drift.
   - `NEW_RELIC_LICENSE_KEY` e `NEW_RELIC_APP_NAME` devem estar definidos.
