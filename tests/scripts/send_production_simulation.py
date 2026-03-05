@@ -33,9 +33,9 @@ if RAIZ_PROJETO not in sys.path:
 from src.config.settings import Configuracoes
 
 # --- 2. Configuracoes da API ---
-PORTA = int(os.getenv("PORT", 8000))
-DEFAULT_API_URL = f"http://localhost:{PORTA}/api/v1/predict/smart"
-# DEFAULT_API_URL = "https://passos-magicos-datathon.onrender.com/api/v1/predict/smart"
+# PORTA = int(os.getenv("PORT", 8000))
+# DEFAULT_API_URL = f"http://localhost:{PORTA}/api/v1/predict/smart"
+DEFAULT_API_URL = "https://passos-magicos-datathon.onrender.com/api/v1/predict/smart"
 URL_API = os.getenv("API_URL", DEFAULT_API_URL).strip()
 DELAY = 0.1  # Acelerado para teste
 
