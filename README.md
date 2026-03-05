@@ -462,7 +462,7 @@ flowchart TD
 ## 9) Link do Vídeo de Apresentação
 
 ### Vídeo de Apresentação do Projeto
-[Link para o vídeo no YouTube]
+[YouTube](https://youtu.be/omoIURJHnfI)
 
 ---
 
